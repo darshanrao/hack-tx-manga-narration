@@ -1,0 +1,1194 @@
+{
+  "scene_id": "ch01",
+  "pdf_file": "Chapters/scene-1.pdf",
+  "processing_timestamp": "2025-10-18T16:31:30.722745",
+  "total_pages": 7,
+  "successful_pages": 7,
+  "failed_pages": 0,
+  "page_results": [
+    {
+      "page_number": 1,
+      "page_id": "ch01_p01",
+      "json_file": "scenes/page_unknown.json",
+      "success": true,
+      "dialogue_lines": 1,
+      "characters": 2
+    },
+    {
+      "page_number": 2,
+      "page_id": "ch01_p02",
+      "json_file": "scenes/page_unknown.json",
+      "success": true,
+      "dialogue_lines": 9,
+      "characters": 5
+    },
+    {
+      "page_number": 3,
+      "page_id": "ch01_p03",
+      "json_file": "scenes/page_unknown.json",
+      "success": true,
+      "dialogue_lines": 9,
+      "characters": 6
+    },
+    {
+      "page_number": 4,
+      "page_id": "ch01_p04",
+      "json_file": "scenes/page_unknown.json",
+      "success": true,
+      "dialogue_lines": 9,
+      "characters": 6
+    },
+    {
+      "page_number": 5,
+      "page_id": "ch01_p05",
+      "json_file": "scenes/page_unknown.json",
+      "success": true,
+      "dialogue_lines": 12,
+      "characters": 6
+    },
+    {
+      "page_number": 6,
+      "page_id": "ch01_p06",
+      "json_file": "scenes/page_unknown.json",
+      "success": true,
+      "dialogue_lines": 9,
+      "characters": 6
+    },
+    {
+      "page_number": 7,
+      "page_id": "ch01_p07",
+      "json_file": "scenes/page_unknown.json",
+      "success": true,
+      "dialogue_lines": 11,
+      "characters": 7
+    }
+  ],
+  "scene_analysis": {
+    "scene_id": "ch01",
+    "total_pages": 7,
+    "page_analyses": [
+      {
+        "page_number": 1,
+        "scene": "An establishing shot from atop a massive wall, looking down into a densely populated city. A large gate, cannons, and a military-style banner are visible, setting a scene of a fortified city.",
+        "characters": [
+          {
+            "name": "Citizens",
+            "expression": "Indiscernible",
+            "role": "background"
+          }
+        ],
+        "dialogue_order": [],
+        "character_interactions": [
+          {
+            "character1": "N/A",
+            "character2": "N/A",
+            "interaction": "No specific character interactions are visible. Numerous background citizens are seen walking in the streets far below."
+          }
+        ]
+      },
+      {
+        "page_number": 2,
+        "scene": "Eren and Mikasa are walking through a busy town street. Eren, who was just crying, asks Mikasa to keep it a secret. As they talk, they are approached by an adult acquaintance, Hannes, who notices Eren's tear-stained face.",
+        "characters": [
+          {
+            "name": "Eren Yeager",
+            "expression": "crying, embarrassed, angry, startled",
+            "role": "main"
+          },
+          {
+            "name": "Mikasa Ackerman",
+            "expression": "concerned, stoic",
+            "role": "main"
+          },
+          {
+            "name": "Hannes",
+            "expression": "inquisitive, concerned",
+            "role": "supporting"
+          },
+          {
+            "name": "Townsfolk",
+            "expression": "neutral",
+            "role": "background"
+          }
+        ],
+        "dialogue_order": [
+          {
+            "speaker": "Eren Yeager",
+            "text": "DON'T TELL ANYONE..."
+          },
+          {
+            "speaker": "Eren Yeager",
+            "text": "...THAT I WAS CRYING."
+          },
+          {
+            "speaker": "Mikasa Ackerman",
+            "text": "...I WON'T."
+          },
+          {
+            "speaker": "Mikasa Ackerman",
+            "text": "CRYING FOR NO REASON..."
+          },
+          {
+            "speaker": "Mikasa Ackerman",
+            "text": "WHY DON'T YOU HAVE YOUR DAD EXAMINE YOU?"
+          },
+          {
+            "speaker": "Eren Yeager",
+            "text": "DON'T BE STUPID! LIKE I CAN TELL MY OLD MAN ABOUT THIS?!"
+          },
+          {
+            "speaker": "Hannes",
+            "text": "WHAT ARE YOU CRYING ABOUT, EREN?"
+          },
+          {
+            "speaker": "Eren Yeager",
+            "text": "M-MR. HANNES!"
+          }
+        ],
+        "character_interactions": [
+          {
+            "character1": "Eren Yeager",
+            "character2": "Mikasa Ackerman",
+            "interaction": "Eren is embarrassed about crying and confides in Mikasa, asking her to keep it a secret. Mikasa agrees but shows her concern by suggesting he talk to his father, which Eren angrily rejects. This interaction shows their close, sibling-like bond, with Mikasa being the concerned caretaker."
+          },
+          {
+            "character1": "Hannes",
+            "character2": "Eren Yeager",
+            "interaction": "Hannes, an adult acquaintance, spots Eren looking upset and directly asks him why he was crying. Eren is startled and flustered by his sudden appearance and questioning."
+          }
+        ]
+      },
+      {
+        "page_number": 3,
+        "scene": "Eren and Mikasa encounter several Garrison soldiers, including Hannes, drinking alcohol while supposedly on duty at a city gate. Hannes teases Eren, who becomes angry and questions their dereliction of duty.",
+        "characters": [
+          {
+            "name": "Eren Yeager",
+            "expression": "shocked, angry, disapproving",
+            "role": "main"
+          },
+          {
+            "name": "Mikasa Ackermann",
+            "expression": "neutral, observant",
+            "role": "main"
+          },
+          {
+            "name": "Hannes",
+            "expression": "jovial, drunk, relaxed",
+            "role": "supporting"
+          },
+          {
+            "name": "Garrison Soldier 1",
+            "expression": "drunk, relaxed",
+            "role": "background"
+          },
+          {
+            "name": "Garrison Soldier 2",
+            "expression": "drunk, relaxed",
+            "role": "background"
+          }
+        ],
+        "dialogue_order": [
+          {
+            "speaker": "Hannes",
+            "text": "DID MIKASA GET MAD AT YOU FOR SOMETHING?"
+          },
+          {
+            "speaker": "Eren Yeager",
+            "text": "HUH?! WHAT MAKES YOU THINK I'M CRYING?!"
+          },
+          {
+            "speaker": "Eren Yeager",
+            "text": "YOU REEK OF LIQUOR !!"
+          },
+          {
+            "speaker": "Eren Yeager",
+            "text": "WHAT THE... ?!"
+          },
+          {
+            "speaker": "Eren Yeager",
+            "text": "DRINKING AGAIN..."
+          },
+          {
+            "speaker": "Hannes",
+            "text": "WOULD YOU TWO LIKE TO JOIN IN?"
+          },
+          {
+            "speaker": "Eren Yeager",
+            "text": "NO... UM... WHAT ABOUT YOUR WORK?"
+          },
+          {
+            "speaker": "Hannes",
+            "text": "OH! WE'RE ON GATE DUTY TODAY."
+          }
+        ],
+        "character_interactions": [
+          {
+            "character1": "Hannes",
+            "character2": "Eren Yeager",
+            "interaction": "Hannes casually teases Eren about being upset by Mikasa, showing a familiar but slightly mocking relationship. He then invites Eren to join their drinking, but Eren responds with disapproval and questions his commitment to his job."
+          },
+          {
+            "character1": "Hannes",
+            "character2": "Mikasa Ackermann",
+            "interaction": "Hannes acknowledges Mikasa's presence when inviting both her and Eren to drink. His question to Eren implies he sees Mikasa as someone who often gets Eren into trouble or makes him upset."
+          },
+          {
+            "character1": "Hannes",
+            "character2": "Garrison Soldiers",
+            "interaction": "Hannes is drinking casually with his fellow soldiers, demonstrating a shared lax attitude towards their responsibilities as guards."
+          }
+        ]
+      },
+      {
+        "page_number": 4,
+        "scene": "Eren confronts Hannes and other Garrison soldiers about their drinking on duty, questioning their preparedness for an emergency. The soldiers are dismissive, which infuriates Eren.",
+        "characters": [
+          {
+            "name": "Eren Yeager",
+            "expression": "concerned, angry, disbelieving",
+            "role": "main"
+          },
+          {
+            "name": "Hannes",
+            "expression": "drunk, nonchalant, dismissive",
+            "role": "supporting"
+          },
+          {
+            "name": "Mikasa Ackerman",
+            "expression": "neutral, observant",
+            "role": "main"
+          },
+          {
+            "name": "Garrison Soldier (cards)",
+            "expression": "inquisitive, complacent",
+            "role": "background"
+          },
+          {
+            "name": "Other Garrison Soldiers",
+            "expression": "relaxed, inattentive",
+            "role": "background"
+          }
+        ],
+        "dialogue_order": [
+          {
+            "speaker": "Hannes",
+            "text": "WE GET HUNGRY AND THIRSTY, HANGING OUT HERE ALL DAY."
+          },
+          {
+            "speaker": "Hannes",
+            "text": "WHAT'S THE BIG DEAL IF LIQUOR HAPPENS TO BE AMONG THE RATIONS SOMETIMES?"
+          },
+          {
+            "speaker": "Eren Yeager",
+            "text": "BUT IN AN EMERGENCY, WOULD YOU BE ABLE TO FIGHT DRUNK?!"
+          },
+          {
+            "speaker": "Garrison Soldier (cards)",
+            "text": "WHAT KIND OF EMERGENCY?"
+          },
+          {
+            "speaker": "Hannes",
+            "text": "..."
+          },
+          {
+            "speaker": "Eren Yeager",
+            "text": "...!! I DON'T BELIEVE THIS! IT'S OBVIOUS!"
+          },
+          {
+            "speaker": "Eren Yeager",
+            "text": "I'M TALKING ABOUT IF THEY BROKE DOWN THE WALL..."
+          },
+          {
+            "speaker": "Eren Yeager",
+            "text": "...AND INVADED THE TOWN!!"
+          }
+        ],
+        "character_interactions": [
+          {
+            "character1": "Eren Yeager",
+            "character2": "Hannes",
+            "interaction": "Eren confronts Hannes about his dereliction of duty (drinking), showing his intense concern for the town's safety. Hannes is dismissive of Eren's worries, treating him like a child and justifying his actions."
+          },
+          {
+            "character1": "Eren Yeager",
+            "character2": "Garrison Soldier (cards)",
+            "interaction": "The soldier questions Eren's premise of an \"emergency,\" highlighting the complacent and unprepared attitude of the Garrison which frustrates Eren further."
+          },
+          {
+            "character1": "Mikasa Ackerman",
+            "character2": "Eren Yeager",
+            "interaction": "Mikasa stands silently next to Eren as he confronts the soldiers, observing the situation."
+          }
+        ]
+      },
+      {
+        "page_number": 5,
+        "scene": "Eren passionately argues with Hannes and other Garrison soldiers about their complacency regarding the Titan threat, citing his father's warnings. Hannes tries to placate him while also showing respect for Dr. Yeager's opinion.",
+        "characters": [
+          {
+            "name": "Eren Yeager",
+            "expression": "passionate, frustrated, worried",
+            "role": "main"
+          },
+          {
+            "name": "Hannes",
+            "expression": "amused, calming, thoughtful",
+            "role": "supporting"
+          },
+          {
+            "name": "Garrison Soldier 2",
+            "expression": "smug, dismissive",
+            "role": "background"
+          },
+          {
+            "name": "Garrison Soldier 3",
+            "expression": "amused",
+            "role": "background"
+          },
+          {
+            "name": "Garrison Soldiers",
+            "expression": "on duty, neutral",
+            "role": "background"
+          }
+        ],
+        "dialogue_order": [
+          {
+            "speaker": "Hannes",
+            "text": "HAHAHA... THE DOCTOR'S SON HAS SPIRIT!"
+          },
+          {
+            "speaker": "Hannes",
+            "text": "HEY, EREN! DON'T SUDDENLY RAISE YOUR VOICE LIKE THAT..."
+          },
+          {
+            "speaker": "Garrison Soldier 2",
+            "text": "...THAT HASN'T HAPPENED IN A HUNDRED YEARS!"
+          },
+          {
+            "speaker": "Eren Yeager",
+            "text": "BUT I TELL YA..."
+          },
+          {
+            "speaker": "Eren Yeager",
+            "text": "IF THE BASTARDS BREAK THROUGH THE WALL, WE'LL BE ON TOP OF THE SITUATION."
+          },
+          {
+            "speaker": "Eren Yeager",
+            "text": "B-BUT IT'S DANGEROUS TO FEEL AT EASE LIKE THIS!"
+          },
+          {
+            "speaker": "Eren Yeager",
+            "text": "MY FATHER SAYS SO!!"
+          },
+          {
+            "speaker": "Hannes",
+            "text": "WELL... YOU MAY BE RIGHT."
+          },
+          {
+            "speaker": "Hannes",
+            "text": "I'M NOT GONNA SECOND-GUESS DR. YEAGER, THIS TOWN'S BENEFACTOR."
+          },
+          {
+            "speaker": "Hannes",
+            "text": "BUT Y'KNOW..."
+          },
+          {
+            "speaker": "Hannes",
+            "text": "WHEN YOU BECOME A SOLDIER, YOU GET YOUR CHANCE TO SEE 'EM, HANGING AROUND OUTSIDE THE WALL WHILE YOU'RE ON WALL DEFENSE DUTY OR WHATEVER..."
+          }
+        ],
+        "character_interactions": [
+          {
+            "character1": "Hannes",
+            "character2": "Eren Yeager",
+            "interaction": "Hannes is initially amused by Eren's fiery spirit, patting his head to calm him down. He then thoughtfully concedes that Eren's father, Dr. Yeager, is right, showing respect for his opinion."
+          },
+          {
+            "character1": "Eren Yeager",
+            "character2": "Garrison Soldier 2",
+            "interaction": "Eren argues against the soldiers' complacency, which is met with a smug and dismissive remark from Garrison Soldier 2 about the 100 years of peace."
+          },
+          {
+            "character1": "Eren Yeager",
+            "character2": "Dr. Yeager (mentioned)",
+            "interaction": "Eren uses his father's authority and warnings to support his argument that it's dangerous to be complacent."
+          }
+        ]
+      },
+      {
+        "page_number": 6,
+        "scene": "On a city street, Eren confronts a complacent Garrison soldier about the regiment's lack of preparedness for a Titan attack. Mikasa looks on with concern while Reiner offers a cynical perspective.",
+        "characters": [
+          {
+            "name": "Giant Titan",
+            "expression": "neutral, walking",
+            "role": "background"
+          },
+          {
+            "name": "Garrison Soldier",
+            "expression": "smug, dismissive",
+            "role": "supporting"
+          },
+          {
+            "name": "Eren",
+            "expression": "angry, indignant",
+            "role": "main"
+          },
+          {
+            "name": "Mikasa",
+            "expression": "concerned, quiet",
+            "role": "main"
+          },
+          {
+            "name": "Reiner",
+            "expression": "amused, cynical",
+            "role": "supporting"
+          }
+        ],
+        "dialogue_order": [
+          {
+            "speaker": "Garrison Soldier",
+            "text": "...AND I JUST CAN'T PICTURE 'EM EVEN PUTTING A DENT IN THIS 50-METER* FORTRESS."
+          },
+          {
+            "speaker": "Eren",
+            "text": "THEN YOU'RE NOT EVEN PREPARED TO FIGHT 'EM IN THE FIRST PLACE, ARE YOU?!"
+          },
+          {
+            "speaker": "Garrison Soldier",
+            "text": "NOPE."
+          },
+          {
+            "speaker": "Eren",
+            "text": "W-WHAT THE HELL?! SO STOP CALLING YOURSELVES A \"GARRISON\" AND MAKE IT THE \"WALL CONSTRUCTION CORPS\" INSTEAD!"
+          },
+          {
+            "speaker": "Garrison Soldier",
+            "text": "THAT AIN'T A BAD IDEA EITHER!"
+          },
+          {
+            "speaker": "Mikasa",
+            "text": "BUT EREN..."
+          },
+          {
+            "speaker": "Reiner",
+            "text": "YOU HAVE SOLDIERS ON ACTIVE DUTY WHEN THE SITUATION HAS GONE TO HELL... ON THE OTHER HAND, WHEN THE GUYS AND I ARE MOCKED AS GOOD-FOR-NOTHING SPONGES, THAT TELLS YOU WE'RE ALL LIVIN' IN A TIME OF PEACE, AM I RIGHT?"
+          },
+          {
+            "speaker": "Mikasa",
+            "text": "..."
+          }
+        ],
+        "character_interactions": [
+          {
+            "character1": "Eren",
+            "character2": "Garrison Soldier",
+            "interaction": "Eren angrily confronts the Garrison Soldier for his complacent and dismissive attitude towards his duty and the Titan threat."
+          },
+          {
+            "character1": "Mikasa",
+            "character2": "Eren",
+            "interaction": "Mikasa shows concern for Eren's angry outburst, attempting to get him to calm down."
+          },
+          {
+            "character1": "Reiner",
+            "character2": "Eren",
+            "interaction": "Reiner interjects in Eren's argument with a cynical observation, suggesting that the soldiers' laziness is a sign of peace, which contrasts with Eren's passionate anger."
+          }
+        ]
+      },
+      {
+        "page_number": 7,
+        "scene": "Eren and Mikasa are walking through town and overhear Garrison soldiers, including Hannes, speaking dismissively about the Survey Corps. This angers Eren, who loudly compares living inside the walls to being a caged animal, attracting the attention of the soldiers and other passersby.",
+        "characters": [
+          {
+            "name": "Eren Jaeger",
+            "expression": "Intense, angry, defiant",
+            "role": "main"
+          },
+          {
+            "name": "Mikasa Ackerman",
+            "expression": "Concerned, worried",
+            "role": "main"
+          },
+          {
+            "name": "Hannes",
+            "expression": "Relaxed, then shocked/surprised",
+            "role": "supporting"
+          },
+          {
+            "name": "Garrison Soldier 1",
+            "expression": "Dismissive, mocking",
+            "role": "supporting"
+          },
+          {
+            "name": "Garrison Soldier 2",
+            "expression": "Casual, dismissive",
+            "role": "supporting"
+          },
+          {
+            "name": "Townsperson",
+            "expression": "Surprised, gossipy",
+            "role": "background"
+          }
+        ],
+        "dialogue_order": [
+          {
+            "speaker": "Garrison Soldier 1",
+            "text": "IT'S JUST LIKE HANNES SAYS."
+          },
+          {
+            "speaker": "Garrison Soldier 2",
+            "text": "HELL... I CAN'T UNDERSTAND THOSE GUYS IN THE SURVEY CORPS WHO WANNA GO OUTSIDE THE WALL!"
+          },
+          {
+            "speaker": "Garrison Soldier 2",
+            "text": "BUT IF THEY WANNA HAVE FUN PLAYING WAR, LET 'EM, I SAY!!"
+          },
+          {
+            "speaker": "Eren Jaeger",
+            "text": "WE DON'T HAVE TO GO OUTSIDE THE WALL FOR OUR WHOLE LIVES..."
+          },
+          {
+            "speaker": "Eren Jaeger",
+            "text": "WE CAN EAT, SLEEP AND SURVIVE JUST FINE HERE... BUT..."
+          },
+          {
+            "speaker": "Eren Jaeger",
+            "text": "...ISN'T THAT..."
+          },
+          {
+            "speaker": "Eren Jaeger",
+            "text": "...LIKE BEING A CAGED ANIMAL?"
+          },
+          {
+            "speaker": "Garrison Soldier 1",
+            "text": "PFFT... WHAT A CRACKPOT..."
+          },
+          {
+            "speaker": "Hannes",
+            "text": "..."
+          },
+          {
+            "speaker": "Townsperson",
+            "text": "DON'T TELL ME... ...HE WANTS TO JOIN THE SURVEY CORPS?"
+          }
+        ],
+        "character_interactions": [
+          {
+            "character1": "Eren Jaeger",
+            "character2": "Garrison Soldiers",
+            "interaction": "Eren overhears the soldiers' cynical remarks about the Survey Corps and reacts with a loud, defiant statement that directly challenges their complacent worldview. The soldiers, in turn, are surprised and mocking of his passion."
+          },
+          {
+            "character1": "Eren Jaeger",
+            "character2": "Mikasa Ackerman",
+            "interaction": "Mikasa watches Eren with a concerned expression as he gets worked up over the soldiers' comments, highlighting her protective nature towards him."
+          },
+          {
+            "character1": "Hannes",
+            "character2": "Eren Jaeger",
+            "interaction": "Hannes is visibly shocked to hear such a passionate and rebellious statement from the young boy, whom he knows."
+          }
+        ]
+      }
+    ],
+    "characters": {
+      "all_characters": [
+        "Garrison Soldier 1",
+        "Garrison Soldier",
+        "Garrison Soldiers",
+        "Mikasa",
+        "Garrison Soldier 3",
+        "Mikasa Ackerman",
+        "Giant Titan",
+        "Townsperson",
+        "Townsfolk",
+        "Citizens",
+        "Garrison Soldier 2",
+        "Eren Yeager",
+        "Hannes",
+        "Other Garrison Soldiers",
+        "Eren",
+        "Reiner",
+        "Mikasa Ackermann",
+        "Garrison Soldier (cards)",
+        "Eren Jaeger"
+      ],
+      "character_count": 19,
+      "appearances": {
+        "Citizens": [
+          {
+            "page": 1,
+            "expression": "Indiscernible",
+            "context": "An establishing shot from atop a massive wall, looking down into a densely populated city. A large gate, cannons, and a military-style banner are visible, setting a scene of a fortified city."
+          }
+        ],
+        "Eren Yeager": [
+          {
+            "page": 2,
+            "expression": "crying, embarrassed, angry, startled",
+            "context": "Eren and Mikasa are walking through a busy town street. Eren, who was just crying, asks Mikasa to keep it a secret. As they talk, they are approached by an adult acquaintance, Hannes, who notices Eren's tear-stained face."
+          },
+          {
+            "page": 3,
+            "expression": "shocked, angry, disapproving",
+            "context": "Eren and Mikasa encounter several Garrison soldiers, including Hannes, drinking alcohol while supposedly on duty at a city gate. Hannes teases Eren, who becomes angry and questions their dereliction of duty."
+          },
+          {
+            "page": 4,
+            "expression": "concerned, angry, disbelieving",
+            "context": "Eren confronts Hannes and other Garrison soldiers about their drinking on duty, questioning their preparedness for an emergency. The soldiers are dismissive, which infuriates Eren."
+          },
+          {
+            "page": 5,
+            "expression": "passionate, frustrated, worried",
+            "context": "Eren passionately argues with Hannes and other Garrison soldiers about their complacency regarding the Titan threat, citing his father's warnings. Hannes tries to placate him while also showing respect for Dr. Yeager's opinion."
+          }
+        ],
+        "Mikasa Ackerman": [
+          {
+            "page": 2,
+            "expression": "concerned, stoic",
+            "context": "Eren and Mikasa are walking through a busy town street. Eren, who was just crying, asks Mikasa to keep it a secret. As they talk, they are approached by an adult acquaintance, Hannes, who notices Eren's tear-stained face."
+          },
+          {
+            "page": 4,
+            "expression": "neutral, observant",
+            "context": "Eren confronts Hannes and other Garrison soldiers about their drinking on duty, questioning their preparedness for an emergency. The soldiers are dismissive, which infuriates Eren."
+          },
+          {
+            "page": 7,
+            "expression": "Concerned, worried",
+            "context": "Eren and Mikasa are walking through town and overhear Garrison soldiers, including Hannes, speaking dismissively about the Survey Corps. This angers Eren, who loudly compares living inside the walls to being a caged animal, attracting the attention of the soldiers and other passersby."
+          }
+        ],
+        "Hannes": [
+          {
+            "page": 2,
+            "expression": "inquisitive, concerned",
+            "context": "Eren and Mikasa are walking through a busy town street. Eren, who was just crying, asks Mikasa to keep it a secret. As they talk, they are approached by an adult acquaintance, Hannes, who notices Eren's tear-stained face."
+          },
+          {
+            "page": 3,
+            "expression": "jovial, drunk, relaxed",
+            "context": "Eren and Mikasa encounter several Garrison soldiers, including Hannes, drinking alcohol while supposedly on duty at a city gate. Hannes teases Eren, who becomes angry and questions their dereliction of duty."
+          },
+          {
+            "page": 4,
+            "expression": "drunk, nonchalant, dismissive",
+            "context": "Eren confronts Hannes and other Garrison soldiers about their drinking on duty, questioning their preparedness for an emergency. The soldiers are dismissive, which infuriates Eren."
+          },
+          {
+            "page": 5,
+            "expression": "amused, calming, thoughtful",
+            "context": "Eren passionately argues with Hannes and other Garrison soldiers about their complacency regarding the Titan threat, citing his father's warnings. Hannes tries to placate him while also showing respect for Dr. Yeager's opinion."
+          },
+          {
+            "page": 7,
+            "expression": "Relaxed, then shocked/surprised",
+            "context": "Eren and Mikasa are walking through town and overhear Garrison soldiers, including Hannes, speaking dismissively about the Survey Corps. This angers Eren, who loudly compares living inside the walls to being a caged animal, attracting the attention of the soldiers and other passersby."
+          }
+        ],
+        "Townsfolk": [
+          {
+            "page": 2,
+            "expression": "neutral",
+            "context": "Eren and Mikasa are walking through a busy town street. Eren, who was just crying, asks Mikasa to keep it a secret. As they talk, they are approached by an adult acquaintance, Hannes, who notices Eren's tear-stained face."
+          }
+        ],
+        "Mikasa Ackermann": [
+          {
+            "page": 3,
+            "expression": "neutral, observant",
+            "context": "Eren and Mikasa encounter several Garrison soldiers, including Hannes, drinking alcohol while supposedly on duty at a city gate. Hannes teases Eren, who becomes angry and questions their dereliction of duty."
+          }
+        ],
+        "Garrison Soldier 1": [
+          {
+            "page": 3,
+            "expression": "drunk, relaxed",
+            "context": "Eren and Mikasa encounter several Garrison soldiers, including Hannes, drinking alcohol while supposedly on duty at a city gate. Hannes teases Eren, who becomes angry and questions their dereliction of duty."
+          },
+          {
+            "page": 7,
+            "expression": "Dismissive, mocking",
+            "context": "Eren and Mikasa are walking through town and overhear Garrison soldiers, including Hannes, speaking dismissively about the Survey Corps. This angers Eren, who loudly compares living inside the walls to being a caged animal, attracting the attention of the soldiers and other passersby."
+          }
+        ],
+        "Garrison Soldier 2": [
+          {
+            "page": 3,
+            "expression": "drunk, relaxed",
+            "context": "Eren and Mikasa encounter several Garrison soldiers, including Hannes, drinking alcohol while supposedly on duty at a city gate. Hannes teases Eren, who becomes angry and questions their dereliction of duty."
+          },
+          {
+            "page": 5,
+            "expression": "smug, dismissive",
+            "context": "Eren passionately argues with Hannes and other Garrison soldiers about their complacency regarding the Titan threat, citing his father's warnings. Hannes tries to placate him while also showing respect for Dr. Yeager's opinion."
+          },
+          {
+            "page": 7,
+            "expression": "Casual, dismissive",
+            "context": "Eren and Mikasa are walking through town and overhear Garrison soldiers, including Hannes, speaking dismissively about the Survey Corps. This angers Eren, who loudly compares living inside the walls to being a caged animal, attracting the attention of the soldiers and other passersby."
+          }
+        ],
+        "Garrison Soldier (cards)": [
+          {
+            "page": 4,
+            "expression": "inquisitive, complacent",
+            "context": "Eren confronts Hannes and other Garrison soldiers about their drinking on duty, questioning their preparedness for an emergency. The soldiers are dismissive, which infuriates Eren."
+          }
+        ],
+        "Other Garrison Soldiers": [
+          {
+            "page": 4,
+            "expression": "relaxed, inattentive",
+            "context": "Eren confronts Hannes and other Garrison soldiers about their drinking on duty, questioning their preparedness for an emergency. The soldiers are dismissive, which infuriates Eren."
+          }
+        ],
+        "Garrison Soldier 3": [
+          {
+            "page": 5,
+            "expression": "amused",
+            "context": "Eren passionately argues with Hannes and other Garrison soldiers about their complacency regarding the Titan threat, citing his father's warnings. Hannes tries to placate him while also showing respect for Dr. Yeager's opinion."
+          }
+        ],
+        "Garrison Soldiers": [
+          {
+            "page": 5,
+            "expression": "on duty, neutral",
+            "context": "Eren passionately argues with Hannes and other Garrison soldiers about their complacency regarding the Titan threat, citing his father's warnings. Hannes tries to placate him while also showing respect for Dr. Yeager's opinion."
+          }
+        ],
+        "Giant Titan": [
+          {
+            "page": 6,
+            "expression": "neutral, walking",
+            "context": "On a city street, Eren confronts a complacent Garrison soldier about the regiment's lack of preparedness for a Titan attack. Mikasa looks on with concern while Reiner offers a cynical perspective."
+          }
+        ],
+        "Garrison Soldier": [
+          {
+            "page": 6,
+            "expression": "smug, dismissive",
+            "context": "On a city street, Eren confronts a complacent Garrison soldier about the regiment's lack of preparedness for a Titan attack. Mikasa looks on with concern while Reiner offers a cynical perspective."
+          }
+        ],
+        "Eren": [
+          {
+            "page": 6,
+            "expression": "angry, indignant",
+            "context": "On a city street, Eren confronts a complacent Garrison soldier about the regiment's lack of preparedness for a Titan attack. Mikasa looks on with concern while Reiner offers a cynical perspective."
+          }
+        ],
+        "Mikasa": [
+          {
+            "page": 6,
+            "expression": "concerned, quiet",
+            "context": "On a city street, Eren confronts a complacent Garrison soldier about the regiment's lack of preparedness for a Titan attack. Mikasa looks on with concern while Reiner offers a cynical perspective."
+          }
+        ],
+        "Reiner": [
+          {
+            "page": 6,
+            "expression": "amused, cynical",
+            "context": "On a city street, Eren confronts a complacent Garrison soldier about the regiment's lack of preparedness for a Titan attack. Mikasa looks on with concern while Reiner offers a cynical perspective."
+          }
+        ],
+        "Eren Jaeger": [
+          {
+            "page": 7,
+            "expression": "Intense, angry, defiant",
+            "context": "Eren and Mikasa are walking through town and overhear Garrison soldiers, including Hannes, speaking dismissively about the Survey Corps. This angers Eren, who loudly compares living inside the walls to being a caged animal, attracting the attention of the soldiers and other passersby."
+          }
+        ],
+        "Townsperson": [
+          {
+            "page": 7,
+            "expression": "Surprised, gossipy",
+            "context": "Eren and Mikasa are walking through town and overhear Garrison soldiers, including Hannes, speaking dismissively about the Survey Corps. This angers Eren, who loudly compares living inside the walls to being a caged animal, attracting the attention of the soldiers and other passersby."
+          }
+        ]
+      },
+      "consistency": {
+        "Citizens": {
+          "appearance_count": 1,
+          "appearance_percentage": 100.0,
+          "dominant_emotion": "Indiscernible",
+          "emotional_range": [
+            "Indiscernible"
+          ],
+          "importance": "main",
+          "first_appearance_page": 1,
+          "last_appearance_page": 1,
+          "character_arc": "single appearance"
+        },
+        "Eren Yeager": {
+          "appearance_count": 4,
+          "appearance_percentage": 100.0,
+          "dominant_emotion": "crying, embarrassed, angry, startled",
+          "emotional_range": [
+            "crying, embarrassed, angry, startled",
+            "shocked, angry, disapproving",
+            "concerned, angry, disbelieving",
+            "passionate, frustrated, worried"
+          ],
+          "importance": "main",
+          "first_appearance_page": 2,
+          "last_appearance_page": 5,
+          "character_arc": "complex development"
+        },
+        "Mikasa Ackerman": {
+          "appearance_count": 3,
+          "appearance_percentage": 100.0,
+          "dominant_emotion": "concerned, stoic",
+          "emotional_range": [
+            "concerned, stoic",
+            "neutral, observant",
+            "Concerned, worried"
+          ],
+          "importance": "main",
+          "first_appearance_page": 2,
+          "last_appearance_page": 7,
+          "character_arc": "complex development"
+        },
+        "Hannes": {
+          "appearance_count": 5,
+          "appearance_percentage": 100.0,
+          "dominant_emotion": "inquisitive, concerned",
+          "emotional_range": [
+            "inquisitive, concerned",
+            "jovial, drunk, relaxed",
+            "drunk, nonchalant, dismissive",
+            "amused, calming, thoughtful",
+            "Relaxed, then shocked/surprised"
+          ],
+          "importance": "main",
+          "first_appearance_page": 2,
+          "last_appearance_page": 7,
+          "character_arc": "complex development"
+        },
+        "Townsfolk": {
+          "appearance_count": 1,
+          "appearance_percentage": 100.0,
+          "dominant_emotion": "neutral",
+          "emotional_range": [
+            "neutral"
+          ],
+          "importance": "main",
+          "first_appearance_page": 2,
+          "last_appearance_page": 2,
+          "character_arc": "single appearance"
+        },
+        "Mikasa Ackermann": {
+          "appearance_count": 1,
+          "appearance_percentage": 100.0,
+          "dominant_emotion": "neutral, observant",
+          "emotional_range": [
+            "neutral, observant"
+          ],
+          "importance": "main",
+          "first_appearance_page": 3,
+          "last_appearance_page": 3,
+          "character_arc": "single appearance"
+        },
+        "Garrison Soldier 1": {
+          "appearance_count": 2,
+          "appearance_percentage": 100.0,
+          "dominant_emotion": "drunk, relaxed",
+          "emotional_range": [
+            "drunk, relaxed",
+            "Dismissive, mocking"
+          ],
+          "importance": "main",
+          "first_appearance_page": 3,
+          "last_appearance_page": 7,
+          "character_arc": "complex development"
+        },
+        "Garrison Soldier 2": {
+          "appearance_count": 3,
+          "appearance_percentage": 100.0,
+          "dominant_emotion": "drunk, relaxed",
+          "emotional_range": [
+            "drunk, relaxed",
+            "smug, dismissive",
+            "Casual, dismissive"
+          ],
+          "importance": "main",
+          "first_appearance_page": 3,
+          "last_appearance_page": 7,
+          "character_arc": "complex development"
+        },
+        "Garrison Soldier (cards)": {
+          "appearance_count": 1,
+          "appearance_percentage": 100.0,
+          "dominant_emotion": "inquisitive, complacent",
+          "emotional_range": [
+            "inquisitive, complacent"
+          ],
+          "importance": "main",
+          "first_appearance_page": 4,
+          "last_appearance_page": 4,
+          "character_arc": "single appearance"
+        },
+        "Other Garrison Soldiers": {
+          "appearance_count": 1,
+          "appearance_percentage": 100.0,
+          "dominant_emotion": "relaxed, inattentive",
+          "emotional_range": [
+            "relaxed, inattentive"
+          ],
+          "importance": "main",
+          "first_appearance_page": 4,
+          "last_appearance_page": 4,
+          "character_arc": "single appearance"
+        },
+        "Garrison Soldier 3": {
+          "appearance_count": 1,
+          "appearance_percentage": 100.0,
+          "dominant_emotion": "amused",
+          "emotional_range": [
+            "amused"
+          ],
+          "importance": "main",
+          "first_appearance_page": 5,
+          "last_appearance_page": 5,
+          "character_arc": "single appearance"
+        },
+        "Garrison Soldiers": {
+          "appearance_count": 1,
+          "appearance_percentage": 100.0,
+          "dominant_emotion": "on duty, neutral",
+          "emotional_range": [
+            "on duty, neutral"
+          ],
+          "importance": "main",
+          "first_appearance_page": 5,
+          "last_appearance_page": 5,
+          "character_arc": "single appearance"
+        },
+        "Giant Titan": {
+          "appearance_count": 1,
+          "appearance_percentage": 100.0,
+          "dominant_emotion": "neutral, walking",
+          "emotional_range": [
+            "neutral, walking"
+          ],
+          "importance": "main",
+          "first_appearance_page": 6,
+          "last_appearance_page": 6,
+          "character_arc": "single appearance"
+        },
+        "Garrison Soldier": {
+          "appearance_count": 1,
+          "appearance_percentage": 100.0,
+          "dominant_emotion": "smug, dismissive",
+          "emotional_range": [
+            "smug, dismissive"
+          ],
+          "importance": "main",
+          "first_appearance_page": 6,
+          "last_appearance_page": 6,
+          "character_arc": "single appearance"
+        },
+        "Eren": {
+          "appearance_count": 1,
+          "appearance_percentage": 100.0,
+          "dominant_emotion": "angry, indignant",
+          "emotional_range": [
+            "angry, indignant"
+          ],
+          "importance": "main",
+          "first_appearance_page": 6,
+          "last_appearance_page": 6,
+          "character_arc": "single appearance"
+        },
+        "Mikasa": {
+          "appearance_count": 1,
+          "appearance_percentage": 100.0,
+          "dominant_emotion": "concerned, quiet",
+          "emotional_range": [
+            "concerned, quiet"
+          ],
+          "importance": "main",
+          "first_appearance_page": 6,
+          "last_appearance_page": 6,
+          "character_arc": "single appearance"
+        },
+        "Reiner": {
+          "appearance_count": 1,
+          "appearance_percentage": 100.0,
+          "dominant_emotion": "amused, cynical",
+          "emotional_range": [
+            "amused, cynical"
+          ],
+          "importance": "main",
+          "first_appearance_page": 6,
+          "last_appearance_page": 6,
+          "character_arc": "single appearance"
+        },
+        "Eren Jaeger": {
+          "appearance_count": 1,
+          "appearance_percentage": 100.0,
+          "dominant_emotion": "Intense, angry, defiant",
+          "emotional_range": [
+            "Intense, angry, defiant"
+          ],
+          "importance": "main",
+          "first_appearance_page": 7,
+          "last_appearance_page": 7,
+          "character_arc": "single appearance"
+        },
+        "Townsperson": {
+          "appearance_count": 1,
+          "appearance_percentage": 100.0,
+          "dominant_emotion": "Surprised, gossipy",
+          "emotional_range": [
+            "Surprised, gossipy"
+          ],
+          "importance": "main",
+          "first_appearance_page": 7,
+          "last_appearance_page": 7,
+          "character_arc": "single appearance"
+        }
+      }
+    },
+    "scene_summary": {
+      "total_dialogue_lines": 53,
+      "scene_progression": [
+        {
+          "page": 1,
+          "scene": "An establishing shot from atop a massive wall, looking down into a densely populated city. A large gate, cannons, and a military-style banner are visible, setting a scene of a fortified city.",
+          "dialogue_count": 0
+        },
+        {
+          "page": 2,
+          "scene": "Eren and Mikasa are walking through a busy town street. Eren, who was just crying, asks Mikasa to keep it a secret. As they talk, they are approached by an adult acquaintance, Hannes, who notices Eren's tear-stained face.",
+          "dialogue_count": 8
+        },
+        {
+          "page": 3,
+          "scene": "Eren and Mikasa encounter several Garrison soldiers, including Hannes, drinking alcohol while supposedly on duty at a city gate. Hannes teases Eren, who becomes angry and questions their dereliction of duty.",
+          "dialogue_count": 8
+        },
+        {
+          "page": 4,
+          "scene": "Eren confronts Hannes and other Garrison soldiers about their drinking on duty, questioning their preparedness for an emergency. The soldiers are dismissive, which infuriates Eren.",
+          "dialogue_count": 8
+        },
+        {
+          "page": 5,
+          "scene": "Eren passionately argues with Hannes and other Garrison soldiers about their complacency regarding the Titan threat, citing his father's warnings. Hannes tries to placate him while also showing respect for Dr. Yeager's opinion.",
+          "dialogue_count": 11
+        },
+        {
+          "page": 6,
+          "scene": "On a city street, Eren confronts a complacent Garrison soldier about the regiment's lack of preparedness for a Titan attack. Mikasa looks on with concern while Reiner offers a cynical perspective.",
+          "dialogue_count": 8
+        },
+        {
+          "page": 7,
+          "scene": "Eren and Mikasa are walking through town and overhear Garrison soldiers, including Hannes, speaking dismissively about the Survey Corps. This angers Eren, who loudly compares living inside the walls to being a caged animal, attracting the attention of the soldiers and other passersby.",
+          "dialogue_count": 10
+        }
+      ],
+      "main_characters": [
+        "Citizens",
+        "Eren Yeager",
+        "Mikasa Ackerman",
+        "Hannes",
+        "Townsfolk",
+        "Mikasa Ackermann",
+        "Garrison Soldier 1",
+        "Garrison Soldier 2",
+        "Garrison Soldier (cards)",
+        "Other Garrison Soldiers",
+        "Garrison Soldier 3",
+        "Garrison Soldiers",
+        "Giant Titan",
+        "Garrison Soldier",
+        "Eren",
+        "Mikasa",
+        "Reiner",
+        "Eren Jaeger",
+        "Townsperson"
+      ],
+      "supporting_characters": [],
+      "background_characters": []
+    },
+    "voice_assignment_recommendations": {
+      "Citizens": "5kMbtRSEKIkRZSdXxrZg",
+      "Eren Yeager": "wI49R6YUU5NNP1h0CECc",
+      "Mikasa Ackerman": "CaT0A6YBELRBgT6Qa2lH",
+      "Hannes": "vBKc2FfBKJfcZNyEt1n6",
+      "Townsfolk": "FIsP50cHv9JY47BkNVR7",
+      "Mikasa Ackermann": "bMxLr8fP6hzNRRi9nJxU",
+      "Garrison Soldier 1": "s0XGIcqmceN2l7kjsqoZ",
+      "Garrison Soldier 2": "5kMbtRSEKIkRZSdXxrZg",
+      "Garrison Soldier (cards)": "wI49R6YUU5NNP1h0CECc",
+      "Other Garrison Soldiers": "vBKc2FfBKJfcZNyEt1n6",
+      "Garrison Soldier 3": "FIsP50cHv9JY47BkNVR7",
+      "Garrison Soldiers": "s0XGIcqmceN2l7kjsqoZ",
+      "Giant Titan": "5kMbtRSEKIkRZSdXxrZg",
+      "Garrison Soldier": "wI49R6YUU5NNP1h0CECc",
+      "Eren": "vBKc2FfBKJfcZNyEt1n6",
+      "Mikasa": "Bn9xWp6PwkrqKRbq8cX2",
+      "Reiner": "FIsP50cHv9JY47BkNVR7",
+      "Eren Jaeger": "s0XGIcqmceN2l7kjsqoZ",
+      "Townsperson": "5kMbtRSEKIkRZSdXxrZg"
+    }
+  },
+  "voice_assignments": {
+    "Garrison Soldier 1": "s0XGIcqmceN2l7kjsqoZ",
+    "Garrison Soldier": "wI49R6YUU5NNP1h0CECc",
+    "Garrison Soldiers": "s0XGIcqmceN2l7kjsqoZ",
+    "Mikasa": "Bn9xWp6PwkrqKRbq8cX2",
+    "Garrison Soldier 3": "FIsP50cHv9JY47BkNVR7",
+    "Mikasa Ackerman": "CaT0A6YBELRBgT6Qa2lH",
+    "Giant Titan": "5kMbtRSEKIkRZSdXxrZg",
+    "Townsperson": "5kMbtRSEKIkRZSdXxrZg",
+    "Townsfolk": "FIsP50cHv9JY47BkNVR7",
+    "Citizens": "5kMbtRSEKIkRZSdXxrZg",
+    "Garrison Soldier 2": "5kMbtRSEKIkRZSdXxrZg",
+    "Eren Yeager": "wI49R6YUU5NNP1h0CECc",
+    "Hannes": "vBKc2FfBKJfcZNyEt1n6",
+    "Other Garrison Soldiers": "vBKc2FfBKJfcZNyEt1n6",
+    "Eren": "vBKc2FfBKJfcZNyEt1n6",
+    "Reiner": "FIsP50cHv9JY47BkNVR7",
+    "Mikasa Ackermann": "bMxLr8fP6hzNRRi9nJxU",
+    "Garrison Soldier (cards)": "wI49R6YUU5NNP1h0CECc",
+    "Eren Jaeger": "s0XGIcqmceN2l7kjsqoZ"
+  },
+  "character_statistics": {
+    "total_characters": 19,
+    "total_scenes": 1,
+    "character_types": {
+      "main": 19
+    },
+    "unique_voices_used": 8,
+    "voices_list": [
+      "vBKc2FfBKJfcZNyEt1n6",
+      "FIsP50cHv9JY47BkNVR7",
+      "s0XGIcqmceN2l7kjsqoZ",
+      "CaT0A6YBELRBgT6Qa2lH",
+      "bMxLr8fP6hzNRRi9nJxU",
+      "Bn9xWp6PwkrqKRbq8cX2",
+      "wI49R6YUU5NNP1h0CECc",
+      "5kMbtRSEKIkRZSdXxrZg"
+    ],
+    "most_appearing_character": "Garrison Soldier 1",
+    "voice_distribution": {
+      "s0XGIcqmceN2l7kjsqoZ": 3,
+      "wI49R6YUU5NNP1h0CECc": 3,
+      "Bn9xWp6PwkrqKRbq8cX2": 1,
+      "FIsP50cHv9JY47BkNVR7": 3,
+      "CaT0A6YBELRBgT6Qa2lH": 1,
+      "5kMbtRSEKIkRZSdXxrZg": 4,
+      "vBKc2FfBKJfcZNyEt1n6": 3,
+      "bMxLr8fP6hzNRRi9nJxU": 1
+    }
+  },
+  "output_directory": "scenes"
+}
