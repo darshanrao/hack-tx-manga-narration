@@ -1,0 +1,166 @@
+{
+  "characters": {
+    "Garrison Soldier 1": {
+      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
+      "character_type": "male",
+      "first_seen": "2025-10-18T16:22:26.225367"
+    },
+    "Garrison Soldier": {
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "character_type": "male",
+      "first_seen": "2025-10-18T16:22:26.228971"
+    },
+    "Garrison Soldiers": {
+      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
+      "character_type": "male",
+      "first_seen": "2025-10-18T16:22:26.229877"
+    },
+    "Mikasa": {
+      "voice_id": "Bn9xWp6PwkrqKRbq8cX2",
+      "character_type": "female",
+      "first_seen": "2025-10-18T16:22:26.230390"
+    },
+    "Garrison Soldier 3": {
+      "voice_id": "FIsP50cHv9JY47BkNVR7",
+      "character_type": "male",
+      "first_seen": "2025-10-18T16:22:26.230815"
+    },
+    "Mikasa Ackerman": {
+      "voice_id": "CaT0A6YBELRBgT6Qa2lH",
+      "character_type": "female",
+      "first_seen": "2025-10-18T16:22:26.231195"
+    },
+    "Giant Titan": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "character_type": "male",
+      "first_seen": "2025-10-18T16:22:26.231573"
+    },
+    "Townsperson": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "character_type": "male",
+      "first_seen": "2025-10-18T16:22:26.231958"
+    },
+    "Townsfolk": {
+      "voice_id": "FIsP50cHv9JY47BkNVR7",
+      "character_type": "male",
+      "first_seen": "2025-10-18T16:22:26.232370"
+    },
+    "Citizens": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "character_type": "male",
+      "first_seen": "2025-10-18T16:22:26.232764"
+    },
+    "Garrison Soldier 2": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "character_type": "male",
+      "first_seen": "2025-10-18T16:22:26.233190"
+    },
+    "Eren Yeager": {
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "character_type": "male",
+      "first_seen": "2025-10-18T16:22:26.233610"
+    },
+    "Hannes": {
+      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+      "character_type": "male",
+      "first_seen": "2025-10-18T16:22:26.233944"
+    },
+    "Other Garrison Soldiers": {
+      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+      "character_type": "male",
+      "first_seen": "2025-10-18T16:22:26.234637"
+    },
+    "Eren": {
+      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+      "character_type": "male",
+      "first_seen": "2025-10-18T16:22:26.235097"
+    },
+    "Reiner": {
+      "voice_id": "FIsP50cHv9JY47BkNVR7",
+      "character_type": "male",
+      "first_seen": "2025-10-18T16:22:26.235555"
+    },
+    "Mikasa Ackermann": {
+      "voice_id": "bMxLr8fP6hzNRRi9nJxU",
+      "character_type": "female",
+      "first_seen": "2025-10-18T16:22:26.236022"
+    },
+    "Garrison Soldier (cards)": {
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "character_type": "male",
+      "first_seen": "2025-10-18T16:22:26.236505"
+    },
+    "Eren Jaeger": {
+      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
+      "character_type": "male",
+      "first_seen": "2025-10-18T16:22:26.236999"
+    },
+    "Narrator": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "character_type": "narrator",
+      "first_seen": "2025-10-18T16:22:26.239278"
+    }
+  },
+  "voice_usage": {
+    "s0XGIcqmceN2l7kjsqoZ": {
+      "count": 3,
+      "characters": [
+        "Garrison Soldier 1",
+        "Garrison Soldiers",
+        "Eren Jaeger"
+      ]
+    },
+    "wI49R6YUU5NNP1h0CECc": {
+      "count": 3,
+      "characters": [
+        "Garrison Soldier",
+        "Eren Yeager",
+        "Garrison Soldier (cards)"
+      ]
+    },
+    "Bn9xWp6PwkrqKRbq8cX2": {
+      "count": 1,
+      "characters": [
+        "Mikasa"
+      ]
+    },
+    "FIsP50cHv9JY47BkNVR7": {
+      "count": 3,
+      "characters": [
+        "Garrison Soldier 3",
+        "Townsfolk",
+        "Reiner"
+      ]
+    },
+    "CaT0A6YBELRBgT6Qa2lH": {
+      "count": 1,
+      "characters": [
+        "Mikasa Ackerman"
+      ]
+    },
+    "5kMbtRSEKIkRZSdXxrZg": {
+      "count": 5,
+      "characters": [
+        "Giant Titan",
+        "Townsperson",
+        "Citizens",
+        "Garrison Soldier 2",
+        "Narrator"
+      ]
+    },
+    "vBKc2FfBKJfcZNyEt1n6": {
+      "count": 3,
+      "characters": [
+        "Hannes",
+        "Other Garrison Soldiers",
+        "Eren"
+      ]
+    },
+    "bMxLr8fP6hzNRRi9nJxU": {
+      "count": 1,
+      "characters": [
+        "Mikasa Ackermann"
+      ]
+    }
+  }
+}
