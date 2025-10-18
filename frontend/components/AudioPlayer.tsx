@@ -32,6 +32,8 @@ export function AudioPlayer({
   onCanPlay
 }: AudioPlayerProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const lastSeekTimeRef = useRef<number>(0);
+  const isSeekingRef = useRef<boolean>(false);
 
   // Update audio properties when they change
   useEffect(() => {
@@ -47,9 +49,10 @@ export function AudioPlayer({
     const audio = audioRef.current;
     if (!audio) return;
 
-    // Only seek if the difference is significant (more than 0.1 seconds)
-    // This prevents infinite loops when the audio updates currentTime
-    if (Math.abs(audio.currentTime - currentTime) > 0.1) {
+    // Only seek if the difference is significant (more than 0.5 seconds)
+    // This prevents stuttering during normal playback while allowing proper seeking
+    const timeDifference = Math.abs(audio.currentTime - currentTime);
+    if (timeDifference > 0.5) {
       audio.currentTime = currentTime;
     }
   }, [currentTime]);
