@@ -13,6 +13,7 @@ import { Button } from "../components/ui/button";
 import { ChevronLeft, ChevronRight, RotateCcw, Home } from "lucide-react";
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
+import { TranscriptEntry, parseTranscript } from '../utils/transcriptParser';
 
 // Dynamic import for PDF viewer to avoid SSR issues
 const PDFPageViewer = dynamic(() => import('../components/PDFPageViewer').then(mod => ({ default: mod.PDFPageViewer })), {
@@ -58,7 +59,9 @@ export default function HomePage() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [transcriptData, setTranscriptData] = useState<TranscriptEntry[]>([]);
   const previousPanelRef = useRef<string | null>(null);
+  const isSeekingRef = useRef<boolean>(false);
 
   // Mock manga pages with audio files - in a real app, this would be extracted from the uploaded file
   const mockPages: MangaPage[] = [
@@ -148,6 +151,34 @@ export default function HomePage() {
   const currentPage = mockPages[currentPageIndex];
   const currentPanel = currentPage?.panels[currentPanelIndex];
 
+  // Load transcript data on component mount
+  useEffect(() => {
+    const loadTranscript = async () => {
+      try {
+        // In a real app, this would fetch from an API or file system
+        // For now, we'll use the mock transcript content
+        const mockTranscriptContent = `00:00 Narrator: Eren and Mikasa are walking through town and overhear Garrison soldiers, including Hannes, speaking dismissively about the Survey Corps. This angers Eren, who loudly compares living inside the walls to being a caged animal, attracting the attention of the soldiers and other passersby.
+00:15 Garrison Soldier 1: IT'S JUST LIKE HANNES SAYS.
+00:18 Garrison Soldier 2: HELL... I CAN'T UNDERSTAND THOSE GUYS IN THE SURVEY CORPS WHO WANNA GO OUTSIDE THE WALL!
+00:23 Garrison Soldier 2: BUT IF THEY WANNA HAVE FUN PLAYING WAR, LET 'EM, I SAY!!
+00:26 Eren Jaeger: WE DON'T HAVE TO GO OUTSIDE THE WALL FOR OUR WHOLE LIVES...
+00:29 Eren Jaeger: WE CAN EAT, SLEEP AND SURVIVE JUST FINE HERE... BUT...
+00:34 Eren Jaeger: ...ISN'T THAT...
+00:36 Eren Jaeger: ...LIKE BEING A CAGED ANIMAL?
+00:38 Garrison Soldier 1: PFFT... WHAT A CRACKPOT...
+00:40 Hannes: ...
+00:41 Townsperson: DON'T TELL ME... ...HE WANTS TO JOIN THE SURVEY CORPS?`;
+
+        const parsedTranscript = parseTranscript(mockTranscriptContent);
+        setTranscriptData(parsedTranscript);
+      } catch (error) {
+        console.error('Error loading transcript:', error);
+      }
+    };
+
+    loadTranscript();
+  }, []);
+
   // Audio player effect - handles audio playback with real audio files
   useEffect(() => {
     // Only reset time when switching panels/pages, not when pausing
@@ -168,7 +199,10 @@ export default function HomePage() {
 
   // Audio event handlers
   const handleTimeUpdate = (time: number) => {
-    setCurrentTime(time);
+    // Only update if we're not currently seeking
+    if (!isSeekingRef.current) {
+      setCurrentTime(time);
+    }
   };
 
   const handleDurationChange = (dur: number) => {
@@ -195,9 +229,14 @@ export default function HomePage() {
   };
 
   const handleSeek = (time: number) => {
+    console.log('handleSeek called with:', time, 'current duration:', duration);
+    isSeekingRef.current = true;
     setCurrentTime(time);
-    // For manga panels with audio files, the AudioPlayer component will handle the actual seeking
-    // For PDFs without audio, this just updates the UI state
+    
+    // Reset seeking flag after a short delay
+    setTimeout(() => {
+      isSeekingRef.current = false;
+    }, 200);
   };
 
   // Reset panel index when page changes manually
@@ -229,17 +268,13 @@ export default function HomePage() {
           break;
         
         case 'ArrowLeft': // Left Arrow - Rewind 5 seconds
-          // Stop current speech and seek backward
-          window.speechSynthesis.cancel();
-          // Note: Speech synthesis doesn't support seeking, so we'll restart from current position
-          // In a real implementation, you'd pause, calculate new position, and resume
+          console.log('Left arrow pressed, seeking from', currentTime, 'to', Math.max(0, currentTime - 5));
+          handleSeek(Math.max(0, currentTime - 5));
           break;
         
         case 'ArrowRight': // Right Arrow - Skip 5 seconds
-          // Stop current speech and seek forward
-          window.speechSynthesis.cancel();
-          // Note: Speech synthesis doesn't support seeking, so we'll restart from current position
-          // In a real implementation, you'd pause, calculate new position, and resume
+          console.log('Right arrow pressed, seeking from', currentTime, 'to', Math.min(duration, currentTime + 5));
+          handleSeek(Math.min(duration, currentTime + 5));
           break;
         
         case 'ArrowUp': // Up Arrow - Volume Up
@@ -314,7 +349,7 @@ export default function HomePage() {
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [uploadedFile, isPDF, isPlaying, currentPageIndex, currentPanelIndex, volume, speed, isMuted]);
+  }, [uploadedFile, isPDF, isPlaying, currentPageIndex, currentPanelIndex, volume, speed, isMuted, currentTime, duration]);
 
   const handleFileUpload = (file: File) => {
     setUploadedFile(file);
@@ -465,23 +500,25 @@ export default function HomePage() {
             
             {/* Right Side - Transcript and Controls (25% width) */}
             <div className="w-3/5 flex flex-col border-l border-slate-700/50 h-full min-h-0">
-              {/* Transcript - Always visible header, content area collapses */}
+              {/* Transcript - Fixed height with scroll */}
               <div className={`transition-[height] duration-300 ease-out ${
-                isTranscriptCollapsed ? 'h-auto' : 'h-auto'
+                isTranscriptCollapsed ? 'h-auto' : 'h-3/5 flex-shrink-0'
               }`}>
                 <Transcript
                   currentText={currentPanel?.text}
                   isPlaying={isPlaying}
-                  className=""
+                  className="h-full"
                   onCollapseChange={setIsTranscriptCollapsed}
+                  currentTime={currentTime}
+                  transcriptData={transcriptData}
                 />
               </div>
               
-              {/* Playback Controls - Expand when transcript is collapsed */}
+              {/* Playback Controls - Takes remaining space */}
               <div className={`transition-[background-color,border-color] duration-300 ease-out ${
                 isTranscriptCollapsed 
                   ? 'flex-1 flex items-center justify-center bg-slate-900 min-h-0' 
-                  : 'border-t border-slate-700/50 bg-slate-900 flex-shrink-0'
+                  : 'flex-1 border-t border-slate-700/50 bg-slate-900 min-h-0'
               }`}>
                 {isPDF ? (
                   <PDFPlaybackControls
