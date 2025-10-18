@@ -5,6 +5,7 @@ import { UploadArea } from "../components/UploadArea";
 import { MangaPageViewer } from "../components/MangaPageViewer";
 import { PlaybackControls } from "../components/PlaybackControls";
 import { PDFPlaybackControls } from "../components/PDFPlaybackControls";
+import { Transcript } from "../components/Transcript";
 import { Button } from "../components/ui/button";
 import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
 import dynamic from 'next/dynamic';
@@ -256,12 +257,12 @@ export default function HomePage() {
         )}
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      {/* Main Content - Split Screen Layout */}
+      <div className="flex-1 flex overflow-hidden">
         {uploadedFile ? (
           <>
-            {/* Manga Page Viewer */}
-            <div className="flex-1 overflow-hidden min-h-0">
+            {/* Left Half - Manga/PDF Viewer */}
+            <div className="w-1/2 overflow-hidden">
               {isPDF ? (
                 <PDFPageViewer
                   pdfFile={uploadedFile}
@@ -277,49 +278,65 @@ export default function HomePage() {
                 />
               )}
             </div>
-
-            {/* Playback Controls */}
-            {!isPDF ? (
-              <PlaybackControls
-                isPlaying={isPlaying}
-                onPlayPause={handlePlayPause}
-                onPrevious={handlePreviousPanel}
-                onNext={handleNextPanel}
-                canGoPrevious={canGoPreviousPanel}
-                canGoNext={canGoNextPanel}
-                currentPanel={currentPanelIndex + 1}
-                totalPanels={currentPage.panels.length}
-                volume={volume}
-                onVolumeChange={setVolume}
-                isMuted={isMuted}
-                onToggleMute={toggleMute}
-                speed={speed}
-                onSpeedChange={setSpeed}
-              />
-            ) : (
-              <PDFPlaybackControls
-                currentPage={currentPageIndex + 1}
-                totalPages={pdfPageCount}
-                isPlaying={isPlaying}
-                onPlayPause={handlePlayPause}
-                volume={volume}
-                onVolumeChange={setVolume}
-                isMuted={isMuted}
-                onToggleMute={toggleMute}
-                speed={speed}
-                onSpeedChange={setSpeed}
-                onPrevious={handlePreviousPage}
-                onNext={handleNextPage}
-                canGoPrevious={currentPageIndex > 0}
-                canGoNext={currentPageIndex < pdfPageCount - 1}
-              />
-            )}
+            
+            {/* Right Half - Transcript and Controls */}
+            <div className="w-1/2 flex flex-col border-l border-slate-700/50">
+              {/* Top Half - Transcript */}
+              <div className="flex-1 overflow-hidden">
+                <Transcript
+                  currentText={currentPanel?.text}
+                  isPlaying={isPlaying}
+                  className="h-full"
+                />
+              </div>
+              
+              {/* Bottom Half - Playback Controls */}
+              <div className="border-t border-slate-700/50">
+                {isPDF ? (
+                  <PDFPlaybackControls
+                    currentPage={currentPageIndex + 1}
+                    totalPages={pdfPageCount}
+                    isPlaying={isPlaying}
+                    onPlayPause={handlePlayPause}
+                    volume={volume}
+                    onVolumeChange={setVolume}
+                    isMuted={isMuted}
+                    onToggleMute={toggleMute}
+                    speed={speed}
+                    onSpeedChange={setSpeed}
+                    onPrevious={handlePreviousPage}
+                    onNext={handleNextPage}
+                    canGoPrevious={currentPageIndex > 0}
+                    canGoNext={currentPageIndex < pdfPageCount - 1}
+                  />
+                ) : (
+                  <PlaybackControls
+                    isPlaying={isPlaying}
+                    onPlayPause={handlePlayPause}
+                    onPrevious={handlePreviousPanel}
+                    onNext={handleNextPanel}
+                    canGoPrevious={canGoPreviousPanel}
+                    canGoNext={canGoNextPanel}
+                    currentPanel={currentPanelIndex + 1}
+                    totalPanels={currentPage.panels.length}
+                    volume={volume}
+                    onVolumeChange={setVolume}
+                    isMuted={isMuted}
+                    onToggleMute={toggleMute}
+                    speed={speed}
+                    onSpeedChange={setSpeed}
+                  />
+                )}
+              </div>
+            </div>
           </>
         ) : (
-          <UploadArea
-            onFileUpload={handleFileUpload}
-            uploadedFileName={uploadedFile?.name}
-          />
+          <div className="w-full">
+            <UploadArea
+              onFileUpload={handleFileUpload}
+              uploadedFileName={uploadedFile?.name}
+            />
+          </div>
         )}
       </div>
     </div>

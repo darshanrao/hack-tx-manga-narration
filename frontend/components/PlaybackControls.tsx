@@ -36,25 +36,25 @@ export function PlaybackControls({
   onSpeedChange,
 }: PlaybackControlsProps) {
   return (
-    <div className="border-t border-slate-700/50 bg-slate-900/80 backdrop-blur-xl p-8 shadow-lg shadow-black/20">
-      <div className="max-w-5xl mx-auto space-y-8">
+    <div className="border-t border-slate-700/50 bg-slate-900/90 backdrop-blur-xl p-4 shadow-lg shadow-black/20">
+      <div className="max-w-4xl mx-auto space-y-4">
         {/* Main Controls */}
-        <div className="flex items-center justify-center gap-6">
+        <div className="flex items-center justify-center gap-4">
           <Button
-            size="lg"
+            size="sm"
             variant="outline"
             onClick={onPrevious}
             disabled={!canGoPrevious}
-            className="h-14 w-14 rounded-full bg-slate-700/80 backdrop-blur-sm border-slate-500/60 hover:bg-slate-600/90 hover:border-blue-400/80 hover:text-blue-300 transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed text-slate-200"
+            className="h-10 w-10 rounded-full bg-slate-700/80 backdrop-blur-sm border-slate-500/60 hover:bg-slate-600/90 hover:border-blue-400/80 hover:text-blue-300 transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed text-slate-200"
             aria-label="Previous panel"
           >
-            <SkipBack className="h-6 w-6" />
+            <SkipBack className="h-4 w-4" />
           </Button>
 
           <Button
-            size="lg"
+            size="sm"
             onClick={onPlayPause}
-            className={`h-20 w-20 rounded-full shadow-xl transition-all duration-200 transform hover:scale-105 ${
+            className={`h-12 w-12 rounded-full shadow-xl transition-all duration-200 transform hover:scale-105 ${
               isPlaying 
                 ? "bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700" 
                 : "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
@@ -62,56 +62,56 @@ export function PlaybackControls({
             aria-label={isPlaying ? "Pause narration" : "Play narration"}
           >
             {isPlaying ? (
-              <Pause className="h-10 w-10 text-white" />
+              <Pause className="h-6 w-6 text-white" />
             ) : (
-              <Play className="h-10 w-10 text-white ml-1" />
+              <Play className="h-6 w-6 text-white ml-0.5" />
             )}
           </Button>
 
           <Button
-            size="lg"
+            size="sm"
             variant="outline"
             onClick={onNext}
             disabled={!canGoNext}
-            className="h-14 w-14 rounded-full bg-slate-700/80 backdrop-blur-sm border-slate-500/60 hover:bg-slate-600/90 hover:border-blue-400/80 hover:text-blue-300 transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed text-slate-200"
+            className="h-10 w-10 rounded-full bg-slate-700/80 backdrop-blur-sm border-slate-500/60 hover:bg-slate-600/90 hover:border-blue-400/80 hover:text-blue-300 transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed text-slate-200"
             aria-label="Next panel"
           >
-            <SkipForward className="h-6 w-6" />
+            <SkipForward className="h-4 w-4" />
           </Button>
         </div>
 
         {/* Panel Progress */}
         <div className="text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800/60 backdrop-blur-sm rounded-full border border-slate-700/40 shadow-lg">
-            <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full animate-pulse"></div>
-            <p className="text-slate-300 font-semibold">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-800/60 backdrop-blur-sm rounded-full border border-slate-700/40 shadow-lg">
+            <div className="w-1.5 h-1.5 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full animate-pulse"></div>
+            <p className="text-slate-300 font-semibold text-sm">
               Panel {currentPanel} of {totalPanels}
             </p>
           </div>
         </div>
 
-        {/* Volume and Speed Controls */}
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {/* Volume and Speed Controls - Compact */}
+        <div className="grid grid-cols-2 gap-3">
           {/* Volume */}
-          <div className="bg-slate-800/60 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/40 shadow-lg">
-            <div className="flex items-center gap-4">
+          <div className="bg-slate-800/60 backdrop-blur-sm rounded-xl p-3 border border-slate-700/40 shadow-lg">
+            <div className="flex items-center gap-2">
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={onToggleMute}
-                className="h-12 w-12 rounded-full bg-slate-700/80 hover:bg-slate-600 hover:text-blue-400 transition-all duration-200"
+                className="h-8 w-8 rounded-full bg-slate-700/80 hover:bg-slate-600 hover:text-blue-400 transition-all duration-200"
                 aria-label={isMuted ? "Unmute" : "Mute"}
               >
                 {isMuted ? (
-                  <VolumeX className="h-6 w-6" />
+                  <VolumeX className="h-4 w-4" />
                 ) : (
-                  <Volume2 className="h-6 w-6" />
+                  <Volume2 className="h-4 w-4" />
                 )}
               </Button>
-              <div className="flex-1 space-y-2">
+              <div className="flex-1 space-y-1">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm font-semibold text-slate-300">Volume</span>
-                  <span className="text-sm font-bold text-slate-400 bg-slate-700/60 px-2 py-1 rounded-full">
+                  <span className="text-xs font-semibold text-slate-300">Volume</span>
+                  <span className="text-xs font-bold text-slate-400 bg-slate-700/60 px-1.5 py-0.5 rounded-full">
                     {Math.round(volume[0] * 100)}%
                   </span>
                 </div>
@@ -128,15 +128,15 @@ export function PlaybackControls({
           </div>
 
           {/* Speed */}
-          <div className="bg-slate-800/60 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/40 shadow-lg">
-            <div className="flex items-center gap-4">
-              <div className="h-12 w-12 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 flex items-center justify-center">
-                <span className="text-white font-bold text-sm">⚡</span>
+          <div className="bg-slate-800/60 backdrop-blur-sm rounded-xl p-3 border border-slate-700/40 shadow-lg">
+            <div className="flex items-center gap-2">
+              <div className="h-8 w-8 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 flex items-center justify-center">
+                <span className="text-white font-bold text-xs">⚡</span>
               </div>
-              <div className="flex-1 space-y-2">
+              <div className="flex-1 space-y-1">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm font-semibold text-slate-300">Speed</span>
-                  <span className="text-sm font-bold text-slate-400 bg-slate-700/60 px-2 py-1 rounded-full">
+                  <span className="text-xs font-semibold text-slate-300">Speed</span>
+                  <span className="text-xs font-bold text-slate-400 bg-slate-700/60 px-1.5 py-0.5 rounded-full">
                     {speed[0].toFixed(1)}x
                   </span>
                 </div>
