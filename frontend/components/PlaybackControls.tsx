@@ -17,6 +17,7 @@ interface PlaybackControlsProps {
   onToggleMute: () => void;
   speed: number[];
   onSpeedChange: (value: number[]) => void;
+  fullWidth?: boolean;
 }
 
 export function PlaybackControls({
@@ -34,10 +35,11 @@ export function PlaybackControls({
   onToggleMute,
   speed,
   onSpeedChange,
+  fullWidth = false,
 }: PlaybackControlsProps) {
   return (
-    <div className="border-t border-slate-700/50 bg-slate-900/90 backdrop-blur-xl p-4 shadow-lg shadow-black/20">
-      <div className="max-w-4xl mx-auto space-y-4">
+    <div className={`${fullWidth ? 'w-full bg-transparent border-0 p-0' : 'bg-slate-900/90 backdrop-blur-xl border-t border-slate-700/50 p-4'}`}>
+      <div className={`space-y-4 ${fullWidth ? 'w-full flex flex-col items-center' : 'max-w-4xl mx-auto flex flex-col items-center'}`}>
         {/* Main Controls */}
         <div className="flex items-center justify-center gap-4">
           <Button
@@ -81,8 +83,8 @@ export function PlaybackControls({
         </div>
 
         {/* Panel Progress */}
-        <div className="text-center">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-800/60 backdrop-blur-sm rounded-full border border-slate-700/40 shadow-lg">
+        <div className="text-center w-full">
+          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-800/60 backdrop-blur-sm rounded-full border border-slate-700/40 shadow-lg w-full justify-center">
             <div className="w-1.5 h-1.5 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full animate-pulse"></div>
             <p className="text-slate-300 font-semibold text-sm">
               Panel {currentPanel} of {totalPanels}
@@ -91,9 +93,9 @@ export function PlaybackControls({
         </div>
 
         {/* Volume and Speed Controls - Compact */}
-        <div className="grid grid-cols-2 gap-3">
+        <div className="flex gap-6 w-full">
           {/* Volume */}
-          <div className="bg-slate-800/60 backdrop-blur-sm rounded-xl p-3 border border-slate-700/40 shadow-lg">
+          <div className="bg-slate-700/80 backdrop-blur-sm rounded-xl p-3 border border-slate-600/50 shadow-lg flex-1">
             <div className="flex items-center gap-2">
               <Button
                 variant="ghost"
@@ -128,7 +130,7 @@ export function PlaybackControls({
           </div>
 
           {/* Speed */}
-          <div className="bg-slate-800/60 backdrop-blur-sm rounded-xl p-3 border border-slate-700/40 shadow-lg">
+          <div className="bg-slate-700/80 backdrop-blur-sm rounded-xl p-3 border border-slate-600/50 shadow-lg flex-1">
             <div className="flex items-center gap-2">
               <div className="h-8 w-8 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 flex items-center justify-center">
                 <span className="text-white font-bold text-xs">⚡</span>

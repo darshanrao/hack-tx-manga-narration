@@ -48,6 +48,7 @@ export default function HomePage() {
   const [pdfPageCount, setPdfPageCount] = useState(0);
   const [isPDF, setIsPDF] = useState(false);
   const [pdfZoom, setPdfZoom] = useState(1.0);
+  const [isTranscriptCollapsed, setIsTranscriptCollapsed] = useState(false);
 
   // Mock manga pages - in a real app, this would be extracted from the uploaded file
   const mockPages: MangaPage[] = [
@@ -262,7 +263,7 @@ export default function HomePage() {
         {uploadedFile ? (
           <>
             {/* Left Side - Manga/PDF Viewer (75% width) */}
-            <div className="w-1/3 overflow-hidden">
+            <div className="w-2/5 overflow-hidden">
               {isPDF ? (
                 <PDFPageViewer
                   pdfFile={uploadedFile}
@@ -280,18 +281,25 @@ export default function HomePage() {
             </div>
             
             {/* Right Side - Transcript and Controls (25% width) */}
-            <div className="w-2/3 flex flex-col border-l border-slate-700/50">
-              {/* Top Half - Transcript */}
-              <div className="flex-1 overflow-hidden">
+            <div className="w-3/5 flex flex-col border-l border-slate-700/50">
+              {/* Transcript - Always visible header, content area collapses */}
+              <div className={`transition-all duration-500 ease-in-out ${
+                isTranscriptCollapsed ? 'h-auto' : 'h-auto'
+              }`}>
                 <Transcript
                   currentText={currentPanel?.text}
                   isPlaying={isPlaying}
-                  className="h-full"
+                  className=""
+                  onCollapseChange={setIsTranscriptCollapsed}
                 />
               </div>
               
-              {/* Bottom Half - Playback Controls */}
-              <div className="border-t border-slate-700/50">
+              {/* Playback Controls - Expand when transcript is collapsed */}
+              <div className={`transition-all duration-500 ease-in-out ${
+                isTranscriptCollapsed 
+                  ? 'flex-1 flex items-center justify-center bg-slate-900/90 backdrop-blur-xl' 
+                  : 'border-t border-slate-700/50'
+              }`}>
                 {isPDF ? (
                   <PDFPlaybackControls
                     currentPage={currentPageIndex + 1}
@@ -308,6 +316,7 @@ export default function HomePage() {
                     onNext={handleNextPage}
                     canGoPrevious={currentPageIndex > 0}
                     canGoNext={currentPageIndex < pdfPageCount - 1}
+                    fullWidth={isTranscriptCollapsed}
                   />
                 ) : (
                   <PlaybackControls
@@ -325,6 +334,7 @@ export default function HomePage() {
                     onToggleMute={toggleMute}
                     speed={speed}
                     onSpeedChange={setSpeed}
+                    fullWidth={isTranscriptCollapsed}
                   />
                 )}
               </div>
