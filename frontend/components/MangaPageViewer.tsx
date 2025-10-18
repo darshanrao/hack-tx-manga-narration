@@ -31,16 +31,16 @@ export function MangaPageViewer({
   }, [currentPanelId]);
 
   return (
-    <div className="h-full w-full flex items-center justify-center p-4 bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50">
-      <div className="relative bg-white rounded-3xl shadow-2xl overflow-hidden manga-page-container border border-white/40">
+    <div className="h-full w-full flex items-center justify-center p-4 bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900">
+      <div className="relative bg-slate-800 rounded-3xl shadow-2xl overflow-hidden manga-page-container border border-slate-700/40">
         {/* Mock manga page background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900">
           {/* Subtle pattern overlay */}
-          <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0 opacity-10">
             <svg className="w-full h-full">
               <defs>
                 <pattern
-                  id="manga-pattern"
+                  id="manga-pattern-dark"
                   width="60"
                   height="60"
                   patternUnits="userSpaceOnUse"
@@ -48,12 +48,12 @@ export function MangaPageViewer({
                   <circle cx="30" cy="30" r="1" fill="currentColor" />
                 </pattern>
               </defs>
-              <rect width="100%" height="100%" fill="url(#manga-pattern)" />
+              <rect width="100%" height="100%" fill="url(#manga-pattern-dark)" />
             </svg>
           </div>
 
           {/* Manga content placeholder */}
-          <div className="absolute inset-0 flex items-center justify-center text-gray-400">
+          <div className="absolute inset-0 flex items-center justify-center text-slate-500">
             <div className="text-center space-y-4">
               <div className="text-8xl drop-shadow-lg">📖</div>
               <p className="text-lg font-medium">Manga Page Visualization</p>
@@ -85,8 +85,8 @@ export function MangaPageViewer({
               <div
                 className={`absolute inset-0 border-4 rounded-2xl transition-all duration-700 ease-out ${
                   isActive
-                    ? "border-blue-500 bg-gradient-to-br from-blue-50/80 to-purple-50/60 shadow-2xl shadow-blue-500/30 scale-105 backdrop-blur-sm"
-                    : "border-slate-300/40 bg-white/20 hover:border-blue-300/60 hover:bg-white/40 hover:shadow-lg hover:shadow-blue-500/10"
+                    ? "border-blue-400 bg-gradient-to-br from-blue-900/40 to-purple-900/30 shadow-2xl shadow-blue-500/40 scale-105 backdrop-blur-sm"
+                    : "border-slate-600/40 bg-slate-800/20 hover:border-blue-500/60 hover:bg-slate-700/40 hover:shadow-lg hover:shadow-blue-500/20"
                 }`}
               />
               
@@ -94,10 +94,10 @@ export function MangaPageViewer({
               {isActive && (
                 <>
                   {/* Animated corner indicators */}
-                  <div className="absolute -top-2 -left-2 w-8 h-8 border-t-4 border-l-4 border-blue-500 rounded-tl-lg animate-pulse" />
-                  <div className="absolute -top-2 -right-2 w-8 h-8 border-t-4 border-r-4 border-blue-500 rounded-tr-lg animate-pulse" />
-                  <div className="absolute -bottom-2 -left-2 w-8 h-8 border-b-4 border-l-4 border-blue-500 rounded-bl-lg animate-pulse" />
-                  <div className="absolute -bottom-2 -right-2 w-8 h-8 border-b-4 border-r-4 border-blue-500 rounded-br-lg animate-pulse" />
+                  <div className="absolute -top-2 -left-2 w-8 h-8 border-t-4 border-l-4 border-blue-400 rounded-tl-lg animate-pulse" />
+                  <div className="absolute -top-2 -right-2 w-8 h-8 border-t-4 border-r-4 border-blue-400 rounded-tr-lg animate-pulse" />
+                  <div className="absolute -bottom-2 -left-2 w-8 h-8 border-b-4 border-l-4 border-blue-400 rounded-bl-lg animate-pulse" />
+                  <div className="absolute -bottom-2 -right-2 w-8 h-8 border-b-4 border-r-4 border-blue-400 rounded-br-lg animate-pulse" />
                   
                   {/* Spotlight effect */}
                   <div className="absolute inset-0 bg-gradient-radial from-blue-400/20 via-blue-300/10 to-transparent animate-pulse rounded-2xl" />
@@ -109,9 +109,9 @@ export function MangaPageViewer({
                   
                   {/* Reading indicator */}
                   <div className="absolute top-2 right-2">
-                    <div className="flex items-center gap-1 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 shadow-lg">
-                      <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full animate-pulse"></div>
-                      <span className="text-xs font-semibold text-slate-700">Reading</span>
+                    <div className="flex items-center gap-1 bg-slate-800/90 backdrop-blur-sm rounded-full px-2 py-1 shadow-lg border border-slate-700">
+                      <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full animate-pulse"></div>
+                      <span className="text-xs font-semibold text-slate-300">Reading</span>
                     </div>
                   </div>
                 </>
@@ -124,7 +124,7 @@ export function MangaPageViewer({
                     isActive ? "opacity-100 scale-100" : "opacity-40 scale-95"
                   }`}
                 >
-                  <div className="bg-white/90 backdrop-blur-sm rounded-xl px-4 py-2 text-sm font-semibold shadow-lg border border-white/40">
+                  <div className="bg-slate-800/90 backdrop-blur-sm rounded-xl px-4 py-2 text-sm font-semibold shadow-lg border border-slate-700/40 text-slate-300">
                     Panel {panel.id}
                   </div>
                 </div>

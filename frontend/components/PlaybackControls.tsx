@@ -36,7 +36,7 @@ export function PlaybackControls({
   onSpeedChange,
 }: PlaybackControlsProps) {
   return (
-    <div className="border-t border-white/20 bg-white/80 backdrop-blur-xl p-8 shadow-lg">
+    <div className="border-t border-slate-700/50 bg-slate-900/80 backdrop-blur-xl p-8 shadow-lg shadow-black/20">
       <div className="max-w-5xl mx-auto space-y-8">
         {/* Main Controls */}
         <div className="flex items-center justify-center gap-6">
@@ -45,7 +45,7 @@ export function PlaybackControls({
             variant="outline"
             onClick={onPrevious}
             disabled={!canGoPrevious}
-            className="h-14 w-14 rounded-full bg-white/60 backdrop-blur-sm border-white/40 hover:bg-white/80 hover:border-blue-400 hover:text-blue-600 transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            className="h-14 w-14 rounded-full bg-slate-700/80 backdrop-blur-sm border-slate-500/60 hover:bg-slate-600/90 hover:border-blue-400/80 hover:text-blue-300 transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed text-slate-200"
             aria-label="Previous panel"
           >
             <SkipBack className="h-6 w-6" />
@@ -73,7 +73,7 @@ export function PlaybackControls({
             variant="outline"
             onClick={onNext}
             disabled={!canGoNext}
-            className="h-14 w-14 rounded-full bg-white/60 backdrop-blur-sm border-white/40 hover:bg-white/80 hover:border-blue-400 hover:text-blue-600 transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+            className="h-14 w-14 rounded-full bg-slate-700/80 backdrop-blur-sm border-slate-500/60 hover:bg-slate-600/90 hover:border-blue-400/80 hover:text-blue-300 transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed text-slate-200"
             aria-label="Next panel"
           >
             <SkipForward className="h-6 w-6" />
@@ -82,9 +82,9 @@ export function PlaybackControls({
 
         {/* Panel Progress */}
         <div className="text-center">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/60 backdrop-blur-sm rounded-full border border-white/40 shadow-lg">
-            <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full animate-pulse"></div>
-            <p className="text-slate-700 font-semibold">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-slate-800/60 backdrop-blur-sm rounded-full border border-slate-700/40 shadow-lg">
+            <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full animate-pulse"></div>
+            <p className="text-slate-300 font-semibold">
               Panel {currentPanel} of {totalPanels}
             </p>
           </div>
@@ -93,13 +93,13 @@ export function PlaybackControls({
         {/* Volume and Speed Controls */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
           {/* Volume */}
-          <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/40 shadow-lg">
+          <div className="bg-slate-800/60 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/40 shadow-lg">
             <div className="flex items-center gap-4">
               <Button
                 variant="ghost"
                 size="icon"
                 onClick={onToggleMute}
-                className="h-12 w-12 rounded-full bg-white/80 hover:bg-white hover:text-blue-600 transition-all duration-200"
+                className="h-12 w-12 rounded-full bg-slate-700/80 hover:bg-slate-600 hover:text-blue-400 transition-all duration-200"
                 aria-label={isMuted ? "Unmute" : "Mute"}
               >
                 {isMuted ? (
@@ -110,8 +110,8 @@ export function PlaybackControls({
               </Button>
               <div className="flex-1 space-y-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm font-semibold text-slate-700">Volume</span>
-                  <span className="text-sm font-bold text-slate-600 bg-slate-100 px-2 py-1 rounded-full">
+                  <span className="text-sm font-semibold text-slate-300">Volume</span>
+                  <span className="text-sm font-bold text-slate-400 bg-slate-700/60 px-2 py-1 rounded-full">
                     {Math.round(volume[0] * 100)}%
                   </span>
                 </div>
@@ -119,7 +119,7 @@ export function PlaybackControls({
                   value={volume}
                   onValueChange={onVolumeChange}
                   max={1}
-                  step={0.1}
+                  step={0.01}
                   className="cursor-pointer"
                   aria-label="Volume control"
                 />
@@ -128,15 +128,15 @@ export function PlaybackControls({
           </div>
 
           {/* Speed */}
-          <div className="bg-white/60 backdrop-blur-sm rounded-2xl p-6 border border-white/40 shadow-lg">
+          <div className="bg-slate-800/60 backdrop-blur-sm rounded-2xl p-6 border border-slate-700/40 shadow-lg">
             <div className="flex items-center gap-4">
               <div className="h-12 w-12 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 flex items-center justify-center">
                 <span className="text-white font-bold text-sm">⚡</span>
               </div>
               <div className="flex-1 space-y-2">
                 <div className="flex justify-between items-center">
-                  <span className="text-sm font-semibold text-slate-700">Speed</span>
-                  <span className="text-sm font-bold text-slate-600 bg-slate-100 px-2 py-1 rounded-full">
+                  <span className="text-sm font-semibold text-slate-300">Speed</span>
+                  <span className="text-sm font-bold text-slate-400 bg-slate-700/60 px-2 py-1 rounded-full">
                     {speed[0].toFixed(1)}x
                   </span>
                 </div>
@@ -146,6 +146,7 @@ export function PlaybackControls({
                   min={0.5}
                   max={2}
                   step={0.1}
+                  speedControl={true}
                   className="cursor-pointer"
                   aria-label="Reading speed control"
                 />

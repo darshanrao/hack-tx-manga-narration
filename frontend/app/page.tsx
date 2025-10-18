@@ -226,14 +226,14 @@ export default function HomePage() {
     currentPanelIndex < currentPage?.panels.length - 1;
 
   return (
-    <div className="h-screen w-screen flex flex-col overflow-hidden bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50">
+    <div className="h-screen w-screen flex flex-col overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900">
       {/* Header */}
-      <div className="border-b border-white/20 bg-white/80 backdrop-blur-xl px-8 py-6 flex items-center justify-between shadow-sm">
+      <div className="border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-xl px-8 py-6 flex items-center justify-between shadow-lg shadow-black/20">
         <div>
-          <h1 className="text-2xl font-bold bg-gradient-to-r from-slate-800 to-slate-600 bg-clip-text text-transparent">
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
             Manga Reader
           </h1>
-          <p className="text-slate-600 mt-1 font-medium">
+          <p className="text-slate-300 mt-1 font-medium">
             {uploadedFile
               ? `${uploadedFile.name} - Page ${currentPageIndex + 1} of ${isPDF ? pdfPageCount : mockPages.length}`
               : "Upload a manga file to begin reading"}
@@ -245,7 +245,7 @@ export default function HomePage() {
               variant="outline"
               size="lg"
               onClick={handleReset}
-              className="gap-2 bg-white/60 backdrop-blur-sm border-white/40 hover:bg-white/80 hover:border-white/60 transition-all duration-200 shadow-sm"
+              className="gap-2 bg-slate-700/80 backdrop-blur-sm border-slate-500/60 hover:bg-slate-600/90 hover:border-blue-400/80 hover:text-blue-300 transition-all duration-200 shadow-lg text-slate-200"
             >
               <RotateCcw className="h-5 w-5" />
               Upload New File
