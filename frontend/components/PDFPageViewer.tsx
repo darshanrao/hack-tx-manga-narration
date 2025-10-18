@@ -52,6 +52,7 @@ export function PDFPageViewer({
   const [pdfDocument, setPdfDocument] = useState<any>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const renderTaskRef = useRef<any>(null);
 
   // Load PDF document
   useEffect(() => {
@@ -104,6 +105,12 @@ export function PDFPageViewer({
       if (!pdfDocument || !canvasRef.current) return;
 
       try {
+        // Cancel any ongoing render task
+        if (renderTaskRef.current) {
+          renderTaskRef.current.cancel();
+          renderTaskRef.current = null;
+        }
+
         const page = await pdfDocument.getPage(currentPageIndex + 1); // PDF pages are 1-indexed
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d');
@@ -134,21 +141,51 @@ export function PDFPageViewer({
         canvas.style.display = 'block';
         canvas.style.margin = 'auto';
 
+        // Clear the canvas before rendering
+        context.clearRect(0, 0, canvas.width, canvas.height);
+
         // Render page
         const renderContext = {
           canvasContext: context,
           viewport: scaledViewport,
         };
 
-        await page.render(renderContext).promise;
+        // Store the render task so we can cancel it if needed
+        const renderTask = page.render(renderContext);
+        renderTaskRef.current = renderTask;
+
+        await renderTask.promise;
+        renderTaskRef.current = null;
       } catch (err) {
+        // Ignore cancellation errors
+        if (err.name === 'RenderingCancelledException') {
+          return;
+        }
         console.error('Error rendering PDF page:', err);
         setError('Failed to render PDF page');
       }
     };
 
     renderPage();
+
+    // Cleanup function to cancel render on unmount or dependency change
+    return () => {
+      if (renderTaskRef.current) {
+        renderTaskRef.current.cancel();
+        renderTaskRef.current = null;
+      }
+    };
   }, [pdfDocument, currentPageIndex]);
+
+  // Cleanup on unmount
+  useEffect(() => {
+    return () => {
+      if (renderTaskRef.current) {
+        renderTaskRef.current.cancel();
+        renderTaskRef.current = null;
+      }
+    };
+  }, []);
 
   if (isLoading) {
     return (
@@ -173,16 +210,14 @@ export function PDFPageViewer({
   }
 
   return (
-    <div className="h-full w-full flex items-center justify-center p-2 bg-muted/30">
-      <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden manga-page-container flex items-center justify-center">
+    <div className="h-full w-full bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900">
+      <div className="relative bg-slate-800/90 backdrop-blur-sm shadow-2xl overflow-hidden manga-page-container h-full w-full border border-slate-600/40">
         <canvas
           ref={canvasRef}
-          className="pdf-canvas"
+          className="pdf-canvas h-full w-full"
           style={{ 
-            maxWidth: '100%', 
-            maxHeight: '100%',
             display: 'block',
-            margin: 'auto'
+            borderRadius: '4px'
           }}
         />
       </div>

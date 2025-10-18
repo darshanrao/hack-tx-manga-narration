@@ -38,110 +38,156 @@ export function PDFPlaybackControls({
   canGoNext,
 }: PDFPlaybackControlsProps) {
   return (
-    <div className="border-t border-border bg-slate-900 px-6 py-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between gap-6">
-          {/* Page Navigation */}
-          <div className="flex items-center gap-4">
-            <Button
-              size="default"
-              variant="ghost"
-              onClick={onPrevious}
-              disabled={!canGoPrevious}
-              className="gap-2 text-white hover:bg-gray-700"
-            >
-              <SkipBack className="h-4 w-4" />
-              Previous Page
-            </Button>
+    <div className="border-t border-slate-700/50 bg-slate-900/90 backdrop-blur-xl px-4 py-4 shadow-lg shadow-black/20">
+      <div className="max-w-4xl mx-auto space-y-4">
+        {/* Page Navigation */}
+        <div className="flex items-center justify-center gap-4">
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={onPrevious}
+            disabled={!canGoPrevious}
+            className="gap-2 bg-slate-700/80 backdrop-blur-sm border-slate-500/60 hover:bg-slate-600/90 hover:border-blue-400/80 hover:text-blue-300 transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed text-slate-200"
+          >
+            <SkipBack className="h-4 w-4" />
+            Previous
+          </Button>
 
-            <div className="text-center">
-              <p className="text-sm text-gray-300">
-                Page {currentPage} of {totalPages}
-              </p>
-            </div>
-
-            <Button
-              size="default"
-              variant="ghost"
-              onClick={onNext}
-              disabled={!canGoNext}
-              className="gap-2 text-white hover:bg-gray-700"
-            >
-              Next Page
-              <SkipForward className="h-4 w-4" />
-            </Button>
+          <div className="text-center bg-slate-800/60 backdrop-blur-sm rounded-xl px-4 py-2 border border-slate-700/40 shadow-lg min-w-fit whitespace-nowrap">
+            <p className="text-slate-300 font-bold text-sm">
+              Page {currentPage} of {totalPages}
+            </p>
           </div>
 
-          {/* Audio Controls */}
-          <div className="flex items-center gap-6">
-            {/* Audio Progress Bar */}
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-gray-300">0:00</span>
-              <div className="w-24">
-                <div className="w-full bg-gray-600 rounded-full h-1">
-                  <div
-                    className="bg-white h-1 rounded-full transition-all duration-300"
-                    style={{
-                      width: `${(currentPage / totalPages) * 100}%`,
-                    }}
-                  />
-                </div>
-              </div>
-              <span className="text-xs text-gray-300">2:10</span>
-            </div>
+          <Button
+            size="sm"
+            variant="outline"
+            onClick={onNext}
+            disabled={!canGoNext}
+            className="gap-2 bg-slate-700/80 backdrop-blur-sm border-slate-500/60 hover:bg-slate-600/90 hover:border-blue-400/80 hover:text-blue-300 transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed text-slate-200"
+          >
+            Next
+            <SkipForward className="h-4 w-4" />
+          </Button>
+        </div>
 
-            {/* Playback Controls */}
+        {/* Playback Controls */}
+        <div className="flex items-center justify-center gap-3">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={onPrevious}
+            disabled={!canGoPrevious}
+            className="h-8 w-8 rounded-full bg-slate-700/80 backdrop-blur-sm border-slate-500/60 hover:bg-slate-600/90 hover:border-blue-400/80 hover:text-blue-300 transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed text-slate-200"
+          >
+            <SkipBack className="h-4 w-4" />
+          </Button>
+
+          <Button
+            size="sm"
+            onClick={onPlayPause}
+            className={`h-10 w-10 rounded-full shadow-xl transition-all duration-200 transform hover:scale-105 ${
+              isPlaying 
+                ? "bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700" 
+                : "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+            }`}
+          >
+            {isPlaying ? (
+              <Pause className="h-5 w-5 text-white" />
+            ) : (
+              <Play className="h-5 w-5 text-white ml-0.5" />
+            )}
+          </Button>
+
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={onNext}
+            disabled={!canGoNext}
+            className="h-8 w-8 rounded-full bg-slate-700/80 backdrop-blur-sm border-slate-500/60 hover:bg-slate-600/90 hover:border-blue-400/80 hover:text-blue-300 transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed text-slate-200"
+          >
+            <SkipForward className="h-4 w-4" />
+          </Button>
+        </div>
+
+        {/* Audio Progress Bar */}
+        <div className="flex items-center justify-center gap-3 bg-slate-800/60 backdrop-blur-sm rounded-xl px-4 py-3 border border-slate-700/40 shadow-lg">
+          <span className="text-xs font-semibold text-slate-400">0:00</span>
+          <div className="flex-1 max-w-xs">
+            <div className="w-full bg-slate-700 rounded-full h-1.5">
+              <div
+                className="bg-gradient-to-r from-blue-400 to-purple-500 h-1.5 rounded-full transition-all duration-300 shadow-sm"
+                style={{
+                  width: `${(currentPage / totalPages) * 100}%`,
+                }}
+              />
+            </div>
+          </div>
+          <span className="text-xs font-semibold text-slate-400">2:10</span>
+        </div>
+
+        {/* Volume and Speed Controls - Compact */}
+        <div className="grid grid-cols-2 gap-3">
+          {/* Volume Control */}
+          <div className="bg-slate-800/60 backdrop-blur-sm rounded-xl p-3 border border-slate-700/40 shadow-lg">
             <div className="flex items-center gap-2">
               <Button
                 variant="ghost"
-                size="sm"
-                onClick={onPrevious}
-                disabled={!canGoPrevious}
-                className="text-white hover:bg-gray-700 p-2"
+                size="icon"
+                onClick={onToggleMute}
+                className="h-8 w-8 rounded-full bg-slate-700/80 hover:bg-slate-600 hover:text-blue-400 transition-all duration-200"
+                aria-label={isMuted ? "Unmute" : "Mute"}
               >
-                <SkipBack className="h-4 w-4" />
-              </Button>
-
-              <Button
-                variant="default"
-                size="sm"
-                onClick={onPlayPause}
-                className="w-10 h-10 rounded-full p-0 bg-white text-black hover:bg-gray-200"
-              >
-                {isPlaying ? (
-                  <Pause className="h-4 w-4" />
+                {isMuted ? (
+                  <VolumeX className="h-4 w-4" />
                 ) : (
-                  <Play className="h-4 w-4 ml-0.5" />
+                  <Volume2 className="h-4 w-4" />
                 )}
               </Button>
-
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onNext}
-                disabled={!canGoNext}
-                className="text-white hover:bg-gray-700 p-2"
-              >
-                <SkipForward className="h-4 w-4" />
-              </Button>
-            </div>
-
-            {/* Volume Control */}
-            <div className="flex items-center gap-2">
-              <Volume2 className="h-4 w-4 text-gray-300" />
-              <div className="w-16">
+              <div className="flex-1 space-y-1">
+                <div className="flex justify-between items-center">
+                  <span className="text-xs font-semibold text-slate-300">Volume</span>
+                  <span className="text-xs font-bold text-slate-400 bg-slate-700/60 px-1.5 py-0.5 rounded-full">
+                    {Math.round(volume[0] * 100)}%
+                  </span>
+                </div>
                 <Slider
                   value={volume}
                   onValueChange={onVolumeChange}
                   max={1}
                   min={0}
-                  step={0.1}
-                  className="w-full"
+                  step={0.01}
+                  className="cursor-pointer"
+                  aria-label="Volume control"
                 />
               </div>
-              <span className="text-xs text-gray-300 w-6">
-                {Math.round(volume[0] * 100)}%
-              </span>
+            </div>
+          </div>
+
+          {/* Speed Control */}
+          <div className="bg-slate-800/60 backdrop-blur-sm rounded-xl p-3 border border-slate-700/40 shadow-lg">
+            <div className="flex items-center gap-2">
+              <div className="h-8 w-8 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 flex items-center justify-center">
+                <span className="text-white font-bold text-xs">⚡</span>
+              </div>
+              <div className="flex-1 space-y-1">
+                <div className="flex justify-between items-center">
+                  <span className="text-xs font-semibold text-slate-300">Speed</span>
+                  <span className="text-xs font-bold text-slate-400 bg-slate-700/60 px-1.5 py-0.5 rounded-full">
+                    {speed[0].toFixed(1)}x
+                  </span>
+                </div>
+                <Slider
+                  value={speed}
+                  onValueChange={onSpeedChange}
+                  min={0.5}
+                  max={2}
+                  step={0.1}
+                  speedControl={true}
+                  className="cursor-pointer"
+                  aria-label="Reading speed control"
+                />
+              </div>
             </div>
           </div>
         </div>

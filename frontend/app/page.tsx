@@ -5,6 +5,7 @@ import { UploadArea } from "../components/UploadArea";
 import { MangaPageViewer } from "../components/MangaPageViewer";
 import { PlaybackControls } from "../components/PlaybackControls";
 import { PDFPlaybackControls } from "../components/PDFPlaybackControls";
+import { Transcript } from "../components/Transcript";
 import { Button } from "../components/ui/button";
 import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
 import dynamic from 'next/dynamic';
@@ -46,6 +47,8 @@ export default function HomePage() {
   const [speed, setSpeed] = useState([1]);
   const [pdfPageCount, setPdfPageCount] = useState(0);
   const [isPDF, setIsPDF] = useState(false);
+  const [pdfZoom, setPdfZoom] = useState(1.0);
+  const [isTranscriptCollapsed, setIsTranscriptCollapsed] = useState(false);
 
   // Mock manga pages - in a real app, this would be extracted from the uploaded file
   const mockPages: MangaPage[] = [
@@ -144,6 +147,7 @@ export default function HomePage() {
     setCurrentPageIndex(0);
     setCurrentPanelIndex(0);
     setIsPlaying(false);
+    setPdfZoom(1.0); // Reset zoom for new file
     
     // Check if file is PDF
     const isPDFFile = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
@@ -226,12 +230,14 @@ export default function HomePage() {
     currentPanelIndex < currentPage?.panels.length - 1;
 
   return (
-    <div className="h-screen w-screen flex flex-col overflow-hidden bg-background">
+    <div className="h-screen w-screen flex flex-col overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900">
       {/* Header */}
-      <div className="border-b border-border bg-background px-8 py-5 flex items-center justify-between">
+      <div className="border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-xl px-8 py-6 flex items-center justify-between shadow-lg shadow-black/20">
         <div>
-          <h1>Manga Reader</h1>
-          <p className="text-muted-foreground mt-1">
+          <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+            Manga Reader
+          </h1>
+          <p className="text-slate-300 mt-1 font-medium">
             {uploadedFile
               ? `${uploadedFile.name} - Page ${currentPageIndex + 1} of ${isPDF ? pdfPageCount : mockPages.length}`
               : "Upload a manga file to begin reading"}
@@ -243,7 +249,7 @@ export default function HomePage() {
               variant="outline"
               size="lg"
               onClick={handleReset}
-              className="gap-2"
+              className="gap-2 bg-slate-700/80 backdrop-blur-sm border-slate-500/60 hover:bg-slate-600/90 hover:border-blue-400/80 hover:text-blue-300 transition-all duration-200 shadow-lg text-slate-200"
             >
               <RotateCcw className="h-5 w-5" />
               Upload New File
@@ -252,17 +258,19 @@ export default function HomePage() {
         )}
       </div>
 
-      {/* Main Content */}
-      <div className="flex-1 flex flex-col overflow-hidden">
+      {/* Main Content - Split Screen Layout */}
+      <div className="flex-1 flex overflow-hidden">
         {uploadedFile ? (
           <>
-            {/* Manga Page Viewer */}
-            <div className="flex-1 overflow-hidden min-h-0">
+            {/* Left Side - Manga/PDF Viewer (75% width) */}
+            <div className="w-2/5 overflow-hidden">
               {isPDF ? (
                 <PDFPageViewer
                   pdfFile={uploadedFile}
                   currentPageIndex={currentPageIndex}
                   onPageCountChange={setPdfPageCount}
+                  zoom={pdfZoom}
+                  onZoomChange={setPdfZoom}
                 />
               ) : (
                 <MangaPageViewer
@@ -271,49 +279,74 @@ export default function HomePage() {
                 />
               )}
             </div>
-
-            {/* Playback Controls */}
-            {!isPDF ? (
-              <PlaybackControls
-                isPlaying={isPlaying}
-                onPlayPause={handlePlayPause}
-                onPrevious={handlePreviousPanel}
-                onNext={handleNextPanel}
-                canGoPrevious={canGoPreviousPanel}
-                canGoNext={canGoNextPanel}
-                currentPanel={currentPanelIndex + 1}
-                totalPanels={currentPage.panels.length}
-                volume={volume}
-                onVolumeChange={setVolume}
-                isMuted={isMuted}
-                onToggleMute={toggleMute}
-                speed={speed}
-                onSpeedChange={setSpeed}
-              />
-            ) : (
-              <PDFPlaybackControls
-                currentPage={currentPageIndex + 1}
-                totalPages={pdfPageCount}
-                isPlaying={isPlaying}
-                onPlayPause={handlePlayPause}
-                volume={volume}
-                onVolumeChange={setVolume}
-                isMuted={isMuted}
-                onToggleMute={toggleMute}
-                speed={speed}
-                onSpeedChange={setSpeed}
-                onPrevious={handlePreviousPage}
-                onNext={handleNextPage}
-                canGoPrevious={currentPageIndex > 0}
-                canGoNext={currentPageIndex < pdfPageCount - 1}
-              />
-            )}
+            
+            {/* Right Side - Transcript and Controls (25% width) */}
+            <div className="w-3/5 flex flex-col border-l border-slate-700/50">
+              {/* Transcript - Always visible header, content area collapses */}
+              <div className={`transition-all duration-500 ease-in-out ${
+                isTranscriptCollapsed ? 'h-auto' : 'h-auto'
+              }`}>
+                <Transcript
+                  currentText={currentPanel?.text}
+                  isPlaying={isPlaying}
+                  className=""
+                  onCollapseChange={setIsTranscriptCollapsed}
+                />
+              </div>
+              
+              {/* Playback Controls - Expand when transcript is collapsed */}
+              <div className={`transition-all duration-500 ease-in-out ${
+                isTranscriptCollapsed 
+                  ? 'flex-1 flex items-center justify-center bg-slate-900/90 backdrop-blur-xl' 
+                  : 'border-t border-slate-700/50'
+              }`}>
+                {isPDF ? (
+                  <PDFPlaybackControls
+                    currentPage={currentPageIndex + 1}
+                    totalPages={pdfPageCount}
+                    isPlaying={isPlaying}
+                    onPlayPause={handlePlayPause}
+                    volume={volume}
+                    onVolumeChange={setVolume}
+                    isMuted={isMuted}
+                    onToggleMute={toggleMute}
+                    speed={speed}
+                    onSpeedChange={setSpeed}
+                    onPrevious={handlePreviousPage}
+                    onNext={handleNextPage}
+                    canGoPrevious={currentPageIndex > 0}
+                    canGoNext={currentPageIndex < pdfPageCount - 1}
+                    fullWidth={isTranscriptCollapsed}
+                  />
+                ) : (
+                  <PlaybackControls
+                    isPlaying={isPlaying}
+                    onPlayPause={handlePlayPause}
+                    onPrevious={handlePreviousPanel}
+                    onNext={handleNextPanel}
+                    canGoPrevious={canGoPreviousPanel}
+                    canGoNext={canGoNextPanel}
+                    currentPanel={currentPanelIndex + 1}
+                    totalPanels={currentPage.panels.length}
+                    volume={volume}
+                    onVolumeChange={setVolume}
+                    isMuted={isMuted}
+                    onToggleMute={toggleMute}
+                    speed={speed}
+                    onSpeedChange={setSpeed}
+                    fullWidth={isTranscriptCollapsed}
+                  />
+                )}
+              </div>
+            </div>
           </>
         ) : (
-          <UploadArea
-            onFileUpload={handleFileUpload}
-            uploadedFileName={uploadedFile?.name}
-          />
+          <div className="w-full">
+            <UploadArea
+              onFileUpload={handleFileUpload}
+              uploadedFileName={uploadedFile?.name}
+            />
+          </div>
         )}
       </div>
     </div>
