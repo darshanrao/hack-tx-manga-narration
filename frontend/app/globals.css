@@ -770,3 +770,69 @@ html {
 .animate-neon-flicker {
   animation: neonFlicker 1.5s ease-in-out infinite;
 }
+
+/* Modern Custom Scrollbar Styles */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(71 85 105) rgb(30 41 59);
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: rgb(30 41 59);
+  border-radius: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgb(71 85 105);
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgb(100 116 139);
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:active {
+  background: rgb(148 163 184);
+}
+
+.scrollbar-track-slate-800::-webkit-scrollbar-track {
+  background: rgb(30 41 59);
+}
+
+.scrollbar-thumb-slate-600::-webkit-scrollbar-thumb {
+  background: rgb(71 85 105);
+}
+
+.hover\:scrollbar-thumb-slate-500:hover::-webkit-scrollbar-thumb {
+  background: rgb(100 116 139);
+}
+
+.scrollbar-thumb-rounded-full::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+}
+
+/* Enhanced scrollbar for dark theme */
+.dark .scrollbar-thin {
+  scrollbar-color: rgb(100 116 139) rgb(15 23 42);
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-track {
+  background: rgb(15 23 42);
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgb(100 116 139);
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgb(148 163 184);
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb:active {
+  background: rgb(203 213 225);
+}

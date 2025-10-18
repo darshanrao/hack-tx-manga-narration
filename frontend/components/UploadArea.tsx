@@ -86,7 +86,7 @@ export function UploadArea({ onFileUpload, uploadedFileName }: UploadAreaProps) 
                 <Upload className="relative h-24 w-24 text-slate-400 drop-shadow-lg animate-float" />
               </div>
               <div className="space-y-6">
-                <div className="space-y-3">
+                <div className="space-y-2">
                   <h3 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
                     Drop your manga file here
                   </h3>
@@ -94,15 +94,17 @@ export function UploadArea({ onFileUpload, uploadedFileName }: UploadAreaProps) 
                     or click to browse your files
                   </p>
                 </div>
-                <label htmlFor="file-input">
-                  <Button
-                    size="lg"
-                    onClick={() => document.getElementById("file-input")?.click()}
-                    className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 animate-glow"
-                  >
-                    Choose File
-                  </Button>
-                </label>
+                <div className="py-2">
+                  <label htmlFor="file-input">
+                    <Button
+                      size="lg"
+                      onClick={() => document.getElementById("file-input")?.click()}
+                      className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white font-semibold px-8 py-4 rounded-xl shadow-lg hover:shadow-xl transition-all duration-200 transform hover:scale-105 animate-glow"
+                    >
+                      Choose File
+                    </Button>
+                  </label>
+                </div>
                 <div className="flex flex-wrap justify-center gap-2 text-sm text-slate-400">
                   <span className="px-3 py-1 bg-slate-800/60 rounded-full border border-slate-700">Images</span>
                   <span className="px-3 py-1 bg-slate-800/60 rounded-full border border-slate-700">PDF</span>
