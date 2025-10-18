@@ -3,7 +3,6 @@
 import { ArrowRight, Sparkles, Volume2, Zap } from 'lucide-react';
 import { Button } from '../../components/ui/button';
 import { Card } from '../../components/ui/card';
-import { ImageWithFallback } from '../../components/figma/ImageWithFallback';
 import Link from 'next/link';
 
 export default function LandingPage() {
@@ -70,28 +69,6 @@ export default function LandingPage() {
             </Button>
           </div>
 
-          {/* Hero Image/Preview */}
-          <div className="relative">
-            <div className="absolute inset-0 bg-gradient-to-t from-[#0f0f23] via-transparent to-transparent z-10"></div>
-            <Card className="bg-gradient-to-br from-gray-800/40 to-gray-900/40 border border-gray-700/50 backdrop-blur-sm overflow-hidden shadow-2xl">
-              <div className="aspect-video relative">
-                <ImageWithFallback
-                  src="https://images.unsplash.com/photo-1760113671986-63ccb46ae202?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxtYW5nYSUyMGFuaW1lJTIwaWxsdXN0cmF0aW9ufGVufDF8fHx8MTc2MDgxMzI2MXww&ixlib=rb-4.1.0&q=80&w=1080&utm_source=figma&utm_medium=referral"
-                  alt="Manga preview"
-                  className="w-full h-full object-cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent flex items-end justify-center pb-8">
-                  <div className="flex items-center gap-4 bg-black/60 backdrop-blur-md px-6 py-3 rounded-full border border-white/10">
-                    <Volume2 className="w-5 h-5 text-purple-400" />
-                    <div className="flex items-center gap-2">
-                      <div className="w-2 h-2 bg-purple-400 rounded-full animate-pulse"></div>
-                      <span className="text-sm">AI Voice Playing...</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </Card>
-          </div>
         </div>
       </div>
 

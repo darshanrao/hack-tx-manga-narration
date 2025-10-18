@@ -97,17 +97,30 @@ export function Transcript({
   }, [transcriptEntries, isExpanded]);
 
   return (
-    <Card className={`h-full flex flex-col bg-slate-900/90 backdrop-blur-sm border-slate-700/50 rounded-none ${className} ${!isExpanded ? 'overflow-hidden p-0 m-0' : 'p-0'} transition-[padding,margin,overflow] duration-300 ease-out`}>
-      {/* Header */}
-      <div className="px-4 pt-4 pb-0 flex-shrink-0">
+    <Card className={`h-full flex flex-col bg-transparent backdrop-blur-sm border-0 rounded-none ${className} ${!isExpanded ? 'overflow-hidden p-0 m-0' : 'p-0'} transition-[padding,margin,overflow] duration-500 ease-out`}>
+      {/* Enhanced Header */}
+      <div className="px-6 pt-6 pb-0 flex-shrink-0">
         <div className="flex items-center justify-between">
-          <div className="flex flex-col">
-            <h3 className="text-lg font-semibold text-slate-200">Transcript</h3>
-            {isPlaying && (
-              <div className="text-xs text-blue-400 font-mono">
-                {Math.floor(currentTime / 60)}:{(Math.floor(currentTime % 60)).toString().padStart(2, '0')}
+          <div className="flex items-center gap-4">
+            <div className="relative">
+              <div className="w-10 h-10 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-blue-500/30">
+                <span className="text-lg">📝</span>
               </div>
-            )}
+              <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl blur opacity-30 animate-pulse"></div>
+            </div>
+            <div className="flex flex-col">
+              <h3 className="text-xl font-bold text-slate-100 bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                Transcript
+              </h3>
+              {isPlaying && (
+                <div className="flex items-center gap-2 mt-1">
+                  <div className="w-2 h-2 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full animate-pulse"></div>
+                  <div className="text-xs text-blue-400 font-mono bg-slate-800/50 px-2 py-1 rounded-full">
+                    {Math.floor(currentTime / 60)}:{(Math.floor(currentTime % 60)).toString().padStart(2, '0')}
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
           <Button
             variant="outline"
@@ -117,7 +130,7 @@ export function Transcript({
               setIsExpanded(newExpanded);
               onCollapseChange?.(!newExpanded);
             }}
-            className="gap-2 bg-slate-700/80 backdrop-blur-sm border-slate-500/60 hover:bg-slate-600/90 hover:border-blue-400/80 hover:text-blue-300 transition-all duration-200 shadow-lg text-slate-200"
+            className="gap-2 glass-dark hover:glass-dark-intense border-slate-500/60 hover:border-blue-400/80 hover:text-blue-300 transition-all duration-300 shadow-lg text-slate-200 hover:shadow-glow btn-modern"
           >
             {isExpanded ? (
               <>
@@ -134,13 +147,13 @@ export function Transcript({
         </div>
       </div>
 
-      {/* Transcript Content - Scrollable */}
-      <div className={`flex-1 overflow-y-auto transition-[opacity,max-height,padding] duration-300 ease-out scrollbar-thin scrollbar-track-slate-800 scrollbar-thumb-slate-600 hover:scrollbar-thumb-slate-500 scrollbar-thumb-rounded-full ${
+      {/* Enhanced Transcript Content - Scrollable */}
+      <div className={`flex-1 overflow-y-auto transition-[opacity,max-height,padding] duration-500 ease-out scrollbar-thin scrollbar-track-slate-800 scrollbar-thumb-slate-600 hover:scrollbar-thumb-slate-500 scrollbar-thumb-rounded-full ${
         isExpanded 
-          ? 'opacity-100 px-4 pt-0 pb-4' 
+          ? 'opacity-100 px-6 pt-4 pb-6' 
           : 'opacity-0 max-h-0 p-0 overflow-hidden'
       }`}>
-        <div className="space-y-3">
+        <div className="space-y-4">
           {transcriptEntries.map((item) => {
             const formatTimestamp = (seconds: number) => {
               const mins = Math.floor(seconds / 60);
@@ -152,31 +165,53 @@ export function Transcript({
               <div
                 key={item.id}
                 ref={item.isActive ? activeEntryRef : null}
-                className={`p-3 rounded-lg transition-all duration-200 cursor-pointer hover:scale-[1.02] ${
+                className={`group p-4 rounded-2xl transition-all duration-300 cursor-pointer hover:scale-[1.02] btn-modern ${
                   item.isActive
-                    ? 'bg-blue-900/40 border border-blue-400/60 shadow-lg shadow-blue-500/20'
-                    : 'bg-slate-700/60 border border-slate-600/40 hover:bg-slate-600/80'
+                    ? 'glass-dark-intense border-2 border-blue-400/60 shadow-2xl shadow-blue-500/30 neon-border'
+                    : 'glass-dark border border-slate-600/40 hover:glass-dark-medium hover:border-blue-500/60 hover:shadow-xl hover:shadow-blue-500/20'
                 }`}
                 onClick={() => onSeek?.(item.timestamp)}
                 title={`Jump to ${formatTimestamp(item.timestamp)}`}
               >
-                <div className="flex items-start gap-3">
-                  <span className={`text-xs font-mono px-2 py-1 rounded ${
-                    item.isActive ? 'bg-blue-500/80 text-blue-100' : 'bg-slate-600/80 text-slate-300'
+                <div className="flex items-start gap-4">
+                  <div className={`flex-shrink-0 w-16 h-8 rounded-full flex items-center justify-center transition-all duration-300 ${
+                    item.isActive 
+                      ? 'bg-gradient-to-r from-blue-500 to-purple-600 text-blue-100 shadow-lg shadow-blue-500/50' 
+                      : 'bg-slate-700/80 text-slate-300 group-hover:bg-slate-600/80'
                   }`}>
-                    {formatTimestamp(item.timestamp)}
-                  </span>
-                  <p className={`text-sm leading-relaxed ${
-                    item.isActive ? 'text-blue-100 font-medium' : 'text-slate-300'
-                  }`}>
-                    <span className={`font-semibold ${
-                      item.isActive ? 'text-blue-200' : 'text-slate-400'
+                    <span className="text-xs font-bold font-mono">
+                      {formatTimestamp(item.timestamp)}
+                    </span>
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-2">
+                      <span className={`text-sm font-bold px-3 py-1 rounded-full transition-all duration-300 ${
+                        item.isActive 
+                          ? 'bg-blue-500/20 text-blue-200 border border-blue-400/40' 
+                          : 'bg-slate-600/60 text-slate-400 group-hover:bg-slate-500/60 group-hover:text-slate-300'
+                      }`}>
+                        {item.speaker}
+                      </span>
+                      {item.isActive && (
+                        <div className="flex items-center gap-1">
+                          <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse"></div>
+                          <div className="w-1.5 h-1.5 bg-purple-400 rounded-full animate-pulse" style={{animationDelay: '0.2s'}}></div>
+                          <div className="w-1.5 h-1.5 bg-blue-400 rounded-full animate-pulse" style={{animationDelay: '0.4s'}}></div>
+                        </div>
+                      )}
+                    </div>
+                    <p className={`text-sm leading-relaxed transition-all duration-300 ${
+                      item.isActive ? 'text-blue-100 font-medium' : 'text-slate-300 group-hover:text-slate-200'
                     }`}>
-                      {item.speaker}:
-                    </span>{' '}
-                    {item.text}
-                  </p>
+                      {item.text}
+                    </p>
+                  </div>
                 </div>
+                
+                {/* Active item indicator */}
+                {item.isActive && (
+                  <div className="absolute left-0 top-1/2 -translate-y-1/2 w-1 h-8 bg-gradient-to-b from-blue-400 to-purple-500 rounded-r-full shadow-lg shadow-blue-400/50"></div>
+                )}
               </div>
             );
           })}
