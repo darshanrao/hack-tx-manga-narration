@@ -6,34 +6,29 @@
 .manga-page-container {
   width: 100%;
   height: 100%;
-  max-width: 100%;
-  max-height: 100%;
-  aspect-ratio: 3/4;
-  object-fit: contain;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
+  justify-content: stretch;
+  position: relative;
 }
 
-/* PDF canvas centering */
+/* PDF canvas centering - allow larger sizes */
 .pdf-canvas {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
   display: block;
-  margin: auto;
+  width: 100%;
+  height: 100%;
 }
 
 /* Ensure the manga page fits within viewport */
 @media (max-height: 600px) {
   .manga-page-container {
-    aspect-ratio: 4/3;
+    /* Allow full height usage */
   }
 }
 
 @media (max-width: 768px) {
   .manga-page-container {
-    aspect-ratio: 3/4;
+    /* Allow full width usage */
   }
 }
 
@@ -568,4 +563,276 @@ html {
   50% {
     opacity: .5;
   }
+}
+
+/* Modern custom animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+@keyframes glow {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.6);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes bounceIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.3);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.05);
+  }
+  70% {
+    transform: scale(0.9);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Modern utility classes */
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-glow {
+  animation: glow 2s ease-in-out infinite;
+}
+
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.6s ease-out;
+}
+
+.animate-slideInRight {
+  animation: slideInRight 0.5s ease-out;
+}
+
+.animate-bounceIn {
+  animation: bounceIn 0.6s ease-out;
+}
+
+/* Glassmorphism utilities */
+.glass {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.glass-dark {
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Modern gradient backgrounds */
+.bg-gradient-radial {
+  background: radial-gradient(circle, var(--tw-gradient-stops));
+}
+
+.bg-gradient-conic {
+  background: conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops));
+}
+
+/* Enhanced shadows */
+.shadow-glow {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.3);
+}
+
+.shadow-glow-lg {
+  box-shadow: 0 0 40px rgba(59, 130, 246, 0.4);
+}
+
+/* Smooth transitions */
+.transition-smooth {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.transition-bounce {
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Dark mode enhancements */
+.dark-glow {
+  box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+}
+
+.dark-glow-lg {
+  box-shadow: 0 0 40px rgba(59, 130, 246, 0.5);
+}
+
+.neon-border {
+  border: 1px solid rgba(59, 130, 246, 0.5);
+  box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+}
+
+.neon-border-purple {
+  border: 1px solid rgba(147, 51, 234, 0.5);
+  box-shadow: 0 0 10px rgba(147, 51, 234, 0.3);
+}
+
+/* Dark glassmorphism */
+.glass-dark {
+  background: rgba(15, 23, 42, 0.6);
+  backdrop-filter: blur(16px);
+  border: 1px solid rgba(71, 85, 105, 0.3);
+}
+
+.glass-dark-intense {
+  background: rgba(15, 23, 42, 0.8);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(71, 85, 105, 0.4);
+}
+
+/* Cyberpunk effects */
+.cyber-grid {
+  background-image: 
+    linear-gradient(rgba(59, 130, 246, 0.1) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(59, 130, 246, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.cyber-glow {
+  filter: drop-shadow(0 0 8px rgba(59, 130, 246, 0.6));
+}
+
+/* Enhanced dark animations */
+@keyframes darkPulse {
+  0%, 100% {
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(59, 130, 246, 0.8);
+  }
+}
+
+@keyframes neonFlicker {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.animate-dark-pulse {
+  animation: darkPulse 2s ease-in-out infinite;
+}
+
+.animate-neon-flicker {
+  animation: neonFlicker 1.5s ease-in-out infinite;
+}
+
+/* Modern Custom Scrollbar Styles */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: rgb(71 85 105) rgb(30 41 59);
+}
+
+.scrollbar-thin::-webkit-scrollbar {
+  width: 8px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: rgb(30 41 59);
+  border-radius: 4px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgb(71 85 105);
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgb(100 116 139);
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:active {
+  background: rgb(148 163 184);
+}
+
+.scrollbar-track-slate-800::-webkit-scrollbar-track {
+  background: rgb(30 41 59);
+}
+
+.scrollbar-thumb-slate-600::-webkit-scrollbar-thumb {
+  background: rgb(71 85 105);
+}
+
+.hover\:scrollbar-thumb-slate-500:hover::-webkit-scrollbar-thumb {
+  background: rgb(100 116 139);
+}
+
+.scrollbar-thumb-rounded-full::-webkit-scrollbar-thumb {
+  border-radius: 9999px;
+}
+
+/* Enhanced scrollbar for dark theme */
+.dark .scrollbar-thin {
+  scrollbar-color: rgb(100 116 139) rgb(15 23 42);
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-track {
+  background: rgb(15 23 42);
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgb(100 116 139);
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgb(148 163 184);
+}
+
+.dark .scrollbar-thin::-webkit-scrollbar-thumb:active {
+  background: rgb(203 213 225);
 }

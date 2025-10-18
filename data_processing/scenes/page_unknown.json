@@ -1,0 +1,98 @@
+{
+  "page_id": "unknown",
+  "scene_title": "Citizens - Page 7",
+  "ambient": "",
+  "characters": {
+    "Eren Jaeger": {
+      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
+      "expression": "Intense, angry, defiant"
+    },
+    "Mikasa Ackerman": {
+      "voice_id": "CaT0A6YBELRBgT6Qa2lH",
+      "expression": "Concerned, worried"
+    },
+    "Hannes": {
+      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+      "expression": "Relaxed, then shocked/surprised"
+    },
+    "Garrison Soldier 1": {
+      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
+      "expression": "Dismissive, mocking"
+    },
+    "Garrison Soldier 2": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "expression": "Casual, dismissive"
+    },
+    "Townsperson": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "expression": "Surprised, gossipy"
+    },
+    "Narrator": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "expression": "neutral"
+    }
+  },
+  "dialogue": [
+    {
+      "speaker": "Narrator",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[calm] Eren and Mikasa are walking through town and overhear Garrison soldiers, including Hannes, speaking dismissively about the Survey Corps. This angers Eren, who loudly compares living inside the walls to being a caged animal, attracting the attention of the soldiers and other passersby."
+    },
+    {
+      "speaker": "Garrison Soldier 1",
+      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
+      "text": "[chuckles] IT'S JUST LIKE HANNES SAYS."
+    },
+    {
+      "speaker": "Garrison Soldier 2",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "HELL... I CAN'T UNDERSTAND THOSE GUYS IN THE SURVEY CORPS WHO WANNA GO OUTSIDE THE WALL!"
+    },
+    {
+      "speaker": "Garrison Soldier 2",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "BUT IF THEY WANNA HAVE FUN PLAYING WAR, LET 'EM, I SAY!!"
+    },
+    {
+      "speaker": "Eren Jaeger",
+      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
+      "text": "WE DON'T HAVE TO GO OUTSIDE THE WALL FOR OUR WHOLE LIVES..."
+    },
+    {
+      "speaker": "Eren Jaeger",
+      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
+      "text": "WE CAN EAT, SLEEP AND SURVIVE JUST FINE HERE... BUT..."
+    },
+    {
+      "speaker": "Eren Jaeger",
+      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
+      "text": "[inhale] [angry] [shouts] ...ISN'T THAT..."
+    },
+    {
+      "speaker": "Eren Jaeger",
+      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
+      "text": "...LIKE BEING A CAGED ANIMAL?"
+    },
+    {
+      "speaker": "Garrison Soldier 1",
+      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
+      "text": "PFFT... WHAT A CRACKPOT..."
+    },
+    {
+      "speaker": "Hannes",
+      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+      "text": "[calm] [softly]... [surprised] [gasp]"
+    },
+    {
+      "speaker": "Townsperson",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "DON'T TELL ME... ...HE WANTS TO JOIN THE SURVEY CORPS?"
+    }
+  ],
+  "metadata": {
+    "generated_at": "2025-10-18T16:31:30.715459",
+    "total_dialogue_lines": 11,
+    "total_characters": 7,
+    "has_narrator": true
+  }
+}
