@@ -50,7 +50,7 @@ export function Transcript({ currentText, isPlaying, className, onCollapseChange
   ];
 
   return (
-    <Card className={`h-auto flex flex-col bg-slate-800/90 backdrop-blur-sm border-slate-700/50 ${className} ${!isExpanded ? 'overflow-hidden p-0 m-0' : 'p-0'} transition-all duration-500 ease-in-out`}>
+    <Card className={`h-auto flex flex-col bg-slate-900/90 backdrop-blur-sm border-slate-700/50 rounded-none ${className} ${!isExpanded ? 'overflow-hidden p-0 m-0' : 'p-0'} transition-[padding,margin,overflow] duration-300 ease-out`}>
       {/* Header */}
       <div className="px-4 pt-4 pb-0">
         <div className="flex items-center justify-between">
@@ -81,7 +81,7 @@ export function Transcript({ currentText, isPlaying, className, onCollapseChange
       </div>
 
       {/* Transcript Content */}
-      <div className={`overflow-y-auto transition-all duration-500 ease-in-out ${
+      <div className={`overflow-y-auto transition-[opacity,max-height,padding] duration-300 ease-out ${
         isExpanded 
           ? 'opacity-100 px-4 pt-0 pb-4' 
           : 'opacity-0 max-h-0 p-0 overflow-hidden'

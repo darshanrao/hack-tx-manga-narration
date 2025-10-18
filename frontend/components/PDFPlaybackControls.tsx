@@ -10,15 +10,18 @@ interface PDFPlaybackControlsProps {
   onPlayPause: () => void;
   volume: number[];
   onVolumeChange: (value: number[]) => void;
-  isMuted: boolean;
-  onToggleMute: () => void;
   speed: number[];
   onSpeedChange: (value: number[]) => void;
+  // Audio time props
+  currentTime: number;
+  duration: number;
+  onSeek: (time: number) => void;
   // Navigation props for fast forward/rewind
   onPrevious: () => void;
   onNext: () => void;
   canGoPrevious: boolean;
   canGoNext: boolean;
+  fullWidth?: boolean;
 }
 
 export function PDFPlaybackControls({
@@ -28,20 +31,28 @@ export function PDFPlaybackControls({
   onPlayPause,
   volume,
   onVolumeChange,
-  isMuted,
-  onToggleMute,
   speed,
   onSpeedChange,
+  currentTime,
+  duration,
+  onSeek,
   onPrevious,
   onNext,
   canGoPrevious,
   canGoNext,
+  fullWidth = false,
 }: PDFPlaybackControlsProps) {
+  const formatTime = (seconds: number) => {
+    if (isNaN(seconds) || !isFinite(seconds)) return "0:00";
+    const mins = Math.floor(seconds / 60);
+    const secs = Math.floor(seconds % 60);
+    return `${mins}:${secs.toString().padStart(2, '0')}`;
+  };
   return (
-    <div className="border-t border-slate-700/50 bg-slate-900/90 backdrop-blur-xl px-4 py-4 shadow-lg shadow-black/20">
-      <div className="max-w-4xl mx-auto space-y-4">
+    <div className={`${fullWidth ? 'w-full bg-transparent border-0 p-0' : 'bg-slate-900 border-t border-slate-700/50 px-4 py-4'}`}>
+      <div className={`space-y-4 ${fullWidth ? 'w-full flex flex-col items-center' : 'max-w-4xl mx-auto flex flex-col items-center'}`}>
         {/* Page Navigation */}
-        <div className="flex items-center justify-center gap-4">
+        <div className={`flex items-center justify-center gap-3 ${fullWidth ? 'w-full max-w-md' : ''}`}>
           <Button
             size="sm"
             variant="outline"
@@ -53,7 +64,7 @@ export function PDFPlaybackControls({
             Previous
           </Button>
 
-          <div className="text-center bg-slate-800/60 backdrop-blur-sm rounded-xl px-4 py-2 border border-slate-700/40 shadow-lg min-w-fit whitespace-nowrap">
+           <div className={`${fullWidth ? 'bg-transparent' : 'bg-slate-800/95'} text-center rounded-xl px-4 py-2 border border-slate-600/60 shadow-lg min-w-fit whitespace-nowrap`}>
             <p className="text-slate-300 font-bold text-sm">
               Page {currentPage} of {totalPages}
             </p>
@@ -72,7 +83,7 @@ export function PDFPlaybackControls({
         </div>
 
         {/* Playback Controls */}
-        <div className="flex items-center justify-center gap-3">
+        <div className={`flex items-center justify-center gap-3 ${fullWidth ? 'w-full max-w-md' : ''}`}>
           <Button
             variant="outline"
             size="sm"
@@ -111,39 +122,28 @@ export function PDFPlaybackControls({
         </div>
 
         {/* Audio Progress Bar */}
-        <div className="flex items-center justify-center gap-3 bg-slate-800/60 backdrop-blur-sm rounded-xl px-4 py-3 border border-slate-700/40 shadow-lg">
-          <span className="text-xs font-semibold text-slate-400">0:00</span>
-          <div className="flex-1 max-w-xs">
-            <div className="w-full bg-slate-700 rounded-full h-1.5">
-              <div
-                className="bg-gradient-to-r from-blue-400 to-purple-500 h-1.5 rounded-full transition-all duration-300 shadow-sm"
-                style={{
-                  width: `${(currentPage / totalPages) * 100}%`,
-                }}
-              />
-            </div>
+         <div className={`${fullWidth ? 'bg-transparent' : 'bg-slate-800/95'} flex items-center justify-center gap-3 rounded-xl px-4 py-3 border border-slate-600/60 shadow-lg w-full`}>
+          <span className="text-xs font-semibold text-slate-400">{formatTime(currentTime)}</span>
+          <div className="flex-1">
+            <Slider
+              value={[currentTime]}
+              max={duration || 1}
+              onValueChange={(value) => onSeek(value[0])}
+              className="cursor-pointer"
+              disabled={duration === 0}
+            />
           </div>
-          <span className="text-xs font-semibold text-slate-400">2:10</span>
+          <span className="text-xs font-semibold text-slate-400">{formatTime(duration)}</span>
         </div>
 
         {/* Volume and Speed Controls - Compact */}
-        <div className="grid grid-cols-2 gap-3">
-          {/* Volume Control */}
-          <div className="bg-slate-800/60 backdrop-blur-sm rounded-xl p-3 border border-slate-700/40 shadow-lg">
+        <div className="flex gap-6 w-full">
+           {/* Volume Control */}
+           <div className={`${fullWidth ? 'bg-transparent' : 'bg-slate-800/95'} rounded-xl p-3 border border-slate-600/60 shadow-lg flex-1`}>
             <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={onToggleMute}
-                className="h-8 w-8 rounded-full bg-slate-700/80 hover:bg-slate-600 hover:text-blue-400 transition-all duration-200"
-                aria-label={isMuted ? "Unmute" : "Mute"}
-              >
-                {isMuted ? (
-                  <VolumeX className="h-4 w-4" />
-                ) : (
-                  <Volume2 className="h-4 w-4" />
-                )}
-              </Button>
+              <div className="h-8 w-8 rounded-full bg-slate-700/80 flex items-center justify-center">
+                <Volume2 className="h-4 w-4 text-slate-300" />
+              </div>
               <div className="flex-1 space-y-1">
                 <div className="flex justify-between items-center">
                   <span className="text-xs font-semibold text-slate-300">Volume</span>
@@ -164,8 +164,8 @@ export function PDFPlaybackControls({
             </div>
           </div>
 
-          {/* Speed Control */}
-          <div className="bg-slate-800/60 backdrop-blur-sm rounded-xl p-3 border border-slate-700/40 shadow-lg">
+           {/* Speed Control */}
+           <div className={`${fullWidth ? 'bg-transparent' : 'bg-slate-800/95'} rounded-xl p-3 border border-slate-600/60 shadow-lg flex-1`}>
             <div className="flex items-center gap-2">
               <div className="h-8 w-8 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 flex items-center justify-center">
                 <span className="text-white font-bold text-xs">⚡</span>
