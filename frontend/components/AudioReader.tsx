@@ -263,7 +263,7 @@ export function AudioReader({ panels, chapterTitle, onPreviousChapter, onNextCha
               {panels.map((panel, index) => (
                 <div
                   key={panel.id}
-                  ref={(el) => (panelRefs.current[index] = el)}
+                  ref={(el) => { panelRefs.current[index] = el; }}
                   className={`border-4 rounded-lg overflow-hidden transition-all cursor-pointer focus:outline-none ${
                     index === currentPanelIndex
                       ? "border-primary ring-8 ring-primary/30 scale-[1.02] shadow-2xl"
