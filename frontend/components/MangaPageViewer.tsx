@@ -31,35 +31,32 @@ export function MangaPageViewer({
   }, [currentPanelId]);
 
   return (
-    <div className="h-full w-full flex items-center justify-center p-2 bg-muted/30">
-      <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden manga-page-container">
+    <div className="h-full w-full flex items-center justify-center p-4 bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50">
+      <div className="relative bg-white rounded-3xl shadow-2xl overflow-hidden manga-page-container border border-white/40">
         {/* Mock manga page background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 to-gray-100">
-          {/* Grid lines to simulate manga page layout */}
-          <svg className="absolute inset-0 w-full h-full opacity-20">
-            <defs>
-              <pattern
-                id="grid"
-                width="40"
-                height="40"
-                patternUnits="userSpaceOnUse"
-              >
-                <path
-                  d="M 40 0 L 0 0 0 40"
-                  fill="none"
-                  stroke="gray"
-                  strokeWidth="0.5"
-                />
-              </pattern>
-            </defs>
-            <rect width="100%" height="100%" fill="url(#grid)" />
-          </svg>
+        <div className="absolute inset-0 bg-gradient-to-br from-gray-50 via-white to-gray-100">
+          {/* Subtle pattern overlay */}
+          <div className="absolute inset-0 opacity-5">
+            <svg className="w-full h-full">
+              <defs>
+                <pattern
+                  id="manga-pattern"
+                  width="60"
+                  height="60"
+                  patternUnits="userSpaceOnUse"
+                >
+                  <circle cx="30" cy="30" r="1" fill="currentColor" />
+                </pattern>
+              </defs>
+              <rect width="100%" height="100%" fill="url(#manga-pattern)" />
+            </svg>
+          </div>
 
           {/* Manga content placeholder */}
           <div className="absolute inset-0 flex items-center justify-center text-gray-400">
-            <div className="text-center space-y-2">
-              <div className="text-6xl">📖</div>
-              <p>Manga Page Visualization</p>
+            <div className="text-center space-y-4">
+              <div className="text-8xl drop-shadow-lg">📖</div>
+              <p className="text-lg font-medium">Manga Page Visualization</p>
             </div>
           </div>
         </div>
@@ -72,7 +69,7 @@ export function MangaPageViewer({
             <div
               key={panel.id}
               ref={isActive ? currentPanelRef : null}
-              className={`absolute transition-all duration-500 ${
+              className={`absolute transition-all duration-700 ease-out ${
                 isActive
                   ? "z-20"
                   : "z-10"
@@ -86,40 +83,48 @@ export function MangaPageViewer({
             >
               {/* Panel border and highlight */}
               <div
-                className={`absolute inset-0 border-4 rounded transition-all duration-500 ${
+                className={`absolute inset-0 border-4 rounded-2xl transition-all duration-700 ease-out ${
                   isActive
-                    ? "border-primary bg-primary/20 shadow-2xl scale-105"
-                    : "border-border/30 bg-transparent hover:border-primary/50"
+                    ? "border-blue-500 bg-gradient-to-br from-blue-50/80 to-purple-50/60 shadow-2xl shadow-blue-500/30 scale-105 backdrop-blur-sm"
+                    : "border-slate-300/40 bg-white/20 hover:border-blue-300/60 hover:bg-white/40 hover:shadow-lg hover:shadow-blue-500/10"
                 }`}
               />
               
-              {/* Active panel indicator */}
+              {/* Active panel effects */}
               {isActive && (
                 <>
                   {/* Animated corner indicators */}
-                  <div className="absolute -top-1 -left-1 w-6 h-6 border-t-4 border-l-4 border-primary rounded-tl animate-pulse" />
-                  <div className="absolute -top-1 -right-1 w-6 h-6 border-t-4 border-r-4 border-primary rounded-tr animate-pulse" />
-                  <div className="absolute -bottom-1 -left-1 w-6 h-6 border-b-4 border-l-4 border-primary rounded-bl animate-pulse" />
-                  <div className="absolute -bottom-1 -right-1 w-6 h-6 border-b-4 border-r-4 border-primary rounded-br animate-pulse" />
+                  <div className="absolute -top-2 -left-2 w-8 h-8 border-t-4 border-l-4 border-blue-500 rounded-tl-lg animate-pulse" />
+                  <div className="absolute -top-2 -right-2 w-8 h-8 border-t-4 border-r-4 border-blue-500 rounded-tr-lg animate-pulse" />
+                  <div className="absolute -bottom-2 -left-2 w-8 h-8 border-b-4 border-l-4 border-blue-500 rounded-bl-lg animate-pulse" />
+                  <div className="absolute -bottom-2 -right-2 w-8 h-8 border-b-4 border-r-4 border-blue-500 rounded-br-lg animate-pulse" />
                   
                   {/* Spotlight effect */}
-                  <div className="absolute inset-0 bg-gradient-radial from-primary/30 via-primary/10 to-transparent animate-pulse" />
+                  <div className="absolute inset-0 bg-gradient-radial from-blue-400/20 via-blue-300/10 to-transparent animate-pulse rounded-2xl" />
                   
                   {/* Panel number badge */}
-                  <div className="absolute -top-3 -left-3 bg-primary text-primary-foreground rounded-full w-8 h-8 flex items-center justify-center shadow-lg">
+                  <div className="absolute -top-4 -left-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-full w-10 h-10 flex items-center justify-center shadow-xl font-bold text-sm">
                     {panel.id}
+                  </div>
+                  
+                  {/* Reading indicator */}
+                  <div className="absolute top-2 right-2">
+                    <div className="flex items-center gap-1 bg-white/90 backdrop-blur-sm rounded-full px-2 py-1 shadow-lg">
+                      <div className="w-2 h-2 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full animate-pulse"></div>
+                      <span className="text-xs font-semibold text-slate-700">Reading</span>
+                    </div>
                   </div>
                 </>
               )}
               
               {/* Panel content placeholder */}
-              <div className="absolute inset-2 flex items-center justify-center">
+              <div className="absolute inset-3 flex items-center justify-center">
                 <div
-                  className={`text-center transition-opacity duration-300 ${
-                    isActive ? "opacity-100" : "opacity-30"
+                  className={`text-center transition-all duration-500 ${
+                    isActive ? "opacity-100 scale-100" : "opacity-40 scale-95"
                   }`}
                 >
-                  <div className="bg-white/80 backdrop-blur-sm rounded px-3 py-1.5 text-sm">
+                  <div className="bg-white/90 backdrop-blur-sm rounded-xl px-4 py-2 text-sm font-semibold shadow-lg border border-white/40">
                     Panel {panel.id}
                   </div>
                 </div>

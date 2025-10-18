@@ -38,98 +38,101 @@ export function PDFPlaybackControls({
   canGoNext,
 }: PDFPlaybackControlsProps) {
   return (
-    <div className="border-t border-border bg-slate-900 px-6 py-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex items-center justify-between gap-6">
+    <div className="border-t border-white/20 bg-white/80 backdrop-blur-xl px-8 py-6 shadow-lg">
+      <div className="max-w-6xl mx-auto">
+        <div className="flex flex-col lg:flex-row items-center justify-between gap-8">
           {/* Page Navigation */}
-          <div className="flex items-center gap-4">
+          <div className="flex items-center gap-6">
             <Button
-              size="default"
-              variant="ghost"
+              size="lg"
+              variant="outline"
               onClick={onPrevious}
               disabled={!canGoPrevious}
-              className="gap-2 text-white hover:bg-gray-700"
+              className="gap-3 bg-white/60 backdrop-blur-sm border-white/40 hover:bg-white/80 hover:border-blue-400 hover:text-blue-600 transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              <SkipBack className="h-4 w-4" />
+              <SkipBack className="h-5 w-5" />
               Previous Page
             </Button>
 
-            <div className="text-center">
-              <p className="text-sm text-gray-300">
+            <div className="text-center bg-white/60 backdrop-blur-sm rounded-2xl px-6 py-3 border border-white/40 shadow-lg min-w-fit whitespace-nowrap">
+              <p className="text-lg font-bold text-slate-700">
                 Page {currentPage} of {totalPages}
               </p>
             </div>
 
             <Button
-              size="default"
-              variant="ghost"
+              size="lg"
+              variant="outline"
               onClick={onNext}
               disabled={!canGoNext}
-              className="gap-2 text-white hover:bg-gray-700"
+              className="gap-3 bg-white/60 backdrop-blur-sm border-white/40 hover:bg-white/80 hover:border-blue-400 hover:text-blue-600 transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
             >
               Next Page
-              <SkipForward className="h-4 w-4" />
+              <SkipForward className="h-5 w-5" />
             </Button>
           </div>
 
           {/* Audio Controls */}
-          <div className="flex items-center gap-6">
+          <div className="flex flex-col lg:flex-row items-center gap-8">
+            {/* Playback Controls */}
+            <div className="flex items-center gap-4">
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={onPrevious}
+                disabled={!canGoPrevious}
+                className="h-12 w-12 rounded-full bg-white/60 backdrop-blur-sm border-white/40 hover:bg-white/80 hover:border-blue-400 hover:text-blue-600 transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <SkipBack className="h-5 w-5" />
+              </Button>
+
+              <Button
+                size="lg"
+                onClick={onPlayPause}
+                className={`h-16 w-16 rounded-full shadow-xl transition-all duration-200 transform hover:scale-105 ${
+                  isPlaying 
+                    ? "bg-gradient-to-r from-red-500 to-pink-600 hover:from-red-600 hover:to-pink-700" 
+                    : "bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700"
+                }`}
+              >
+                {isPlaying ? (
+                  <Pause className="h-8 w-8 text-white" />
+                ) : (
+                  <Play className="h-8 w-8 text-white ml-1" />
+                )}
+              </Button>
+
+              <Button
+                variant="outline"
+                size="lg"
+                onClick={onNext}
+                disabled={!canGoNext}
+                className="h-12 w-12 rounded-full bg-white/60 backdrop-blur-sm border-white/40 hover:bg-white/80 hover:border-blue-400 hover:text-blue-600 transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                <SkipForward className="h-5 w-5" />
+              </Button>
+            </div>
+
             {/* Audio Progress Bar */}
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-gray-300">0:00</span>
-              <div className="w-24">
-                <div className="w-full bg-gray-600 rounded-full h-1">
+            <div className="flex items-center gap-4 bg-white/60 backdrop-blur-sm rounded-2xl px-6 py-4 border border-white/40 shadow-lg">
+              <span className="text-sm font-semibold text-slate-600">0:00</span>
+              <div className="w-32">
+                <div className="w-full bg-slate-200 rounded-full h-2">
                   <div
-                    className="bg-white h-1 rounded-full transition-all duration-300"
+                    className="bg-gradient-to-r from-blue-500 to-purple-600 h-2 rounded-full transition-all duration-300 shadow-sm"
                     style={{
                       width: `${(currentPage / totalPages) * 100}%`,
                     }}
                   />
                 </div>
               </div>
-              <span className="text-xs text-gray-300">2:10</span>
-            </div>
-
-            {/* Playback Controls */}
-            <div className="flex items-center gap-2">
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onPrevious}
-                disabled={!canGoPrevious}
-                className="text-white hover:bg-gray-700 p-2"
-              >
-                <SkipBack className="h-4 w-4" />
-              </Button>
-
-              <Button
-                variant="default"
-                size="sm"
-                onClick={onPlayPause}
-                className="w-10 h-10 rounded-full p-0 bg-white text-black hover:bg-gray-200"
-              >
-                {isPlaying ? (
-                  <Pause className="h-4 w-4" />
-                ) : (
-                  <Play className="h-4 w-4 ml-0.5" />
-                )}
-              </Button>
-
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={onNext}
-                disabled={!canGoNext}
-                className="text-white hover:bg-gray-700 p-2"
-              >
-                <SkipForward className="h-4 w-4" />
-              </Button>
+              <span className="text-sm font-semibold text-slate-600">2:10</span>
             </div>
 
             {/* Volume Control */}
-            <div className="flex items-center gap-2">
-              <Volume2 className="h-4 w-4 text-gray-300" />
-              <div className="w-16">
+            <div className="flex items-center gap-4 bg-white/60 backdrop-blur-sm rounded-2xl px-6 py-4 border border-white/40 shadow-lg">
+              <Volume2 className="h-6 w-6 text-slate-600" />
+              <div className="w-24">
                 <Slider
                   value={volume}
                   onValueChange={onVolumeChange}
@@ -139,7 +142,7 @@ export function PDFPlaybackControls({
                   className="w-full"
                 />
               </div>
-              <span className="text-xs text-gray-300 w-6">
+              <span className="text-sm font-bold text-slate-600 w-8 text-center">
                 {Math.round(volume[0] * 100)}%
               </span>
             </div>
