@@ -210,16 +210,14 @@ export function PDFPageViewer({
   }
 
   return (
-    <div className="h-full w-full flex items-center justify-center p-2 bg-muted/30">
-      <div className="relative bg-white rounded-lg shadow-2xl overflow-hidden manga-page-container flex items-center justify-center">
+    <div className="h-full w-full bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900">
+      <div className="relative bg-slate-800/90 backdrop-blur-sm shadow-2xl overflow-hidden manga-page-container h-full w-full border border-slate-600/40">
         <canvas
           ref={canvasRef}
-          className="pdf-canvas"
+          className="pdf-canvas h-full w-full"
           style={{ 
-            maxWidth: '100%', 
-            maxHeight: '100%',
             display: 'block',
-            margin: 'auto'
+            borderRadius: '4px'
           }}
         />
       </div>

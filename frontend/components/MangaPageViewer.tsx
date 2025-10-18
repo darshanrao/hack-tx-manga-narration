@@ -31,10 +31,10 @@ export function MangaPageViewer({
   }, [currentPanelId]);
 
   return (
-    <div className="h-full w-full flex items-center justify-center p-4 bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900">
-      <div className="relative bg-slate-800 rounded-3xl shadow-2xl overflow-hidden manga-page-container border border-slate-700/40">
+    <div className="h-full w-full bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900">
+      <div className="relative bg-slate-800/90 backdrop-blur-sm shadow-2xl overflow-hidden manga-page-container h-full w-full border border-slate-600/40">
         {/* Mock manga page background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-800 via-slate-700 to-slate-900">
+        <div className="absolute inset-0 bg-gradient-to-br from-slate-700 via-slate-600 to-slate-800">
           {/* Subtle pattern overlay */}
           <div className="absolute inset-0 opacity-10">
             <svg className="w-full h-full">
@@ -52,13 +52,13 @@ export function MangaPageViewer({
             </svg>
           </div>
 
-          {/* Manga content placeholder */}
-          <div className="absolute inset-0 flex items-center justify-center text-slate-500">
-            <div className="text-center space-y-4">
-              <div className="text-8xl drop-shadow-lg">📖</div>
-              <p className="text-lg font-medium">Manga Page Visualization</p>
+            {/* Manga content placeholder */}
+            <div className="absolute inset-0 flex items-center justify-center text-slate-400">
+              <div className="text-center space-y-4">
+                <div className="text-8xl drop-shadow-lg">📖</div>
+                <p className="text-lg font-medium">Manga Page Visualization</p>
+              </div>
             </div>
-          </div>
         </div>
 
         {/* Panel overlays */}

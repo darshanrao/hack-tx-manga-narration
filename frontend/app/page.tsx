@@ -261,8 +261,8 @@ export default function HomePage() {
       <div className="flex-1 flex overflow-hidden">
         {uploadedFile ? (
           <>
-            {/* Left Half - Manga/PDF Viewer */}
-            <div className="w-1/2 overflow-hidden">
+            {/* Left Side - Manga/PDF Viewer (75% width) */}
+            <div className="w-1/3 overflow-hidden">
               {isPDF ? (
                 <PDFPageViewer
                   pdfFile={uploadedFile}
@@ -279,8 +279,8 @@ export default function HomePage() {
               )}
             </div>
             
-            {/* Right Half - Transcript and Controls */}
-            <div className="w-1/2 flex flex-col border-l border-slate-700/50">
+            {/* Right Side - Transcript and Controls (25% width) */}
+            <div className="w-2/3 flex flex-col border-l border-slate-700/50">
               {/* Top Half - Transcript */}
               <div className="flex-1 overflow-hidden">
                 <Transcript

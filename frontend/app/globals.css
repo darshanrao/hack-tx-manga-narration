@@ -7,15 +7,16 @@
   width: 100%;
   height: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
+  align-items: stretch;
+  justify-content: stretch;
   position: relative;
 }
 
 /* PDF canvas centering - allow larger sizes */
 .pdf-canvas {
   display: block;
-  margin: auto;
+  width: 100%;
+  height: 100%;
 }
 
 /* Ensure the manga page fits within viewport */
