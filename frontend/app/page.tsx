@@ -46,6 +46,7 @@ export default function HomePage() {
   const [speed, setSpeed] = useState([1]);
   const [pdfPageCount, setPdfPageCount] = useState(0);
   const [isPDF, setIsPDF] = useState(false);
+  const [pdfZoom, setPdfZoom] = useState(1.0);
 
   // Mock manga pages - in a real app, this would be extracted from the uploaded file
   const mockPages: MangaPage[] = [
@@ -144,6 +145,7 @@ export default function HomePage() {
     setCurrentPageIndex(0);
     setCurrentPanelIndex(0);
     setIsPlaying(false);
+    setPdfZoom(1.0); // Reset zoom for new file
     
     // Check if file is PDF
     const isPDFFile = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
@@ -265,6 +267,8 @@ export default function HomePage() {
                   pdfFile={uploadedFile}
                   currentPageIndex={currentPageIndex}
                   onPageCountChange={setPdfPageCount}
+                  zoom={pdfZoom}
+                  onZoomChange={setPdfZoom}
                 />
               ) : (
                 <MangaPageViewer
