@@ -29,10 +29,10 @@ export function KeyboardShortcutsHelp() {
       <DialogTrigger asChild>
         <Button
           variant="outline"
-          size="sm"
+          size="lg"
           className="gap-2 bg-slate-700/80 backdrop-blur-sm border-slate-500/60 hover:bg-slate-600/90 hover:border-blue-400/80 hover:text-blue-300 transition-all duration-200 shadow-lg text-slate-200"
         >
-          <Keyboard className="h-4 w-4" />
+          <Keyboard className="h-5 w-5" />
           Shortcuts
         </Button>
       </DialogTrigger>

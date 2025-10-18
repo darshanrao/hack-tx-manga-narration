@@ -239,6 +239,14 @@ export default function HomePage() {
     }, 200);
   };
 
+  const handleSeekBackward = () => {
+    handleSeek(Math.max(0, currentTime - 5));
+  };
+
+  const handleSeekForward = () => {
+    handleSeek(Math.min(duration, currentTime + 5));
+  };
+
   // Reset panel index when page changes manually
   useEffect(() => {
     setCurrentPanelIndex(0);
@@ -511,6 +519,7 @@ export default function HomePage() {
                   onCollapseChange={setIsTranscriptCollapsed}
                   currentTime={currentTime}
                   transcriptData={transcriptData}
+                  onSeek={handleSeek}
                 />
               </div>
               
@@ -533,10 +542,12 @@ export default function HomePage() {
                     currentTime={currentTime}
                     duration={duration}
                     onSeek={handleSeek}
-                    onPrevious={handlePreviousPage}
-                    onNext={handleNextPage}
-                    canGoPrevious={currentPageIndex > 0}
-                    canGoNext={currentPageIndex < pdfPageCount - 1}
+                    onSeekBackward={handleSeekBackward}
+                    onSeekForward={handleSeekForward}
+                    onPreviousPage={handlePreviousPage}
+                    onNextPage={handleNextPage}
+                    canGoPreviousPage={currentPageIndex > 0}
+                    canGoNextPage={currentPageIndex < pdfPageCount - 1}
                     fullWidth={isTranscriptCollapsed}
                   />
                 ) : (

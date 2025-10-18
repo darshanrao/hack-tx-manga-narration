@@ -8,15 +8,17 @@ import Link from 'next/link';
 
 export default function LandingPage() {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-[#0f0f23] via-[#1a1a3e] to-[#2d1b4e] text-white overflow-hidden">
+    <div className="h-screen bg-gradient-to-br from-[#0f0f23] via-[#1a1a3e] to-[#2d1b4e] text-white overflow-hidden flex flex-col">
       {/* Animated background elements */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
         <div className="absolute top-20 left-10 w-72 h-72 bg-purple-500/10 rounded-full blur-3xl animate-pulse"></div>
         <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-500/10 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
       </div>
 
-      {/* Navigation */}
-      <nav className="relative z-10 container mx-auto px-6 py-6">
+      {/* Scrollable content container */}
+      <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-track-slate-800 scrollbar-thumb-slate-600 hover:scrollbar-thumb-slate-500 scrollbar-thumb-rounded-full">
+        {/* Navigation */}
+        <nav className="relative z-10 container mx-auto px-6 py-6">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
@@ -165,19 +167,20 @@ export default function LandingPage() {
         </div>
       </div>
 
-      {/* Footer */}
-      <footer className="relative z-10 border-t border-gray-800 mt-20">
-        <div className="container mx-auto px-6 py-8">
-          <div className="flex items-center justify-between text-gray-400 text-sm">
-            <p>© 2025 MangaVoice. Built for hackathon.</p>
-            <div className="flex items-center gap-6">
-              <a href="#" className="hover:text-white transition-colors">Privacy</a>
-              <a href="#" className="hover:text-white transition-colors">Terms</a>
-              <a href="#" className="hover:text-white transition-colors">Contact</a>
+        {/* Footer */}
+        <footer className="relative z-10 border-t border-gray-800 mt-20">
+          <div className="container mx-auto px-6 py-8">
+            <div className="flex items-center justify-between text-gray-400 text-sm">
+              <p>© 2025 MangaVoice. Built for hackathon.</p>
+              <div className="flex items-center gap-6">
+                <a href="#" className="hover:text-white transition-colors">Privacy</a>
+                <a href="#" className="hover:text-white transition-colors">Terms</a>
+                <a href="#" className="hover:text-white transition-colors">Contact</a>
+              </div>
             </div>
           </div>
-        </div>
-      </footer>
+        </footer>
+      </div>
     </div>
   );
 }

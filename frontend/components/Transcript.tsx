@@ -13,6 +13,7 @@ interface TranscriptProps {
   onCollapseChange?: (isCollapsed: boolean) => void;
   currentTime?: number;
   transcriptData?: TranscriptEntry[];
+  onSeek?: (time: number) => void;
 }
 
 export function Transcript({ 
@@ -21,7 +22,8 @@ export function Transcript({
   className, 
   onCollapseChange, 
   currentTime = 0,
-  transcriptData 
+  transcriptData,
+  onSeek
 }: TranscriptProps) {
   const [isExpanded, setIsExpanded] = useState(true);
   const [transcriptEntries, setTranscriptEntries] = useState<TranscriptEntry[]>([]);
@@ -133,7 +135,7 @@ export function Transcript({
       </div>
 
       {/* Transcript Content - Scrollable */}
-      <div className={`flex-1 overflow-y-auto transition-[opacity,max-height,padding] duration-300 ease-out ${
+      <div className={`flex-1 overflow-y-auto transition-[opacity,max-height,padding] duration-300 ease-out scrollbar-thin scrollbar-track-slate-800 scrollbar-thumb-slate-600 hover:scrollbar-thumb-slate-500 scrollbar-thumb-rounded-full ${
         isExpanded 
           ? 'opacity-100 px-4 pt-0 pb-4' 
           : 'opacity-0 max-h-0 p-0 overflow-hidden'
@@ -150,11 +152,13 @@ export function Transcript({
               <div
                 key={item.id}
                 ref={item.isActive ? activeEntryRef : null}
-                className={`p-3 rounded-lg transition-all duration-200 ${
+                className={`p-3 rounded-lg transition-all duration-200 cursor-pointer hover:scale-[1.02] ${
                   item.isActive
                     ? 'bg-blue-900/40 border border-blue-400/60 shadow-lg shadow-blue-500/20'
                     : 'bg-slate-700/60 border border-slate-600/40 hover:bg-slate-600/80'
                 }`}
+                onClick={() => onSeek?.(item.timestamp)}
+                title={`Jump to ${formatTimestamp(item.timestamp)}`}
               >
                 <div className="flex items-start gap-3">
                   <span className={`text-xs font-mono px-2 py-1 rounded ${
