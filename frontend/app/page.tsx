@@ -230,7 +230,7 @@ export default function HomePage() {
     currentPanelIndex < currentPage?.panels.length - 1;
 
   return (
-    <div className="h-screen w-screen flex flex-col overflow-hidden bg-gradient-to-br from-slate-900 via-slate-800 to-gray-900">
+    <div className="h-screen w-screen flex flex-col overflow-hidden bg-slate-900">
       {/* Header */}
       <div className="border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-xl px-8 py-6 flex items-center justify-between shadow-lg shadow-black/20">
         <div>
@@ -281,9 +281,9 @@ export default function HomePage() {
             </div>
             
             {/* Right Side - Transcript and Controls (25% width) */}
-            <div className="w-3/5 flex flex-col border-l border-slate-700/50">
+            <div className="w-3/5 flex flex-col border-l border-slate-700/50 h-full min-h-0">
               {/* Transcript - Always visible header, content area collapses */}
-              <div className={`transition-all duration-500 ease-in-out ${
+              <div className={`transition-[height] duration-300 ease-out ${
                 isTranscriptCollapsed ? 'h-auto' : 'h-auto'
               }`}>
                 <Transcript
@@ -295,10 +295,10 @@ export default function HomePage() {
               </div>
               
               {/* Playback Controls - Expand when transcript is collapsed */}
-              <div className={`transition-all duration-500 ease-in-out ${
+              <div className={`transition-[background-color,border-color] duration-300 ease-out ${
                 isTranscriptCollapsed 
-                  ? 'flex-1 flex items-center justify-center bg-slate-900/90 backdrop-blur-xl' 
-                  : 'border-t border-slate-700/50'
+                  ? 'flex-1 flex items-center justify-center bg-slate-900 min-h-0' 
+                  : 'border-t border-slate-700/50 bg-slate-900 flex-shrink-0'
               }`}>
                 {isPDF ? (
                   <PDFPlaybackControls

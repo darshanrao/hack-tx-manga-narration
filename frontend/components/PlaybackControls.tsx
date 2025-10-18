@@ -38,7 +38,7 @@ export function PlaybackControls({
   fullWidth = false,
 }: PlaybackControlsProps) {
   return (
-    <div className={`${fullWidth ? 'w-full bg-transparent border-0 p-0' : 'bg-slate-900/90 backdrop-blur-xl border-t border-slate-700/50 p-4'}`}>
+    <div className={`${fullWidth ? 'w-full bg-transparent border-0 p-0' : 'bg-slate-900 border-t border-slate-700/50 p-4'}`}>
       <div className={`space-y-4 ${fullWidth ? 'w-full flex flex-col items-center' : 'max-w-4xl mx-auto flex flex-col items-center'}`}>
         {/* Main Controls */}
         <div className="flex items-center justify-center gap-4">
@@ -84,7 +84,7 @@ export function PlaybackControls({
 
         {/* Panel Progress */}
         <div className="text-center w-full">
-          <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-slate-800/60 backdrop-blur-sm rounded-full border border-slate-700/40 shadow-lg w-full justify-center">
+           <div className={`${fullWidth ? 'bg-transparent' : 'bg-slate-800/95'} inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-slate-600/60 shadow-lg w-full justify-center`}>
             <div className="w-1.5 h-1.5 bg-gradient-to-r from-blue-400 to-purple-500 rounded-full animate-pulse"></div>
             <p className="text-slate-300 font-semibold text-sm">
               Panel {currentPanel} of {totalPanels}
@@ -94,8 +94,8 @@ export function PlaybackControls({
 
         {/* Volume and Speed Controls - Compact */}
         <div className="flex gap-6 w-full">
-          {/* Volume */}
-          <div className="bg-slate-700/80 backdrop-blur-sm rounded-xl p-3 border border-slate-600/50 shadow-lg flex-1">
+           {/* Volume */}
+           <div className={`${fullWidth ? 'bg-transparent' : 'bg-slate-800/95'} rounded-xl p-3 border border-slate-600/60 shadow-lg flex-1`}>
             <div className="flex items-center gap-2">
               <Button
                 variant="ghost"
@@ -129,8 +129,8 @@ export function PlaybackControls({
             </div>
           </div>
 
-          {/* Speed */}
-          <div className="bg-slate-700/80 backdrop-blur-sm rounded-xl p-3 border border-slate-600/50 shadow-lg flex-1">
+           {/* Speed */}
+           <div className={`${fullWidth ? 'bg-transparent' : 'bg-slate-800/95'} rounded-xl p-3 border border-slate-600/60 shadow-lg flex-1`}>
             <div className="flex items-center gap-2">
               <div className="h-8 w-8 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 flex items-center justify-center">
                 <span className="text-white font-bold text-xs">⚡</span>
