@@ -1,0 +1,11 @@
+# ElevenLabs v3 Dialogue Generation Backend Dependencies
+# Install with: pip install -r requirements.txt
+
+# Core dependencies for ElevenLabs API integration
+elevenlabs>=1.0.0
+
+# Environment variable management
+python-dotenv>=1.0.0
+
+# Additional utilities (already included in Python standard library)
+# os, uuid - built-in modules

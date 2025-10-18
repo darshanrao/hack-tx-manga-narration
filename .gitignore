@@ -158,3 +158,8 @@ supabase/.temp/
 supabase/.branches/
 supabase/.outputs/
 
+# ElevenLabs specific
+elevenlabs/output/
+*.mp3
+*.wav
+*.m4a
