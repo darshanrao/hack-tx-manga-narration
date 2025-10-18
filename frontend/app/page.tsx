@@ -1,13 +1,17 @@
 'use client'
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { UploadArea } from "../components/UploadArea";
 import { MangaPageViewer } from "../components/MangaPageViewer";
 import { PlaybackControls } from "../components/PlaybackControls";
 import { PDFPlaybackControls } from "../components/PDFPlaybackControls";
+import { EnhancedPlaybackControls } from "../components/EnhancedPlaybackControls";
+import { AudioPlayer } from "../components/AudioPlayer";
 import { Transcript } from "../components/Transcript";
+import { KeyboardShortcutsHelp } from "../components/KeyboardShortcutsHelp";
 import { Button } from "../components/ui/button";
-import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
+import { ChevronLeft, ChevronRight, RotateCcw, Home } from "lucide-react";
+import Link from 'next/link';
 import dynamic from 'next/dynamic';
 
 // Dynamic import for PDF viewer to avoid SSR issues
@@ -30,6 +34,8 @@ interface Panel {
   width: number;
   height: number;
   text: string;
+  audioFileUrl?: string; // Path to audio file
+  audioDuration?: number; // Duration in seconds
 }
 
 interface MangaPage {
@@ -49,20 +55,72 @@ export default function HomePage() {
   const [isPDF, setIsPDF] = useState(false);
   const [pdfZoom, setPdfZoom] = useState(1.0);
   const [isTranscriptCollapsed, setIsTranscriptCollapsed] = useState(false);
+  const [currentTime, setCurrentTime] = useState(0);
+  const [duration, setDuration] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const previousPanelRef = useRef<string | null>(null);
 
-  // Mock manga pages - in a real app, this would be extracted from the uploaded file
+  // Mock manga pages with audio files - in a real app, this would be extracted from the uploaded file
   const mockPages: MangaPage[] = [
     {
       id: 1,
       panels: [
-        { id: "1", x: 5, y: 5, width: 40, height: 25, text: "In a world where humanity lives behind massive walls to protect themselves from giant humanoid creatures called Titans, young Eren Yeager dreams of exploring the world beyond." },
-        { id: "2", x: 52, y: 5, width: 43, height: 25, text: "One day, a colossal Titan appears and breaches the outer wall, allowing smaller Titans to invade the city." },
-        { id: "3", x: 5, y: 33, width: 28, height: 15, text: "Mother! No!" },
-        { id: "4", x: 36, y: 33, width: 59, height: 30, text: "Eren watches in horror as his mother is devoured by a Titan, vowing to eliminate every last one of them from the face of the Earth." },
-        { id: "5", x: 5, y: 51, width: 28, height: 20, text: "I'll kill them all. Every single Titan!" },
-        { id: "6", x: 5, y: 73, width: 42, height: 22, text: "Years later, Eren joins the military along with his childhood friends Mikasa and Armin." },
-        { id: "7", x: 50, y: 66, width: 45, height: 15, text: "Eren, you need to control your emotions. That's how you'll survive." },
-        { id: "8", x: 50, y: 83, width: 45, height: 12, text: "During training, Eren proves to be a fierce and determined soldier." },
+        { 
+          id: "1", 
+          x: 5, y: 5, width: 40, height: 25, 
+          text: "In a world where humanity lives behind massive walls to protect themselves from giant humanoid creatures called Titans, young Eren Yeager dreams of exploring the world beyond.",
+          audioFileUrl: "/mock-audio/dialogue_output_b0181950.mp3",
+          audioDuration: 15.5
+        },
+        { 
+          id: "2", 
+          x: 52, y: 5, width: 43, height: 25, 
+          text: "One day, a colossal Titan appears and breaches the outer wall, allowing smaller Titans to invade the city.",
+          audioFileUrl: "/mock-audio/dialogue_output_b0181950.mp3",
+          audioDuration: 12.3
+        },
+        { 
+          id: "3", 
+          x: 5, y: 33, width: 28, height: 15, 
+          text: "Mother! No!",
+          audioFileUrl: "/mock-audio/dialogue_output_b0181950.mp3",
+          audioDuration: 2.1
+        },
+        { 
+          id: "4", 
+          x: 36, y: 33, width: 59, height: 30, 
+          text: "Eren watches in horror as his mother is devoured by a Titan, vowing to eliminate every last one of them from the face of the Earth.",
+          audioFileUrl: "/mock-audio/dialogue_output_b0181950.mp3",
+          audioDuration: 18.7
+        },
+        { 
+          id: "5", 
+          x: 5, y: 51, width: 28, height: 20, 
+          text: "I'll kill them all. Every single Titan!",
+          audioFileUrl: "/mock-audio/dialogue_output_b0181950.mp3",
+          audioDuration: 4.2
+        },
+        { 
+          id: "6", 
+          x: 5, y: 73, width: 42, height: 22, 
+          text: "Years later, Eren joins the military along with his childhood friends Mikasa and Armin.",
+          audioFileUrl: "/mock-audio/dialogue_output_b0181950.mp3",
+          audioDuration: 8.9
+        },
+        { 
+          id: "7", 
+          x: 50, y: 66, width: 45, height: 15, 
+          text: "Eren, you need to control your emotions. That's how you'll survive.",
+          audioFileUrl: "/mock-audio/dialogue_output_b0181950.mp3",
+          audioDuration: 6.4
+        },
+        { 
+          id: "8", 
+          x: 50, y: 83, width: 45, height: 12, 
+          text: "During training, Eren proves to be a fierce and determined soldier.",
+          audioFileUrl: "/mock-audio/dialogue_output_b0181950.mp3",
+          audioDuration: 7.1
+        },
       ],
     },
     {
@@ -90,57 +148,173 @@ export default function HomePage() {
   const currentPage = mockPages[currentPageIndex];
   const currentPanel = currentPage?.panels[currentPanelIndex];
 
-  // Speech synthesis effect
+  // Audio player effect - handles audio playback with real audio files
   useEffect(() => {
-    if (!isPlaying || !currentPanel) {
-      window.speechSynthesis.cancel();
+    // Only reset time when switching panels/pages, not when pausing
+    if (!currentPanel?.audioFileUrl) {
+      setCurrentTime(0);
+      setDuration(0);
+      previousPanelRef.current = null;
       return;
     }
+    
+    // Only reset time when switching to a different panel
+    const currentPanelId = currentPanel.id;
+    if (previousPanelRef.current !== currentPanelId) {
+      setCurrentTime(0);
+      previousPanelRef.current = currentPanelId;
+    }
+  }, [currentPanelIndex, currentPageIndex, currentPanel]);
 
-    const utterance = new SpeechSynthesisUtterance(currentPanel.text);
-    utterance.volume = isMuted ? 0 : volume[0];
-    utterance.rate = speed[0];
+  // Audio event handlers
+  const handleTimeUpdate = (time: number) => {
+    setCurrentTime(time);
+  };
 
-    utterance.onend = () => {
-      // Move to next panel or page
-      if (currentPanelIndex < currentPage.panels.length - 1) {
-        setCurrentPanelIndex((prev) => prev + 1);
-      } else if (currentPageIndex < mockPages.length - 1) {
-        // Move to next page
-        setCurrentPageIndex((prev) => prev + 1);
-        setCurrentPanelIndex(0);
-      } else {
-        // End of manga
-        setIsPlaying(false);
-      }
-    };
+  const handleDurationChange = (dur: number) => {
+    setDuration(dur);
+  };
 
-    window.speechSynthesis.speak(utterance);
+  const handleAudioEnded = () => {
+    // Move to next panel or page
+    if (currentPanelIndex < currentPage.panels.length - 1) {
+      setCurrentPanelIndex((prev) => prev + 1);
+    } else if (currentPageIndex < mockPages.length - 1) {
+      // Move to next page
+      setCurrentPageIndex((prev) => prev + 1);
+      setCurrentPanelIndex(0);
+    } else {
+      // End of manga
+      setIsPlaying(false);
+    }
+  };
 
-    return () => {
-      window.speechSynthesis.cancel();
-    };
-  }, [isPlaying, currentPanelIndex, currentPageIndex, currentPanel, volume, isMuted, speed]);
+  const handleAudioError = () => {
+    console.error('Audio playback error');
+    setIsPlaying(false);
+  };
+
+  const handleSeek = (time: number) => {
+    setCurrentTime(time);
+    // For manga panels with audio files, the AudioPlayer component will handle the actual seeking
+    // For PDFs without audio, this just updates the UI state
+  };
 
   // Reset panel index when page changes manually
   useEffect(() => {
     setCurrentPanelIndex(0);
   }, [currentPageIndex]);
 
-  // Basic keyboard navigation for PDFs (spacebar only)
+  // Comprehensive keyboard shortcuts for playback controls
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
-      if (!uploadedFile || !isPDF) return;
+      if (!uploadedFile) return;
 
-      if (event.key === ' ') {
+      // Prevent shortcuts when typing in input fields
+      if (event.target instanceof HTMLInputElement || 
+          event.target instanceof HTMLTextAreaElement ||
+          event.target instanceof HTMLSelectElement) {
+        return;
+      }
+
+      // Prevent default for our shortcuts
+      const shortcuts = [' ', 'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'm', 'M', '+', '-', '=', '0', 'PageUp', 'PageDown'];
+      if (shortcuts.includes(event.key)) {
         event.preventDefault();
-        handlePlayPause();
+      }
+
+      switch (event.key) {
+        case ' ': // Spacebar - Play/Pause
+          handlePlayPause();
+          break;
+        
+        case 'ArrowLeft': // Left Arrow - Rewind 5 seconds
+          // Stop current speech and seek backward
+          window.speechSynthesis.cancel();
+          // Note: Speech synthesis doesn't support seeking, so we'll restart from current position
+          // In a real implementation, you'd pause, calculate new position, and resume
+          break;
+        
+        case 'ArrowRight': // Right Arrow - Skip 5 seconds
+          // Stop current speech and seek forward
+          window.speechSynthesis.cancel();
+          // Note: Speech synthesis doesn't support seeking, so we'll restart from current position
+          // In a real implementation, you'd pause, calculate new position, and resume
+          break;
+        
+        case 'ArrowUp': // Up Arrow - Volume Up
+          setVolume(prev => [Math.min(1, prev[0] + 0.1)]);
+          break;
+        
+        case 'ArrowDown': // Down Arrow - Volume Down
+          setVolume(prev => [Math.max(0, prev[0] - 0.1)]);
+          break;
+        
+        case 'm':
+        case 'M': // M - Mute/Unmute
+          toggleMute();
+          break;
+        
+        case '+':
+        case '=': // Plus/Equals - Speed Up
+          setSpeed(prev => [Math.min(2, prev[0] + 0.1)]);
+          break;
+        
+        case '-': // Minus - Speed Down
+          setSpeed(prev => [Math.max(0.5, prev[0] - 0.1)]);
+          break;
+        
+        case '0': // Zero - Reset Speed
+          setSpeed([1]);
+          break;
+        
+        case 'Home': // Home - First Page/Panel
+          if (isPDF) {
+            handleFirstPage();
+          } else {
+            setCurrentPageIndex(0);
+            setCurrentPanelIndex(0);
+            setIsPlaying(false);
+          }
+          break;
+        
+        case 'End': // End - Last Page/Panel
+          if (isPDF) {
+            handleLastPage();
+          } else {
+            const maxPages = mockPages.length;
+            setCurrentPageIndex(maxPages - 1);
+            setCurrentPanelIndex(mockPages[maxPages - 1].panels.length - 1);
+            setIsPlaying(false);
+          }
+          break;
+        
+        case 'Escape': // Escape - Stop playback
+          setIsPlaying(false);
+          window.speechSynthesis.cancel();
+          break;
+        
+        case 'PageUp': // Page Up - Previous page/panel
+          if (isPDF) {
+            handlePreviousPage();
+          } else {
+            handlePreviousPanel();
+          }
+          break;
+        
+        case 'PageDown': // Page Down - Next page/panel
+          if (isPDF) {
+            handleNextPage();
+          } else {
+            handleNextPanel();
+          }
+          break;
       }
     };
 
     window.addEventListener('keydown', handleKeyDown);
     return () => window.removeEventListener('keydown', handleKeyDown);
-  }, [uploadedFile, isPDF]);
+  }, [uploadedFile, isPDF, isPlaying, currentPageIndex, currentPanelIndex, volume, speed, isMuted]);
 
   const handleFileUpload = (file: File) => {
     setUploadedFile(file);
@@ -243,8 +417,19 @@ export default function HomePage() {
               : "Upload a manga file to begin reading"}
           </p>
         </div>
-        {uploadedFile && (
-          <div className="flex gap-3">
+        <div className="flex gap-3">
+          <KeyboardShortcutsHelp />
+          <Link href="/landing">
+            <Button
+              variant="outline"
+              size="lg"
+              className="gap-2 bg-slate-700/80 backdrop-blur-sm border-slate-500/60 hover:bg-slate-600/90 hover:border-blue-400/80 hover:text-blue-300 transition-all duration-200 shadow-lg text-slate-200"
+            >
+              <Home className="h-5 w-5" />
+              Home
+            </Button>
+          </Link>
+          {uploadedFile && (
             <Button
               variant="outline"
               size="lg"
@@ -254,8 +439,8 @@ export default function HomePage() {
               <RotateCcw className="h-5 w-5" />
               Upload New File
             </Button>
-          </div>
-        )}
+          )}
+        </div>
       </div>
 
       {/* Main Content - Split Screen Layout */}
@@ -269,8 +454,6 @@ export default function HomePage() {
                   pdfFile={uploadedFile}
                   currentPageIndex={currentPageIndex}
                   onPageCountChange={setPdfPageCount}
-                  zoom={pdfZoom}
-                  onZoomChange={setPdfZoom}
                 />
               ) : (
                 <MangaPageViewer
@@ -308,10 +491,11 @@ export default function HomePage() {
                     onPlayPause={handlePlayPause}
                     volume={volume}
                     onVolumeChange={setVolume}
-                    isMuted={isMuted}
-                    onToggleMute={toggleMute}
                     speed={speed}
                     onSpeedChange={setSpeed}
+                    currentTime={currentTime}
+                    duration={duration}
+                    onSeek={handleSeek}
                     onPrevious={handlePreviousPage}
                     onNext={handleNextPage}
                     canGoPrevious={currentPageIndex > 0}
@@ -319,7 +503,7 @@ export default function HomePage() {
                     fullWidth={isTranscriptCollapsed}
                   />
                 ) : (
-                  <PlaybackControls
+                  <EnhancedPlaybackControls
                     isPlaying={isPlaying}
                     onPlayPause={handlePlayPause}
                     onPrevious={handlePreviousPanel}
@@ -328,12 +512,13 @@ export default function HomePage() {
                     canGoNext={canGoNextPanel}
                     currentPanel={currentPanelIndex + 1}
                     totalPanels={currentPage.panels.length}
+                    currentTime={currentTime}
+                    duration={duration}
                     volume={volume}
                     onVolumeChange={setVolume}
-                    isMuted={isMuted}
-                    onToggleMute={toggleMute}
                     speed={speed}
                     onSpeedChange={setSpeed}
+                    onSeek={handleSeek}
                     fullWidth={isTranscriptCollapsed}
                   />
                 )}
@@ -349,6 +534,24 @@ export default function HomePage() {
           </div>
         )}
       </div>
+      
+      {/* Audio Player - Hidden component that handles audio playback */}
+      {currentPanel?.audioFileUrl && (
+        <AudioPlayer
+          audioUrl={currentPanel.audioFileUrl}
+          isPlaying={isPlaying}
+          volume={volume[0]}
+          speed={speed[0]}
+          isMuted={isMuted}
+          currentTime={currentTime}
+          onTimeUpdate={handleTimeUpdate}
+          onDurationChange={handleDurationChange}
+          onEnded={handleAudioEnded}
+          onError={handleAudioError}
+          onLoadStart={() => setIsLoading(true)}
+          onCanPlay={() => setIsLoading(false)}
+        />
+      )}
     </div>
   );
 }
