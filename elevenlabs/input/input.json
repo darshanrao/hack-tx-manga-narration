@@ -1,34 +1,34 @@
 {
-    "page_id": "unknown",
-    "scene_title": "Citizens - Page 7",
-    "ambient": "",
+    "scene_id": "ch01_final",
+    "scene_title": "Eren - Complete Scene",
+    "ambient": "busy town square, sounds of people and horses, slightly somber atmosphere due to the children's mood | The scene is set near the gate of a town/city. There's a sense of everyday life mixed with the presence of soldiers. The overall atmosphere is somewhat tense due to the soldiers' behavior and the reminder of duty. | The panels transition from an indoor setting with soldiers drinking and relaxing, to a crowded street scene with civilians walking about. The atmosphere shifts from casual and relaxed to one of everyday life, with an undercurrent of the underlying tensions related to living within the walls. | The scene is set on top of a large wall with open sky and visible landscape in the background. The atmosphere is somewhat tense due to the disagreement but generally relaxed due to Hannes' perceived confidence. | The scene starts in a somewhat relaxed, possibly drunken atmosphere among the garrison members, with the sounds of them drinking and chatting. The sudden announcement of the Titan invasion shatters this atmosphere, creating a sense of urgency and chaos. The 'twitch' sound effect suggests something reacting to the news with a sudden movement. | The atmosphere is vast and expansive, emphasizing the scale of the walls and the city. The sound effect suggests a distant, possibly ominous presence or event. The scene has a neutral tone, establishing the setting. | General outdoor atmosphere near the wall, likely sunny. Sense of tension and frustration due to the confrontation.",
     "characters": {
-        "Eren Jaeger": {
-            "voice_id": "s0XGIcqmceN2l7kjsqoZ",
-            "expression": "Intense, angry, defiant"
-        },
-        "Mikasa Ackerman": {
-            "voice_id": "CaT0A6YBELRBgT6Qa2lH",
-            "expression": "Concerned, worried"
-        },
-        "Hannes": {
-            "voice_id": "vBKc2FfBKJfcZNyEt1n6",
-            "expression": "Relaxed, then shocked/surprised"
-        },
-        "Garrison Soldier 1": {
-            "voice_id": "s0XGIcqmceN2l7kjsqoZ",
-            "expression": "Dismissive, mocking"
-        },
-        "Garrison Soldier 2": {
-            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
-            "expression": "Casual, dismissive"
-        },
-        "Townsperson": {
-            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
-            "expression": "Surprised, gossipy"
-        },
         "Narrator": {
             "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "expression": "neutral"
+        },
+        "Sound Effect": {
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "expression": "neutral"
+        },
+        "Mikasa": {
+            "voice_id": "CaT0A6YBELRBgT6Qa2lH",
+            "expression": "serious, questioning"
+        },
+        "Eren": {
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "expression": "Frustrated and indignant, then thoughtful and contemplative"
+        },
+        "Hannes": {
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "expression": "Casual and somewhat dismissive, then surprised and doubtful"
+        },
+        "Soldier": {
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "expression": "neutral"
+        },
+        "Narration": {
+            "voice_id": "vBKc2FfBKJfcZNyEt1n6",
             "expression": "neutral"
         }
     },
@@ -36,63 +36,475 @@
         {
             "speaker": "Narrator",
             "voice_id": "5kMbtRSEKIkRZSdXxrZg",
-            "text": "[calm] Eren and Mikasa are walking through town and overhear Garrison soldiers, including Hannes, speaking dismissively about the Survey Corps. This angers Eren, who loudly compares living inside the walls to being a caged animal, attracting the attention of the soldiers and other passersby."
+            "text": "[calm] A panoramic view of a walled city, looking down from a great height. A sound effect indicates distant activity.",
+            "page_number": 1,
+            "emotion": "neutral",
+            "confidence": "high"
         },
         {
-            "speaker": "Garrison Soldier 1",
-            "voice_id": "s0XGIcqmceN2l7kjsqoZ",
-            "text": "[chuckles] IT'S JUST LIKE HANNES SAYS."
-        },
-        {
-            "speaker": "Garrison Soldier 2",
+            "speaker": "Sound Effect",
             "voice_id": "5kMbtRSEKIkRZSdXxrZg",
-            "text": "HELL... I CAN'T UNDERSTAND THOSE GUYS IN THE SURVEY CORPS WHO WANNA GO OUTSIDE THE WALL!"
+            "text": "[neutral] fwOOO",
+            "page_number": 1,
+            "emotion": "neutral",
+            "confidence": "high"
         },
         {
-            "speaker": "Garrison Soldier 2",
+            "speaker": "Narrator",
             "voice_id": "5kMbtRSEKIkRZSdXxrZg",
-            "text": "BUT IF THEY WANNA HAVE FUN PLAYING WAR, LET 'EM, I SAY!!"
+            "text": "[calm] Eren and Mikasa are walking in town, upset. Eren is crying. Hannes notices and questions him.",
+            "page_number": 2,
+            "emotion": "neutral",
+            "confidence": "high"
         },
         {
-            "speaker": "Eren Jaeger",
-            "voice_id": "s0XGIcqmceN2l7kjsqoZ",
-            "text": "WE DON'T HAVE TO GO OUTSIDE THE WALL FOR OUR WHOLE LIVES..."
+            "speaker": "Mikasa",
+            "voice_id": "CaT0A6YBELRBgT6Qa2lH",
+            "text": "[sad] ...",
+            "page_number": 2,
+            "emotion": "sad, contemplative",
+            "confidence": "medium"
         },
         {
-            "speaker": "Eren Jaeger",
-            "voice_id": "s0XGIcqmceN2l7kjsqoZ",
-            "text": "WE CAN EAT, SLEEP AND SURVIVE JUST FINE HERE... BUT..."
+            "speaker": "Mikasa",
+            "voice_id": "CaT0A6YBELRBgT6Qa2lH",
+            "text": "[sad] ...",
+            "page_number": 2,
+            "emotion": "sad, contemplative",
+            "confidence": "medium"
         },
         {
-            "speaker": "Eren Jaeger",
-            "voice_id": "s0XGIcqmceN2l7kjsqoZ",
-            "text": "[inhale] [angry] [shouts] ...ISN'T THAT..."
+            "speaker": "Eren",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[sad] [crying] SNIFF",
+            "page_number": 2,
+            "emotion": "sad, tearful",
+            "confidence": "high"
         },
         {
-            "speaker": "Eren Jaeger",
-            "voice_id": "s0XGIcqmceN2l7kjsqoZ",
-            "text": "...LIKE BEING A CAGED ANIMAL?"
+            "speaker": "Eren",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[ashamed] DON'T TELL ANYONE...",
+            "page_number": 2,
+            "emotion": "ashamed, vulnerable",
+            "confidence": "high"
         },
         {
-            "speaker": "Garrison Soldier 1",
-            "voice_id": "s0XGIcqmceN2l7kjsqoZ",
-            "text": "PFFT... WHAT A CRACKPOT..."
+            "speaker": "Eren",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "...THAT I WAS CRYING.",
+            "page_number": 2,
+            "emotion": "embarrassed, defensive",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Mikasa",
+            "voice_id": "CaT0A6YBELRBgT6Qa2lH",
+            "text": "[calm] ...I WON'T.",
+            "page_number": 2,
+            "emotion": "calm, supportive",
+            "confidence": "high"
         },
         {
             "speaker": "Hannes",
-            "voice_id": "vBKc2FfBKJfcZNyEt1n6",
-            "text": "[calm] [softly]... [surprised] [gasp]"
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[questioning] [chuckles] CRYING FOR NO REASON...",
+            "page_number": 2,
+            "emotion": "questioning, teasing",
+            "confidence": "medium"
         },
         {
-            "speaker": "Townsperson",
+            "speaker": "Hannes",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[friendly] WHY DON'T YOU HAVE YOUR DAD EXAMINE YOU?",
+            "page_number": 2,
+            "emotion": "teasing, friendly",
+            "confidence": "medium"
+        },
+        {
+            "speaker": "Eren",
             "voice_id": "5kMbtRSEKIkRZSdXxrZg",
-            "text": "DON'T TELL ME... ...HE WANTS TO JOIN THE SURVEY CORPS?"
+            "text": "[angry] [frustrated] DON'T BE STUPID! LIKE I CAN TELL MY OLD MAN ABOUT THIS?!",
+            "page_number": 2,
+            "emotion": "angry, frustrated",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Hannes",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[concerned] WHAT ARE YOU CRYING ABOUT, EREN?",
+            "page_number": 2,
+            "emotion": "concerned, inquisitive",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Eren",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[surprised] [embarrassed] M-MR. HANNES!",
+            "page_number": 2,
+            "emotion": "surprised, slightly embarrassed",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Narrator",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[calm] Eren and Mikasa walk past members of the Garrison Regiment who are drinking. Eren is confronted about his smell of liquor and the possibility that Mikasa is angry at him. The scene shifts to Eren and Mikasa approaching the gate where they're scheduled for duty.",
+            "page_number": 3,
+            "emotion": "neutral",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Hannes",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[mocking] DID MIKASA GET MAD AT YOU FOR SOMETHING?",
+            "page_number": 3,
+            "emotion": "mocking",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Eren",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[irritated] HUH?! WHAT MAKES YOU THINK I'M CRYING?!",
+            "page_number": 3,
+            "emotion": "irritated",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Eren",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[angry] YOU REEK OF LIQUOR!!",
+            "page_number": 3,
+            "emotion": "angry",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Soldier",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[surprised] WHAT THE...?!",
+            "page_number": 3,
+            "emotion": "surprised",
+            "confidence": "medium"
+        },
+        {
+            "speaker": "Soldier",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[disappointed] DRINKING AGAIN...",
+            "page_number": 3,
+            "emotion": "disappointed",
+            "confidence": "medium"
+        },
+        {
+            "speaker": "Soldier",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[inviting] WOULD YOU TWO LIKE TO JOIN IN?",
+            "page_number": 3,
+            "emotion": "inviting",
+            "confidence": "medium"
+        },
+        {
+            "speaker": "Eren",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[determined] OH! WE'RE ON GATE DUTY TODAY.",
+            "page_number": 3,
+            "emotion": "serious, determined",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Soldier",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[concerned] [embarrassed] NO... UM... WHAT ABOUT YOUR WORK?",
+            "page_number": 3,
+            "emotion": "concerned, slightly embarrassed",
+            "confidence": "medium"
+        },
+        {
+            "speaker": "Narrator",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[calm] Eren confronts Hannes and other garrison members about drinking on duty. Suddenly, a dramatic and urgent atmosphere shifts the scene. Eren shouts about the Titans invading the town, creating panic.",
+            "page_number": 4,
+            "emotion": "neutral",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Eren",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[suspicious] BUT IN AN EMERGENCY, WOULD YOU BE ABLE TO FIGHT DRUNK?!",
+            "page_number": 4,
+            "emotion": "suspicious, confrontational",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Hannes",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[nonchalant] WHAT'S THE BIG DEAL IF LIQUOR HAPPENS TO BE AMONG THE RATIONS SOMETIMES?",
+            "page_number": 4,
+            "emotion": "nonchalant, dismissive",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Hannes",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[casual] WE GET HUNGRY AND THIRSTY, HANGING OUT HERE ALL DAY.",
+            "page_number": 4,
+            "emotion": "justifying, casual",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Eren",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[curious] WHAT KIND OF EMERGENCY?",
+            "page_number": 4,
+            "emotion": "curious, skeptical",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Eren",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[terrified] [urgent] ...AND INVADED THE TOWN!!",
+            "page_number": 4,
+            "emotion": "terrified, urgent",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Eren",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[concerned] I'M TALKING ABOUT IF THEY BROKE DOWN THE WALL...",
+            "page_number": 4,
+            "emotion": "serious, concerned",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Mikasa",
+            "voice_id": "CaT0A6YBELRBgT6Qa2lH",
+            "text": "[shocked] [terrified] !! I DON'T BELIEVE THIS! IT'S OBVIOUS!",
+            "page_number": 4,
+            "emotion": "shocked, terrified",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Narrator",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[calm] Eren is arguing with Hannes and other garrison members about feeling at ease with the current situation. They are on top of the wall.",
+            "page_number": 5,
+            "emotion": "neutral",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Hannes",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "...THAT HASN'T HAPPENED IN A HUNDRED YEARS!",
+            "page_number": 5,
+            "emotion": "dismissive",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Hannes",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[confident] BUT I TELL YA...",
+            "page_number": 5,
+            "emotion": "confident",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Hannes",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[cocky] IF THE BASTARDS BREAK THROUGH THE WALL, WE'LL BE ON TOP OF THE SITUATION.",
+            "page_number": 5,
+            "emotion": "cocky",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Hannes",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[amused] [condescending] HAHAHA...THE DOCTOR'S SON HAS SPIRIT!",
+            "page_number": 5,
+            "emotion": "amused, condescending",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Hannes",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[irritated] HEY, EREN! DON'T SUDDENLY RAISE YOUR VOICE LIKE THAT...",
+            "page_number": 5,
+            "emotion": "irritated",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Eren",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[determined] [angry] MY FATHER SAYS SO!!",
+            "page_number": 5,
+            "emotion": "determined, angry",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Hannes",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[hesitant] WELL...YOU MAY BE RIGHT.",
+            "page_number": 5,
+            "emotion": "hesitant, conceding",
+            "confidence": "medium"
+        },
+        {
+            "speaker": "Mikasa",
+            "voice_id": "CaT0A6YBELRBgT6Qa2lH",
+            "text": "[fearful] [worried] B-BUT IT'S DANGEROUS TO FEEL AT EASE LIKE THIS!",
+            "page_number": 5,
+            "emotion": "fearful, worried",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Hannes",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[calm] [respectful] I'M NOT GONNA SECOND-GUESS DR. YEAGER, THIS TOWN'S BENE-FACTOR. BUT Y'KNOW...",
+            "page_number": 5,
+            "emotion": "calm, respectful",
+            "confidence": "medium"
+        },
+        {
+            "speaker": "Narration",
+            "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+            "text": "[matter-of-factly] WHEN YOU BECOME A SOLDIER, YOU GET YOUR CHANCE TO SEE 'EM, HANGING AROUND OUTSIDE THE WALL WHILE YOU'RE ON WALL DEFENSE DUTY OR WHATEVER...",
+            "page_number": 5,
+            "emotion": "matter-of-fact, sarcastic",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Narrator",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[calm] Eren and Mikasa confront garrison members about their complacency and lack of preparedness. They are near the wall, emphasizing its size and the perceived threat.",
+            "page_number": 6,
+            "emotion": "neutral",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Hannes",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[sarcastic] THAT AIN'T A BAD IDEA EITHER!",
+            "page_number": 6,
+            "emotion": "sarcastic, dismissive",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Eren",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[angry] [furious] W-WHAT THE HELL?! SO STOP CALLING YOURSELVES A \"GARRISON\" AND MAKE IT THE \"WALL CONSTRUCTION CORPS\" INSTEAD!",
+            "page_number": 6,
+            "emotion": "angry, furious",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Hannes",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[dismissive] NOPE.",
+            "page_number": 6,
+            "emotion": "dismissive, nonchalant",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Hannes",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[sarcastic] [mocking] THEN YOU'RE NOT EVEN PREPARED TO FIGHT 'EM IN THE FIRST PLACE, ARE YOU?!",
+            "page_number": 6,
+            "emotion": "sarcastic, mocking",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Mikasa",
+            "voice_id": "CaT0A6YBELRBgT6Qa2lH",
+            "text": "[serious] [questioning] ON THE OTHER HAND, WHEN THE GUYS AND I ARE MOCKED AS GOOD-FOR-NOTHING SPONGES, THAT TELLS YOU WE'RE ALL LIVIN' IN A TIME OF PEACE, AM I RIGHT?",
+            "page_number": 6,
+            "emotion": "serious, questioning",
+            "confidence": "medium"
+        },
+        {
+            "speaker": "Hannes",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[resigned] [reflective] YOU HAVE SOLDIERS ON ACTIVE DUTY WHEN THE SITUATION HAS GONE TO HELL...",
+            "page_number": 6,
+            "emotion": "resigned, reflective",
+            "confidence": "medium"
+        },
+        {
+            "speaker": "Mikasa",
+            "voice_id": "CaT0A6YBELRBgT6Qa2lH",
+            "text": "[concerned] [warning] BUT EREN...",
+            "page_number": 6,
+            "emotion": "concerned, warning",
+            "confidence": "medium"
+        },
+        {
+            "speaker": "Narrator",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[calm] Eren expresses his frustration with those who want to live a sheltered life within the walls, while Hannes and others in the garrison discuss Eren's ambition to join the Survey Corps with disbelief.",
+            "page_number": 7,
+            "emotion": "neutral",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Hannes",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[neutral] IT'S JUST LIKE HANNES SAYS.",
+            "page_number": 7,
+            "emotion": "Neutral",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Eren",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[angry] HELL... I CAN'T UNDERSTAND THOSE GUYS IN THE SURVEY CORPS WHO WANNA GO OUTSIDE THE WALL!",
+            "page_number": 7,
+            "emotion": "Angry",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Eren",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[angry] BUT IF THEY WANNA HAVE FUN PLAYING WAR, LET 'EM, I SAY!!",
+            "page_number": 7,
+            "emotion": "Angry",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Eren",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[thoughtful] ...ISN'T THAT... ...LIKE BEING A CAGED ANIMAL?",
+            "page_number": 7,
+            "emotion": "Thoughtful",
+            "confidence": "medium"
+        },
+        {
+            "speaker": "Hannes",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[calm] WE DON'T HAVE TO GO OUTSIDE THE WALL FOR OUR WHOLE LIVES... WE CAN EAT, SLEEP AND SURVIVE JUST FINE HERE... BUT...",
+            "page_number": 7,
+            "emotion": "Calm",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Hannes",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[surprised] DON'T TELL ME... ...HE WANTS TO JOIN THE SURVEY CORPS?",
+            "page_number": 7,
+            "emotion": "Surprised",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Hannes",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[sarcastic] PFFT... WHAT A CRACKPOT...",
+            "page_number": 7,
+            "emotion": "Sarcastic",
+            "confidence": "high"
         }
     ],
     "metadata": {
-        "generated_at": "2025-10-18T16:31:30.715459",
-        "total_dialogue_lines": 11,
+        "generated_at": "2025-10-18T21:48:19.723561",
+        "total_pages": 7,
+        "successful_pages": 7,
+        "failed_pages": 0,
+        "total_dialogue_lines": 58,
         "total_characters": 7,
-        "has_narrator": true
+        "pdf_file": "Chapters/scene-1.pdf"
     }
 }

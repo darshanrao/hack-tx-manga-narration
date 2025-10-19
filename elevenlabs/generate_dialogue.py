@@ -38,9 +38,9 @@ def parse_json_script(file_path):
         file_path (str): Path to the JSON script file
         
     Returns:
-        tuple: (dialogue_payload, transcript_data) where:
-            - dialogue_payload: List of dicts for ElevenLabs API
-            - transcript_data: List of dicts with speaker, text, and timing info
+        tuple: (pages_data, scene_id) where:
+            - pages_data: Dict with page numbers as keys, each containing dialogue_payload and transcript_data
+            - scene_id: Title of the scene for output naming
     """
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"JSON script file not found: {file_path}")
@@ -51,14 +51,14 @@ def parse_json_script(file_path):
     except json.JSONDecodeError as e:
         raise ValueError(f"Invalid JSON format: {str(e)}")
     
-    # Extract dialogue data
-    dialogue_payload = []
-    transcript_data = []
+    # Group dialogue by page number
+    pages_data = {}
     
     for entry in data.get('dialogue', []):
         speaker = entry.get('speaker', 'Unknown')
         voice_id = entry.get('voice_id', '')
         text = entry.get('text', '')
+        page_number = entry.get('page_number', 1)
         
         if not voice_id:
             print(f"Warning: No voice_id for speaker '{speaker}', skipping")
@@ -68,8 +68,15 @@ def parse_json_script(file_path):
             print(f"Warning: Empty text for speaker '{speaker}', skipping")
             continue
         
+        # Initialize page data if not exists
+        if page_number not in pages_data:
+            pages_data[page_number] = {
+                'dialogue_payload': [],
+                'transcript_data': []
+            }
+        
         # Add to dialogue payload for ElevenLabs
-        dialogue_payload.append({
+        pages_data[page_number]['dialogue_payload'].append({
             "text": text,
             "voice_id": voice_id
         })
@@ -78,20 +85,25 @@ def parse_json_script(file_path):
         clean_text = clean_audio_tags(text)
         
         # Add to transcript data
-        transcript_data.append({
+        pages_data[page_number]['transcript_data'].append({
             "speaker": speaker,
             "text": clean_text,
             "original_text": text,
             "voice_id": voice_id
         })
         
-        print(f"Parsed: {speaker} ({voice_id[:8]}...) -> {text[:50]}{'...' if len(text) > 50 else ''}")
+        print(f"Parsed Page {page_number}: {speaker} ({voice_id[:8]}...) -> {text[:50]}{'...' if len(text) > 50 else ''}")
     
-    if not dialogue_payload:
+    if not pages_data:
         raise ValueError("No valid dialogue found in JSON file")
     
-    print(f"Successfully parsed {len(dialogue_payload)} dialogue entries")
-    return dialogue_payload, transcript_data
+    # Extract scene_id for output naming
+    scene_id = data.get('scene_id', 'Unknown_Scene')
+    
+    total_entries = sum(len(page['dialogue_payload']) for page in pages_data.values())
+    print(f"Successfully parsed {total_entries} dialogue entries across {len(pages_data)} pages")
+    print(f"Scene ID: {scene_id}")
+    return pages_data, scene_id
 
 
 def clean_audio_tags(text):
@@ -353,64 +365,99 @@ def main():
         print("2. Added your ElevenLabs API key to the ELEVENLABS_API_KEY variable")
         return
     
-    # Parse the JSON script file
-    script_path = os.path.join(os.path.dirname(__file__), 'input', 'input.json')
+    # Parse the JSON script file - accept any filename
+    import sys
+    if len(sys.argv) > 1:
+        # Use filename from command line argument
+        script_filename = sys.argv[1]
+    else:
+        # Default to scene2.json
+        script_filename = 'scene2.json'
+    
+    script_path = os.path.join(os.path.dirname(__file__), 'input', script_filename)
     try:
         print(f"\n[INFO] Parsing JSON script from: {script_path}")
-        dialogue_payload, transcript_data = parse_json_script(script_path)
+        pages_data, scene_id = parse_json_script(script_path)
         
     except Exception as e:
         print(f"[ERROR] Error parsing JSON script: {str(e)}")
         return
     
-    # Generate audio using precise individual segments for accurate timing
+    # Generate audio for each page separately
     try:
-        print("\n[INFO] Generating audio with precise timing using individual segments...")
+        print("\n[INFO] Generating audio with precise timing for each page...")
         print("This will take longer but provides accurate timestamps...")
         
-        # Generate individual audio segments for precise timing
-        audio_data, precise_timestamps = generate_individual_audio_segments(
-            client, dialogue_payload, transcript_data
-        )
-        
-        # Generate timestamp-based filename
-        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        audio_filename = f"dialogue_output_{timestamp}.mp3"
-        transcript_filename = f"transcript_{timestamp}.txt"
-        
         # Create output directory if it doesn't exist
-        output_dir = os.path.join(os.path.dirname(__file__), 'output')
+        output_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'assets')
         os.makedirs(output_dir, exist_ok=True)
         
-        audio_path = os.path.join(output_dir, audio_filename)
-        transcript_path = os.path.join(output_dir, transcript_filename)
+        # Generate timestamp for all files
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        # Clean scene_id for filename (remove special characters)
+        clean_scene_id = re.sub(r'[^\w\s-]', '', scene_id).strip()
+        clean_scene_id = re.sub(r'[-\s]+', '_', clean_scene_id)
         
-        print(f"[INFO] Saving combined audio to: output/{audio_filename}")
+        total_duration = 0.0
+        total_lines = 0
         
-        # Save the combined audio data
-        with open(audio_path, 'wb') as audio_file:
-            audio_file.write(audio_data)
+        # Process each page separately
+        for page_number in sorted(pages_data.keys()):
+            print(f"\n[INFO] Processing Page {page_number}...")
+            
+            page_data = pages_data[page_number]
+            dialogue_payload = page_data['dialogue_payload']
+            transcript_data = page_data['transcript_data']
+            
+            if not dialogue_payload:
+                print(f"[WARNING] No dialogue found for page {page_number}, skipping")
+                continue
+            
+            # Generate individual audio segments for precise timing
+            audio_data, precise_timestamps = generate_individual_audio_segments(
+                client, dialogue_payload, transcript_data
+            )
+            
+            # Generate filenames with page number
+            audio_filename = f"{clean_scene_id}_page{page_number:02d}_dialogue_{timestamp}.mp3"
+            transcript_filename = f"{clean_scene_id}_page{page_number:02d}_transcript_{timestamp}.txt"
+            
+            audio_path = os.path.join(output_dir, audio_filename)
+            transcript_path = os.path.join(output_dir, transcript_filename)
+            
+            print(f"[INFO] Saving page {page_number} audio to: assets/{audio_filename}")
+            
+            # Save the audio data
+            with open(audio_path, 'wb') as audio_file:
+                audio_file.write(audio_data)
+            
+            # Get page duration
+            page_duration = get_audio_duration_from_mp3(audio_data)
+            total_duration += page_duration
+            
+            print(f"[INFO] Generating precise transcript with timestamps for page {page_number}...")
+            print(f"[INFO] Page {page_number} audio duration: {page_duration:.1f} seconds")
+            
+            # Generate transcript with precise timestamps
+            transcript_content = generate_precise_transcript(precise_timestamps)
+            
+            # Save transcript file
+            with open(transcript_path, 'w', encoding='utf-8') as transcript_file:
+                transcript_file.write(transcript_content)
+            
+            total_lines += len(precise_timestamps)
+            print(f"[OK] Page {page_number} complete!")
+            print(f"[INFO] Audio file: assets/{audio_filename}")
+            print(f"[INFO] Transcript file: assets/{transcript_filename}")
+            print(f"[INFO] Page {page_number} duration: {page_duration:.1f} seconds")
+            print(f"[INFO] Precise timestamps generated for {len(precise_timestamps)} lines")
         
-        # Get total duration
-        total_duration = get_audio_duration_from_mp3(audio_data)
-        
-        print(f"[INFO] Generating precise transcript with timestamps...")
-        print(f"[INFO] Total audio duration: {total_duration:.1f} seconds")
-        
-        # Generate transcript with precise timestamps
-        transcript_content = generate_precise_transcript(precise_timestamps)
-        
-        # Save transcript file
-        with open(transcript_path, 'w', encoding='utf-8') as transcript_file:
-            transcript_file.write(transcript_content)
-        
-        print(f"[OK] Audio generation complete!")
-        print(f"[INFO] Audio file: output/{audio_filename}")
-        print(f"[INFO] Transcript file: output/{transcript_filename}")
+        print(f"\n[OK] All pages audio generation complete!")
+        print(f"[INFO] Total pages processed: {len(pages_data)}")
         print(f"[INFO] Total duration: {total_duration:.1f} seconds")
-        print(f"[INFO] Precise timestamps generated for {len(precise_timestamps)} lines")
+        print(f"[INFO] Total lines processed: {total_lines}")
         print(f"[INFO] Files saved to organized output folder")
-        print(f"[INFO] You can now play the generated audio file and view the transcript")
+        print(f"[INFO] You can now play the generated audio files and view the transcripts")
         
     except Exception as e:
         print(f"[ERROR] Error generating audio: {str(e)}")
