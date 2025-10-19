@@ -1,0 +1,294 @@
+{
+    "scene_id": "ch02",
+    "scene_title": "Taiju - Complete Scene",
+    "ambient": "Laboratory setting. Sounds of bubbling chemicals, possible explosion 'BOOM' sound effect. Atmosphere of scientific experimentation and revelation. | Sounds of 'BAM' and 'POP' are illustrated, indicating energy and activity. Setting is a school environment, with classrooms visible. Atmosphere is high-energy and anticipation. | The scene is set in a science lab. There are beakers and scientific equipment visible in the background. The atmosphere feels experimental, hinting at both intellectual curiosity and potential danger. | School environment with a tree. Atmosphere of determination and anticipation.",
+    "characters": {
+        "Taiju": {
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "expression": "shocked and concerned"
+        },
+        "Senku": {
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "expression": "smug and confident"
+        },
+        "Narrator": {
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "expression": "neutral"
+        }
+    },
+    "dialogue": [
+        {
+            "speaker": "Narrator",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[calm] Taiju is determined to confess his love for Yuzuriha. He is standing in front of his school, bursting with energy. Senku is present but only seen from the back, apparently in a science lab with other students.",
+            "page_number": 1,
+            "emotion": "neutral",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Taiju",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[determined] [excited] THERE'S NO STOPPING ME! IT'S GOTTA BE TODAY!!",
+            "page_number": 1,
+            "emotion": "determined, excited",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Senku",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[irritated] [shouts] LISTEN UP, SENKU !!",
+            "page_number": 1,
+            "emotion": "irritated, commanding",
+            "confidence": "medium"
+        },
+        {
+            "speaker": "Taiju",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[sentimental] [softly] AFTER FIVE LONG YEARS OF HAVING FEELINGS FOR YUZURIHA...",
+            "page_number": 1,
+            "emotion": "sentimental, determined",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Taiju",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[determined] [excited] ...I'M FINALLY GONNA CONFESS MY LOVE!!",
+            "page_number": 1,
+            "emotion": "determined, excited",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Narrator",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[calm] Senku is working in his science lab, and Taiju is observing him, initially impressed but quickly growing skeptical about what Senku is doing. They are indoors in a lab-like setting.",
+            "page_number": 2,
+            "emotion": "neutral",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Senku",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[sarcastic] [matter-of-factly] I'LL BE CHEERING FOR YOU SO HARD FROM HERE IN THE SCIENCE LAB THAT MY VOCAL CORDS'LL SNAP.",
+            "page_number": 2,
+            "emotion": "sarcastic",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Senku",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[curious] HM [short pause] INTERESTING... VERRRY INTERESTING.",
+            "page_number": 2,
+            "emotion": "curious",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Taiju",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[confused] WAIT, SO WHICH IS IT?!",
+            "page_number": 2,
+            "emotion": "confused",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Taiju",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[frustrated] A FOOL WHO TAKES FIVE WHOLE YEARS TO SAY ANYTHING IS THE EPITOME OF ABSURDITY.",
+            "page_number": 2,
+            "emotion": "frustrated",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Senku",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[irritated] [softly] SILENCE. I WON'T CHEER EVEN ONE MILLIMETER FOR YOU, YOU BIG OAF.",
+            "page_number": 2,
+            "emotion": "irritated",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Taiju",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[sarcastic] [playfully] OH YEAH? THANKS, Senku!",
+            "page_number": 2,
+            "emotion": "sarcastic",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Senku",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[smug] ALLOW ME TO PROVIDE A METHOD SO RATIONAL IT'LL KILL YOU.",
+            "page_number": 2,
+            "emotion": "smug",
+            "confidence": "medium"
+        },
+        {
+            "speaker": "Senku",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[confident] THIS WILL SEND YOUR PHEROMONE PRODUCTION INTO OVERDRIVE.",
+            "page_number": 2,
+            "emotion": "confident",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Senku",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[neutral] BASICALLY, IT'S A LOVE POTION.",
+            "page_number": 2,
+            "emotion": "neutral",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Senku",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[confident] YOUR SUCCESS IS TEN BILLION PERCENT ASSURED IF YOU DRINK THIS!",
+            "page_number": 2,
+            "emotion": "confident",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Narrator",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[calm] Taiju refuses Senku's science experiment and decides to confess his love to Yuzuriha under the camphor tree.",
+            "page_number": 3,
+            "emotion": "neutral",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Senku",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[neutral] [slightly dismissive] THANKS, SENKU, BUT...",
+            "page_number": 3,
+            "emotion": "Neutral, slightly dismissive",
+            "confidence": "medium"
+        },
+        {
+            "speaker": "Senku",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[dismissive] ...NO THANKS!",
+            "page_number": 3,
+            "emotion": "Dismissive",
+            "confidence": "medium"
+        },
+        {
+            "speaker": "Taiju",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[frustrated] [determined] I CAN'T GO AND CHEAT MY WAY INTO HER HEART.",
+            "page_number": 3,
+            "emotion": "Frustrated, determined",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Taiju",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[determined] [confident] THAT'S RIGHT. LIKE THE HONEST AND UPRIGHT DUDE I AM...",
+            "page_number": 3,
+            "emotion": "Determined, confident",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Taiju",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[determined] ...I TOLD YUZURIHA TO MEET ME UNDER THE CAMPHOR TREE.",
+            "page_number": 3,
+            "emotion": "Determined",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Taiju",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[determined] [excited] THAT'S WHERE I'LL CONFESS!!",
+            "page_number": 3,
+            "emotion": "Determined, excited",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Narrator",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[calm] Senku reveals that the 'love potion' was just ordinary gasoline made from plastic bottle caps, much to the shock of Taiju and others, while Senku smirks to himself.",
+            "page_number": 4,
+            "emotion": "neutral",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Taiju",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[confused] HUH?",
+            "page_number": 4,
+            "emotion": "confused",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Taiju",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[confused] I DUN GEDDIT.",
+            "page_number": 4,
+            "emotion": "confused",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Taiju",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[fearful] [worried] SO Taiju WOULD'VE DIED IF HE DRANK IT?",
+            "page_number": 4,
+            "emotion": "fearful",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Senku",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[calm] IT'S MERELY LONG GASOLINE MOLECULES CHOPPED UP BY A FEW HYDROCARBONS. SIMPLE ENOUGH TO UNDERSTAND.",
+            "page_number": 4,
+            "emotion": "calm",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Senku",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[sarcastic] [yells] JUST THINK ABOUT THE ATOMIC STRUCTURE OF POLY-ETHYLENE, YOU FOOLS!",
+            "page_number": 4,
+            "emotion": "sarcastic",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Taiju",
+            "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+            "text": "[shocked] WAS THAT REALLY A LOVE POTION, Senku...?",
+            "page_number": 4,
+            "emotion": "shocked",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Senku",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[calm] OF COURSE NOT. IT'S JUST ORDINARY GASOLINE. I PRODUCED IT FROM PLASTIC BOTTLE CAPS.",
+            "page_number": 4,
+            "emotion": "calm",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Senku",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[smug] HEH HEH... [short pause] I WAS TEN BILLION PERCENT SURE HE WOULDN'T DRINK IT.",
+            "page_number": 4,
+            "emotion": "smug",
+            "confidence": "high"
+        },
+        {
+            "speaker": "Senku",
+            "voice_id": "wI49R6YUU5NNP1h0CECc",
+            "text": "[amused] HE'S AN HONEST FOOL.",
+            "page_number": 4,
+            "emotion": "amused",
+            "confidence": "high"
+        }
+    ],
+    "metadata": {
+        "generated_at": "2025-10-18T19:54:56.632677",
+        "total_pages": 4,
+        "successful_pages": 4,
+        "failed_pages": 0,
+        "total_dialogue_lines": 33,
+        "total_characters": 3,
+        "pdf_file": "Chapters/scene-2.pdf"
+    }
+}
