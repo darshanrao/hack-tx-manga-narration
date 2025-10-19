@@ -60,9 +60,7 @@ export default function HomePage() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [jobId, setJobId] = useState<string | null>(null);
-  const [jobStatus, setJobStatus] = useState<string | null>(null);
-  const [transcriptUrl, setTranscriptUrl] = useState<string | null>(null);
+  // Removed ingest job logic per request; keeping UI simple
   const [transcriptData, setTranscriptData] = useState<TranscriptEntry[]>([]);
   const previousPanelRef = useRef<string | null>(null);
   const isSeekingRef = useRef<boolean>(false);
@@ -381,7 +379,7 @@ export default function HomePage() {
     // Upload to backend which forwards to Supabase (avoids RLS and service key in frontend host)
     try {
       const bucket = 'manga-pdfs';
-      const objectPath = `pdfs/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9_.-]/g, '_')}`;
+      const objectPath = file.name; // retain original filename at bucket root (no subfolder)
       const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
       const form = new FormData();
       form.append('file', file);
@@ -402,54 +400,13 @@ export default function HomePage() {
 
       if (uploadedPath) {
         console.log('Uploaded to:', uploadedPath);
-        // Optionally kick off backend ingest here
-        try {
-          const res = await fetch(`${API_BASE}/api/ingest/start`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ bucket, object_path: uploadedPath }),
-          });
-          if (res.ok) {
-            const { job_id } = await res.json();
-            console.log('Ingest job started:', job_id);
-            setJobId(job_id);
-            setJobStatus('queued');
-          } else {
-            console.warn('Failed to start ingest, status:', res.status);
-          }
-        } catch (e) {
-          console.warn('Unable to contact backend ingest endpoint:', e);
-        }
       }
     } catch (e) {
       console.error('Unexpected upload failure:', e);
     }
   };
 
-  // Poll job status if we have a jobId
-  useEffect(() => {
-    if (!jobId) return;
-    const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
-    const interval = setInterval(async () => {
-      try {
-        const res = await fetch(`${API_BASE}/api/ingest/status/${jobId}`);
-        if (!res.ok) return;
-        const data = await res.json();
-        setJobStatus(data.status);
-        if (data.status === 'done') {
-          clearInterval(interval);
-          const tUrl = data.outputs?.transcript_url as string | undefined;
-          if (tUrl) setTranscriptUrl(tUrl);
-        }
-        if (data.status === 'error') {
-          clearInterval(interval);
-        }
-      } catch (e) {
-        // ignore transient errors
-      }
-    }, 1500);
-    return () => clearInterval(interval);
-  }, [jobId]);
+  // Ingest polling removed
 
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
@@ -538,14 +495,7 @@ export default function HomePage() {
         </div>
         <div className="flex gap-3">
           <KeyboardShortcutsHelp />
-          {jobId && (
-            <div className="px-3 py-2 rounded-md bg-slate-800/80 border border-slate-600 text-slate-200 text-sm">
-              Job: {jobStatus || '...'}
-              {transcriptUrl && (
-                <a className="ml-2 underline text-blue-300" href={transcriptUrl} target="_blank" rel="noreferrer">transcript</a>
-              )}
-            </div>
-          )}
+          {/* Job status UI removed */}
           <Link href="/landing">
             <Button
               variant="outline"

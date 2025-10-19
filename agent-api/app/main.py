@@ -1,7 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .routers import parse
-from .routers import ingest
 from .routers import storage_upload
 from .settings import get_settings
 
@@ -25,5 +24,4 @@ async def health():
 # Mount routers under configurable API prefix
 api_prefix = settings.API_PREFIX.rstrip("/")
 app.include_router(parse.router, prefix=f"{api_prefix}/agent", tags=["agent"]) 
-app.include_router(ingest.router, prefix=f"{api_prefix}/ingest", tags=["ingest"]) 
 app.include_router(storage_upload.router, prefix=f"{api_prefix}/storage", tags=["storage"]) 
