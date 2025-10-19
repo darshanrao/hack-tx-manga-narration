@@ -108,51 +108,8 @@ Data flow
 
 ## Flow Diagram
 
-```
-             +----------------+
-             |   PDF Input    |
-             |  (local/upload)|
-             +--------+-------+
-                      |
-                      v
-            +---------+----------+
-            |  Gemini Pass 1     |  Character set & context
-            | (character ID)     |
-            +---------+----------+
-                      |
-                      v
-            +---------+----------+
-            |  Gemini Pass 2     |  Page-level dialogue with speakers
-            | (dialogue extract) |
-            +---------+----------+
-                      |
-                      v
-            +---------+----------+
-            |  Audio Tagging     |  Add [whispers], [angry], pauses
-            +---------+----------+
-                      |
-                      v
-            +---------+----------+
-            | ElevenLabs v3      |  Per-page MP3 + transcript
-            |  (text→dialogue)   |
-            +---------+----------+
-                      |
-          +-----------+------------+
-          |                        |
-          v                        v
- +--------+---------+     +--------+---------+
- |  Local Public     |     |  Supabase Storage|
- | (frontend/public) |     |   (optional)     |
- +--------+---------+     +--------+---------+
-          \______________________/ 
-                     |
-                     v
-            +--------+---------+
-            |  Frontend (UI)   |
-            | PDF page ↔ audio |
-            | transcript sync  |
-            +------------------+
-```
+[![Untitled-diagram-2025-10-19-160123.png](https://i.postimg.cc/Gm399frR/Untitled-diagram-2025-10-19-160123.png)](https://postimg.cc/3d63cndf)
+
 
 ---
 
