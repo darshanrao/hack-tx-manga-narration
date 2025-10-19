@@ -16,7 +16,7 @@ class Settings(BaseSettings):
     API_PREFIX: str = "/api"
 
     # CORS
-    CORS_ALLOW_ORIGINS: List[str] = ["http://localhost:3000"]
+    CORS_ALLOW_ORIGINS: List[str] = ["http://localhost:3000", "http://127.0.0.1:3000"]
 
     # External services (populate via environment or .env)
     SUPABASE_URL: Optional[str] = None

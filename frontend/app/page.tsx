@@ -16,6 +16,7 @@ import dynamic from 'next/dynamic';
 import { TranscriptEntry, parseTranscript } from '../utils/transcriptParser';
 import { PageAudioManager } from '../components/PageAudioManager';
 import { PageAudioData } from '../utils/pageAudioManager';
+import { SceneSidebar } from "../components/SceneSidebar";
 // Supabase client is not needed in the browser for uploads; we use backend-forwarded uploads instead
 
 // Dynamic import for PDF viewer to avoid SSR issues
@@ -71,6 +72,8 @@ export default function HomePage() {
   const [activeTranscriptEntry, setActiveTranscriptEntry] = useState<TranscriptEntry | null>(null);
   const [chapterIndex, setChapterIndex] = useState(0);
   const [chapterMeta, setChapterMeta] = useState<{ totalPages: number; canGoNext: boolean; canGoPrevious: boolean }>({ totalPages: 0, canGoNext: false, canGoPrevious: false });
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [currentScene, setCurrentScene] = useState<any>(null);
   const previousPanelRef = useRef<string | null>(null);
   const isSeekingRef = useRef<boolean>(false);
 
@@ -451,7 +454,7 @@ export default function HomePage() {
     // Upload to Supabase storage
     try {
       const bucket = 'manga-pdfs';
-      const objectPath = `pdfs/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9_.-]/g, '_')}`;
+      const objectPath = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9_.-]/g, '_')}`;
       const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
       const form = new FormData();
       form.append('file', file);
@@ -496,6 +499,77 @@ export default function HomePage() {
       }
     } catch (e) {
       console.error('Unexpected upload failure:', e);
+    }
+  };
+
+  // Handle scene selection from sidebar
+  const handleSceneSelect = async (scene: any) => {
+    try {
+      console.log('Selected scene:', scene);
+      setCurrentScene(scene);
+
+      // Extract chapter index from scene filename
+      const match = scene.filename?.match(/scene[-_](\d+)/i);
+      if (match) {
+        const sceneNumber = parseInt(match[1], 10);
+        if (!isNaN(sceneNumber) && sceneNumber > 0) {
+          setChapterIndex(sceneNumber - 1);
+        }
+      }
+
+      setCurrentPageIndex(0);
+      setCurrentPanelIndex(0);
+      setIsPlaying(false);
+      setPdfZoom(1.0);
+      if (scene.total_pages) setPdfPageCount(scene.total_pages);
+
+      // Resolve a public URL for the PDF (direct or via backend details)
+      let publicUrl: string | null = scene.public_url || null;
+      if (!publicUrl && scene.id) {
+        try {
+          const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
+          const detailsRes = await fetch(`${API_BASE}/api/scenes/${encodeURIComponent(scene.id)}`);
+          if (detailsRes.ok) {
+            const details = await detailsRes.json();
+            publicUrl = details.public_url || null;
+          }
+        } catch {}
+      }
+
+      if (publicUrl) {
+        let res = await fetch(publicUrl);
+        if (!res.ok) {
+          // Try backend-signed URL fallback for private buckets
+          try {
+            const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
+            const signRes = await fetch(`${API_BASE}/api/storage/sign`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ bucket: 'manga-pdfs', object_path: scene.id, expires_in: 3600 })
+            });
+            if (signRes.ok) {
+              const signed = await signRes.json();
+              if (signed?.signed_url) {
+                res = await fetch(signed.signed_url);
+              }
+            }
+          } catch {}
+        }
+        if (!res.ok) throw new Error(`Failed to download PDF: ${res.status}`);
+        const blob = await res.blob();
+        const fileName = scene.filename || 'scene.pdf';
+        const file = new File([blob], fileName, { type: blob.type || 'application/pdf' });
+        setUploadedFile(file);
+        setIsPDF(true);
+      } else {
+        console.warn('Scene has no resolvable public_url; cannot download PDF');
+      }
+    } catch (e) {
+      console.error('Error selecting scene:', e);
+    } finally {
+      if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+        setIsSidebarOpen(false);
+      }
     }
   };
 
@@ -619,6 +693,14 @@ export default function HomePage() {
           currentTime={currentTime}
         >
       <div className="h-screen w-screen flex flex-col overflow-hidden bg-slate-900">
+      {/* Scene Sidebar */}
+      <SceneSidebar
+        isOpen={isSidebarOpen}
+        onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+        onSceneSelect={handleSceneSelect}
+        currentScene={currentScene}
+      />
+      
       {/* Header */}
       <div className="border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-xl px-8 py-6 flex items-center justify-between shadow-lg shadow-black/20">
         <div>
@@ -633,10 +715,7 @@ export default function HomePage() {
         </div>
               <div className="flex gap-3 items-center">
           <KeyboardShortcutsHelp />
-          {/* Backend status indicator */}
-          <div className="px-3 py-2 rounded-md bg-blue-900/80 border border-blue-600 text-blue-200 text-sm">
-            <span className="font-semibold">Backend:</span> Offline (PDF viewer works locally)
-          </div>
+          
           <Link href="/landing">
             <Button
               variant="outline"
@@ -662,7 +741,7 @@ export default function HomePage() {
       </div>
 
       {/* Main Content - Split Screen Layout */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className={`flex-1 flex overflow-hidden transition-all duration-300 ${isSidebarOpen ? 'lg:ml-80' : ''}`}>
         {uploadedFile ? (
           <>
             {/* Left Side - Manga/PDF Viewer (75% width) */}
