@@ -4,8 +4,9 @@ Handles PDF to image conversion and page extraction
 """
 
 import os
+import io
 from typing import List, Tuple
-from pdf2image import convert_from_path
+import fitz  # PyMuPDF
 from PIL import Image
 import logging
 
@@ -40,8 +41,23 @@ class PDFProcessor:
         try:
             logger.info(f"Processing PDF: {pdf_path}")
             
-            # Convert PDF to images
-            images = convert_from_path(pdf_path, dpi=self.dpi)
+            # Open PDF with PyMuPDF
+            pdf_document = fitz.open(pdf_path)
+            images = []
+            
+            # Convert each page to image
+            for page_num in range(pdf_document.page_count):
+                page = pdf_document[page_num]
+                # Convert page to image with specified DPI
+                mat = fitz.Matrix(self.dpi/72, self.dpi/72)  # 72 is default DPI
+                pix = page.get_pixmap(matrix=mat)
+                img_data = pix.tobytes("png")
+                
+                # Convert to PIL Image
+                image = Image.open(io.BytesIO(img_data))
+                images.append(image)
+            
+            pdf_document.close()
             
             logger.info(f"Successfully extracted {len(images)} pages")
             
@@ -72,8 +88,10 @@ class PDFProcessor:
             Number of pages
         """
         try:
-            images = convert_from_path(pdf_path, dpi=self.dpi)
-            return len(images)
+            pdf_document = fitz.open(pdf_path)
+            page_count = pdf_document.page_count
+            pdf_document.close()
+            return page_count
         except Exception as e:
             logger.error(f"Error getting page count for {pdf_path}: {str(e)}")
             raise

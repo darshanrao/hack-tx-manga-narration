@@ -1,0 +1,56 @@
+{
+  "characters": {
+    "Mikasa": {
+      "voice_id": "CaT0A6YBELRBgT6Qa2lH",
+      "character_type": "female",
+      "first_seen": "2025-10-19T00:32:41.941836"
+    },
+    "Eren": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "character_type": "male",
+      "first_seen": "2025-10-19T00:32:41.941836"
+    },
+    "Hannes": {
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "character_type": "male",
+      "first_seen": "2025-10-19T00:32:41.946771"
+    },
+    "Narrator": {
+      "voice_id": "L1aJrPa7pLJEyYlh3Ilq",
+      "character_type": "narrator",
+      "first_seen": "2025-10-19T00:32:45.289120"
+    },
+    "Sound Effect": {
+      "voice_id": "L1aJrPa7pLJEyYlh3Ilq",
+      "character_type": "unknown",
+      "first_seen": "2025-10-19T00:32:45.289120"
+    }
+  },
+  "voice_usage": {
+    "CaT0A6YBELRBgT6Qa2lH": {
+      "count": 1,
+      "characters": [
+        "Mikasa"
+      ]
+    },
+    "5kMbtRSEKIkRZSdXxrZg": {
+      "count": 1,
+      "characters": [
+        "Eren"
+      ]
+    },
+    "wI49R6YUU5NNP1h0CECc": {
+      "count": 1,
+      "characters": [
+        "Hannes"
+      ]
+    },
+    "L1aJrPa7pLJEyYlh3Ilq": {
+      "count": 2,
+      "characters": [
+        "Narrator",
+        "Sound Effect"
+      ]
+    }
+  }
+}

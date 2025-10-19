@@ -26,9 +26,9 @@ def process_pdf(
     pdf_path: str,
     scene_id: Optional[str] = None,
     gemini_api_key: Optional[str] = None,
-    pass1_model: str = "gemini-2.0-flash",
-    pass2_model: str = "gemini-2.5-pro",
-    enhancement_model: str = "gemini-2.5-flash-lite",
+    pass1_model: str = "gemini-2.0-flash-lite",
+    pass2_model: str = "gemini-2.0-flash-lite",
+    enhancement_model: str = "gemini-2.0-flash-lite",
     pdf_dpi: int = 300,
     cleanup_images: bool = True,
     output_dir: str = "scenes"
