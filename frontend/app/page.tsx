@@ -448,8 +448,7 @@ export default function HomePage() {
       setPdfPageCount(7); // Set to 7 pages for your test PDF
     }
 
-    // Backend upload is optional - comment out for testing without backend
-    /*
+    // Upload to Supabase storage
     try {
       const bucket = 'manga-pdfs';
       const objectPath = `pdfs/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9_.-]/g, '_')}`;
@@ -459,6 +458,7 @@ export default function HomePage() {
       form.append('bucket', bucket);
       form.append('object_path', objectPath);
 
+      console.log('Uploading to Supabase:', { bucket, objectPath });
       const up = await fetch(`${API_BASE}/api/storage/upload`, {
         method: 'POST',
         body: form,
@@ -472,7 +472,9 @@ export default function HomePage() {
       const uploadedPath: string = uploaded.object_path;
 
       if (uploadedPath) {
-        console.log('Uploaded to:', uploadedPath);
+        console.log('Successfully uploaded to Supabase:', uploadedPath);
+        console.log('Public URL:', uploaded.public_url);
+        
         // Optionally kick off backend ingest here
         try {
           const res = await fetch(`${API_BASE}/api/ingest/start`, {
@@ -495,7 +497,6 @@ export default function HomePage() {
     } catch (e) {
       console.error('Unexpected upload failure:', e);
     }
-    */
   };
 
   // Poll job status if we have a jobId
