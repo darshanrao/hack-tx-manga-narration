@@ -1,4 +1,4 @@
-## Manga Narration (HackTX 2025)
+## Sonokomi (Sound Komikko) (HackTX 2025)
 
 Turn manga PDFs into immersive, accessible audio with page-synced transcripts and voice-acted dialogue. Built for rapid demos: one command to run the frontend, one for the backend, optional pipelines to generate audio from PDFs.
 
