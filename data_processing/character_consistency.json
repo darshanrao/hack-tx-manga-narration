@@ -71,10 +71,10 @@
       "total_pages": 7,
       "characters": [
         "Eren",
-        "Hannes",
-        "Mikasa"
+        "Mikasa",
+        "Hannes"
       ],
-      "registered_at": "2025-10-18T22:54:12.958396",
+      "registered_at": "2025-10-19T01:05:49.344604",
       "character_count": 3
     },
     "scene_scene-2": {
@@ -127,7 +127,7 @@
       "character_type": "main",
       "gender": "male",
       "first_seen": "2025-10-18T19:52:53.878694",
-      "last_seen": "2025-10-18T23:25:11.664946",
+      "last_seen": "2025-10-19T01:05:49.344604",
       "scenes": [
         "ch01_fixed",
         "ch03_cleanup_test",
@@ -136,7 +136,8 @@
         "ch01_updated",
         "ch01_final_test",
         "test_scene",
-        "quick_test"
+        "quick_test",
+        "test_scene"
       ],
       "appearance_count": 6,
       "dominant_emotion": "neutral"
@@ -146,7 +147,7 @@
       "character_type": "main",
       "gender": "female",
       "first_seen": "2025-10-18T19:52:53.879449",
-      "last_seen": "2025-10-18T23:25:11.664998",
+      "last_seen": "2025-10-19T01:05:49.344604",
       "scenes": [
         "ch01_fixed",
         "ch03_cleanup_test",
@@ -155,7 +156,8 @@
         "ch01_updated",
         "ch01_final_test",
         "test_scene",
-        "quick_test"
+        "quick_test",
+        "test_scene"
       ],
       "appearance_count": 4,
       "dominant_emotion": "neutral"
@@ -165,7 +167,7 @@
       "character_type": "supporting",
       "gender": "male",
       "first_seen": "2025-10-18T19:52:53.880055",
-      "last_seen": "2025-10-18T23:25:11.665026",
+      "last_seen": "2025-10-19T01:05:49.344604",
       "scenes": [
         "ch01_fixed",
         "ch01_final",
@@ -173,7 +175,8 @@
         "ch01_updated",
         "ch01_final_test",
         "test_scene",
-        "quick_test"
+        "quick_test",
+        "test_scene"
       ],
       "appearance_count": 5,
       "dominant_emotion": "neutral"
@@ -306,8 +309,8 @@
     },
     "test_scene": {
       "Eren": "5kMbtRSEKIkRZSdXxrZg",
-      "Hannes": "wI49R6YUU5NNP1h0CECc",
-      "Mikasa": "CaT0A6YBELRBgT6Qa2lH"
+      "Mikasa": "CaT0A6YBELRBgT6Qa2lH",
+      "Hannes": "wI49R6YUU5NNP1h0CECc"
     },
     "scene_scene-2": {
       "Character_A": "5kMbtRSEKIkRZSdXxrZg",

@@ -11,8 +11,8 @@ from pathlib import Path
 import os
 from dotenv import load_dotenv
 
-# Load environment variables
-load_dotenv()
+# Load environment variables from root .env file
+load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
 
 # Import pipeline components
 from pdf_to_audio_pipeline import PDFToAudioPipeline
@@ -112,7 +112,7 @@ def process_pdf(
         return audio_json
         
     except Exception as e:
-        logger.error(f"❌ Error processing PDF {pdf_path}: {str(e)}")
+        logger.error(f"Error processing PDF {pdf_path}: {str(e)}")
         raise
 
 
@@ -172,17 +172,17 @@ def process_multiple_pdfs_to_json(
                 )
                 
                 results[pdf_file.name] = json_output
-                logger.info(f"✅ Completed: {pdf_file.name}")
+                logger.info(f"Completed: {pdf_file.name}")
                 
             except Exception as e:
-                logger.error(f"❌ Failed to process {pdf_file.name}: {str(e)}")
+                logger.error(f"Failed to process {pdf_file.name}: {str(e)}")
                 results[pdf_file.name] = {"error": str(e)}
         
         logger.info(f"📊 Processed {len(results)} PDFs total")
         return results
         
     except Exception as e:
-        logger.error(f"❌ Error processing PDF directory {pdf_directory}: {str(e)}")
+        logger.error(f"Error processing PDF directory {pdf_directory}: {str(e)}")
         raise
 
 
@@ -196,13 +196,13 @@ if __name__ == "__main__":
             cleanup_images=True
         )
         
-        print("✅ Success!")
+        print("Success!")
         print(f"Scene ID: {result.get('scene_id')}")
         print(f"Characters: {list(result.get('characters', {}).keys())}")
         print(f"Total dialogue lines: {len(result.get('dialogue', []))}")
         
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"Error: {e}")
     
     # Example 2: Process multiple PDFs
     try:
@@ -211,7 +211,7 @@ if __name__ == "__main__":
             cleanup_images=True
         )
         
-        print(f"✅ Processed {len(results)} PDFs")
+        print(f"Processed {len(results)} PDFs")
         for pdf_name, json_data in results.items():
             if "error" not in json_data:
                 print(f"  {pdf_name}: {len(json_data.get('dialogue', []))} dialogue lines")
@@ -219,4 +219,4 @@ if __name__ == "__main__":
                 print(f"  {pdf_name}: ERROR - {json_data['error']}")
                 
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"Error: {e}")
