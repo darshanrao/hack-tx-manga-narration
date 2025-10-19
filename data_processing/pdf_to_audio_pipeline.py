@@ -25,7 +25,7 @@ class PDFToAudioPipeline:
     """Complete pipeline for converting PDF manga to ElevenLabs-ready audio JSON"""
     
     def __init__(self, 
-                 output_dir: str = "scenes",
+                 output_dir: str = "pipeline_output/intermediate",
                  gemini_api_key: str = None,
                  vision_model: str = "gemini-2.0-flash",
                  enhancement_model: str = "gemini-2.5-flash-lite",
@@ -49,7 +49,7 @@ class PDFToAudioPipeline:
         # Initialize components
         self.pdf_processor = PDFProcessor(dpi=pdf_dpi)
         # Use optimized models: fast Flash for Pass 1, powerful Pro for Pass 2
-        self.scene_analyzer = TwoPassHybridAnalyzer(gemini_api_key, "gemini-2.0-flash", vision_model)
+        self.scene_analyzer = TwoPassHybridAnalyzer(gemini_api_key, "gemini-2.0-flash", "gemini-2.5-pro")
         self.consistency_manager = CharacterConsistencyManager()
         self.audio_enhancer = AudioTagEnhancer(gemini_api_key, enhancement_model)
         self.json_builder = ElevenLabsJSONBuilder(self.consistency_manager.voice_registry)
@@ -418,7 +418,7 @@ def main():
     
     # Initialize pipeline
     pipeline = PDFToAudioPipeline(
-        output_dir="scenes",
+        output_dir="pipeline_output/intermediate",
         gemini_api_key=os.getenv("GOOGLE_API_KEY")
     )
     

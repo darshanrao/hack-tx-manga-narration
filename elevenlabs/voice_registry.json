@@ -24,6 +24,46 @@
       "voice_id": "L1aJrPa7pLJEyYlh3Ilq",
       "character_type": "unknown",
       "first_seen": "2025-10-19T00:32:45.289120"
+    },
+    "Unnamed Garrison Soldier A": {
+      "voice_id": "UgBBYS2sOqTuMpoF3BR0",
+      "character_type": "unknown",
+      "first_seen": "2025-10-19T03:14:48.983890"
+    },
+    "Unnamed Garrison Soldier B": {
+      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+      "character_type": "unknown",
+      "first_seen": "2025-10-19T03:14:48.984775"
+    },
+    "Unnamed Garrison Soldier": {
+      "voice_id": "UgBBYS2sOqTuMpoF3BR0",
+      "character_type": "unknown",
+      "first_seen": "2025-10-19T03:24:52.861308"
+    },
+    "Garrison Soldier": {
+      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+      "character_type": "unknown",
+      "first_seen": "2025-10-19T03:24:52.862336"
+    },
+    "Taiju": {
+      "voice_id": "UgBBYS2sOqTuMpoF3BR0",
+      "character_type": "male",
+      "first_seen": "2025-10-19T03:45:58.495196"
+    },
+    "Senku": {
+      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+      "character_type": "male",
+      "first_seen": "2025-10-19T03:45:58.496680"
+    },
+    "Unnamed Student with Glasses": {
+      "voice_id": "XA2bIQ92TabjGbpO2xRr",
+      "character_type": "unknown",
+      "first_seen": "2025-10-19T03:46:01.738088"
+    },
+    "Unnamed Student with Headband": {
+      "voice_id": "s3TPKV1kjDlVtZbl4Ksh",
+      "character_type": "unknown",
+      "first_seen": "2025-10-19T03:46:01.739345"
     }
   },
   "voice_usage": {
@@ -50,6 +90,34 @@
       "characters": [
         "Narrator",
         "Sound Effect"
+      ]
+    },
+    "UgBBYS2sOqTuMpoF3BR0": {
+      "count": 3,
+      "characters": [
+        "Unnamed Garrison Soldier A",
+        "Unnamed Garrison Soldier",
+        "Taiju"
+      ]
+    },
+    "vBKc2FfBKJfcZNyEt1n6": {
+      "count": 3,
+      "characters": [
+        "Unnamed Garrison Soldier B",
+        "Garrison Soldier",
+        "Senku"
+      ]
+    },
+    "XA2bIQ92TabjGbpO2xRr": {
+      "count": 1,
+      "characters": [
+        "Unnamed Student with Glasses"
+      ]
+    },
+    "s3TPKV1kjDlVtZbl4Ksh": {
+      "count": 1,
+      "characters": [
+        "Unnamed Student with Headband"
       ]
     }
   }

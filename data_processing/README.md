@@ -222,21 +222,22 @@ The generated JSON follows this structure:
 The pipeline uses ElevenLabs voice IDs:
 
 **Male Voices:**
-- `5kMbtRSEKIkRZSdXxrZg`
-- `wI49R6YUU5NNP1h0CECc`
+- `UgBBYS2sOqTuMpoF3BR0`
 - `vBKc2FfBKJfcZNyEt1n6`
-- `FIsP50cHv9JY47BkNVR7`
-- `s0XGIcqmceN2l7kjsqoZ`
+- `XA2bIQ92TabjGbpO2xRr`
+- `s3TPKV1kjDlVtZbl4Ksh`
+- `2BJW5coyhAzSr8STdHbE`
+- `3jR9BuQAOPMWUjWpi0ll`
+- `TWUKKXAylkYxxlPe4gx0`
 
 **Female Voices:**
-- `CaT0A6YBELRBgT6Qa2lH`
-- `bMxLr8fP6hzNRRi9nJxU`
-- `Bn9xWp6PwkrqKRbq8cX2`
-- `iNwc1Lv2YQLywnCvjfn1`
+- `OYTbf65OHHFELVut7v2H`
 - `uYXf8XasLslADfZ2MB4u`
+- `bMxLr8fP6hzNRRi9nJxU`
+- `TbMNBJ27fH2U0VgpSNko`
 
 **Narrator Voice:**
-- `L1aJrPa7pLJEyYlh3Ilq`
+- `asDeXBMC8hUkhqqL7agO`
 
 ### Character Consistency
 

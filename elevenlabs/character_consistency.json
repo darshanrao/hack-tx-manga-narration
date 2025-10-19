@@ -10,6 +10,38 @@
       ],
       "registered_at": "2025-10-19T01:11:10.511810",
       "character_count": 3
+    },
+    "test_scene": {
+      "scene_id": "test_scene",
+      "total_pages": 7,
+      "characters": [
+        "Eren",
+        "Mikasa",
+        "Hannes"
+      ],
+      "registered_at": "2025-10-19T03:14:43.770148",
+      "character_count": 3
+    },
+    "scene1_full_pipeline": {
+      "scene_id": "scene1_full_pipeline",
+      "total_pages": 7,
+      "characters": [
+        "Eren",
+        "Mikasa",
+        "Hannes"
+      ],
+      "registered_at": "2025-10-19T03:24:47.421462",
+      "character_count": 3
+    },
+    "scene2_test": {
+      "scene_id": "scene2_test",
+      "total_pages": 4,
+      "characters": [
+        "Taiju",
+        "Senku"
+      ],
+      "registered_at": "2025-10-19T03:45:58.494802",
+      "character_count": 2
     }
   },
   "characters": {
@@ -18,13 +50,15 @@
       "character_type": "main",
       "gender": "female",
       "first_seen": "2025-10-19T00:32:41.941836",
-      "last_seen": "2025-10-19T01:11:10.511810",
+      "last_seen": "2025-10-19T03:24:47.421602",
       "scenes": [
         "scene_scene-1",
         "scene_scene-1",
         "scene_scene-1",
         "scene_scene-1",
-        "scene_scene-1"
+        "scene_scene-1",
+        "test_scene",
+        "scene1_full_pipeline"
       ],
       "appearance_count": 4,
       "dominant_emotion": "neutral"
@@ -34,13 +68,15 @@
       "character_type": "main",
       "gender": "male",
       "first_seen": "2025-10-19T00:32:41.946771",
-      "last_seen": "2025-10-19T01:11:10.511810",
+      "last_seen": "2025-10-19T03:24:47.421544",
       "scenes": [
         "scene_scene-1",
         "scene_scene-1",
         "scene_scene-1",
         "scene_scene-1",
-        "scene_scene-1"
+        "scene_scene-1",
+        "test_scene",
+        "scene1_full_pipeline"
       ],
       "appearance_count": 5,
       "dominant_emotion": "neutral"
@@ -50,13 +86,39 @@
       "character_type": "supporting",
       "gender": "male",
       "first_seen": "2025-10-19T00:32:41.948783",
-      "last_seen": "2025-10-19T01:11:10.511810",
+      "last_seen": "2025-10-19T03:24:47.421630",
       "scenes": [
         "scene_scene-1",
         "scene_scene-1",
         "scene_scene-1",
         "scene_scene-1",
-        "scene_scene-1"
+        "scene_scene-1",
+        "test_scene",
+        "scene1_full_pipeline"
+      ],
+      "appearance_count": 4,
+      "dominant_emotion": "neutral"
+    },
+    "Taiju": {
+      "voice_id": "UgBBYS2sOqTuMpoF3BR0",
+      "character_type": "main",
+      "gender": "male",
+      "first_seen": "2025-10-19T03:45:58.496638",
+      "last_seen": "2025-10-19T03:45:58.496643",
+      "scenes": [
+        "scene2_test"
+      ],
+      "appearance_count": 4,
+      "dominant_emotion": "neutral"
+    },
+    "Senku": {
+      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+      "character_type": "main",
+      "gender": "male",
+      "first_seen": "2025-10-19T03:45:58.496937",
+      "last_seen": "2025-10-19T03:45:58.496939",
+      "scenes": [
+        "scene2_test"
       ],
       "appearance_count": 4,
       "dominant_emotion": "neutral"
@@ -67,6 +129,20 @@
       "Eren": "5kMbtRSEKIkRZSdXxrZg",
       "Mikasa": "CaT0A6YBELRBgT6Qa2lH",
       "Hannes": "wI49R6YUU5NNP1h0CECc"
+    },
+    "test_scene": {
+      "Eren": "5kMbtRSEKIkRZSdXxrZg",
+      "Mikasa": "CaT0A6YBELRBgT6Qa2lH",
+      "Hannes": "wI49R6YUU5NNP1h0CECc"
+    },
+    "scene1_full_pipeline": {
+      "Eren": "5kMbtRSEKIkRZSdXxrZg",
+      "Mikasa": "CaT0A6YBELRBgT6Qa2lH",
+      "Hannes": "wI49R6YUU5NNP1h0CECc"
+    },
+    "scene2_test": {
+      "Taiju": "UgBBYS2sOqTuMpoF3BR0",
+      "Senku": "vBKc2FfBKJfcZNyEt1n6"
     }
   },
   "consistency_rules": {}

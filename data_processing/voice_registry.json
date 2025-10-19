@@ -1,163 +1,203 @@
 {
   "characters": {
     "Eren": {
-      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "voice_id": "UgBBYS2sOqTuMpoF3BR0",
       "character_type": "male",
       "first_seen": "2025-10-18T19:52:53.876056"
     },
     "Mikasa": {
-      "voice_id": "CaT0A6YBELRBgT6Qa2lH",
+      "voice_id": "OYTbf65OHHFELVut7v2H",
       "character_type": "female",
       "first_seen": "2025-10-18T19:52:53.878843"
     },
     "Hannes": {
-      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
       "character_type": "male",
       "first_seen": "2025-10-18T19:52:53.879521"
     },
     "Narrator": {
-      "voice_id": "L1aJrPa7pLJEyYlh3Ilq",
+      "voice_id": "asDeXBMC8hUkhqqL7agO",
       "character_type": "narrator",
       "first_seen": "2025-10-18T19:52:56.868582"
     },
     "Taiju": {
-      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "voice_id": "XA2bIQ92TabjGbpO2xRr",
       "character_type": "male",
       "first_seen": "2025-10-18T19:54:54.598592"
     },
     "Senku": {
-      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "voice_id": "s3TPKV1kjDlVtZbl4Ksh",
       "character_type": "male",
       "first_seen": "2025-10-18T19:54:54.601192"
     },
     "Grisha": {
-      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "voice_id": "2BJW5coyhAzSr8STdHbE",
       "character_type": "male",
       "first_seen": "2025-10-18T20:00:36.639422"
     },
     "Kalura": {
-      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "voice_id": "3jR9BuQAOPMWUjWpi0ll",
       "character_type": "male",
       "first_seen": "2025-10-18T20:00:36.641126"
     },
     "Sound Effect": {
-      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "voice_id": "TWUKKXAylkYxxlPe4gx0",
       "character_type": "unknown",
       "first_seen": "2025-10-18T21:48:19.717771"
     },
     "Soldier": {
-      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
       "character_type": "unknown",
       "first_seen": "2025-10-18T21:48:19.720805"
     },
     "Narration": {
-      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+      "voice_id": "asDeXBMC8hUkhqqL7agO",
       "character_type": "unknown",
       "first_seen": "2025-10-18T21:48:19.722065"
     },
     "Garrison Soldier": {
-      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "voice_id": "UgBBYS2sOqTuMpoF3BR0",
       "character_type": "unknown",
       "first_seen": "2025-10-18T22:24:21.382784"
     },
     "Character_A": {
-      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "voice_id": "XA2bIQ92TabjGbpO2xRr",
       "character_type": "male",
       "first_seen": "2025-10-18T22:47:52.197093"
     },
     "Character_B": {
-      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "voice_id": "s3TPKV1kjDlVtZbl4Ksh",
       "character_type": "male",
       "first_seen": "2025-10-18T22:47:52.201075"
     },
     "Character_C": {
-      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+      "voice_id": "2BJW5coyhAzSr8STdHbE",
       "character_type": "male",
       "first_seen": "2025-10-18T22:47:52.202472"
     },
     "Garrison Soldier 1": {
-      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "voice_id": "3jR9BuQAOPMWUjWpi0ll",
       "character_type": "unknown",
       "first_seen": "2025-10-18T22:54:16.385699"
     },
     "Garrison Soldier 2": {
-      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "voice_id": "TWUKKXAylkYxxlPe4gx0",
       "character_type": "unknown",
       "first_seen": "2025-10-18T22:54:16.387255"
     },
     "Eren's Father": {
-      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
       "character_type": "unknown",
       "first_seen": "2025-10-18T23:07:53.917578"
     },
     "Unidentified Man with glasses": {
-      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "voice_id": "XA2bIQ92TabjGbpO2xRr",
       "character_type": "unknown",
       "first_seen": "2025-10-18T23:07:53.919047"
     },
     "Unnamed Garrison Soldier 1": {
-      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "voice_id": "s3TPKV1kjDlVtZbl4Ksh",
       "character_type": "unknown",
       "first_seen": "2025-10-18T23:25:14.812192"
     },
     "Unnamed Garrison Soldier 2": {
-      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "voice_id": "2BJW5coyhAzSr8STdHbE",
       "character_type": "unknown",
       "first_seen": "2025-10-18T23:25:14.813490"
     },
     "Unnamed Garrison Soldier": {
-      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+      "voice_id": "3jR9BuQAOPMWUjWpi0ll",
       "character_type": "unknown",
       "first_seen": "2025-10-18T23:25:14.814414"
     }
   },
   "voice_usage": {
-    "5kMbtRSEKIkRZSdXxrZg": {
-      "count": 9,
+    "UgBBYS2sOqTuMpoF3BR0": {
+      "count": 2,
       "characters": [
         "Eren",
-        "Taiju",
-        "Grisha",
-        "Sound Effect",
-        "Garrison Soldier",
-        "Character_A",
-        "Garrison Soldier 1",
-        "Eren's Father",
-        "Unnamed Garrison Soldier 1"
+        "Garrison Soldier"
       ]
     },
-    "L1aJrPa7pLJEyYlh3Ilq": {
-      "count": 1,
+    "asDeXBMC8hUkhqqL7agO": {
+      "count": 2,
       "characters": [
-        "Narrator"
+        "Narrator",
+        "Narration"
       ]
     },
-    "CaT0A6YBELRBgT6Qa2lH": {
+    "OYTbf65OHHFELVut7v2H": {
       "count": 1,
       "characters": [
         "Mikasa"
       ]
     },
-    "wI49R6YUU5NNP1h0CECc": {
-      "count": 8,
-      "characters": [
-        "Hannes",
-        "Senku",
-        "Kalura",
-        "Soldier",
-        "Character_B",
-        "Garrison Soldier 2",
-        "Unidentified Man with glasses",
-        "Unnamed Garrison Soldier 2"
-      ]
-    },
     "vBKc2FfBKJfcZNyEt1n6": {
       "count": 3,
       "characters": [
-        "Narration",
+        "Hannes",
+        "Soldier",
+        "Eren's Father"
+      ]
+    },
+    "XA2bIQ92TabjGbpO2xRr": {
+      "count": 3,
+      "characters": [
+        "Taiju",
+        "Character_A",
+        "Unidentified Man with glasses"
+      ]
+    },
+    "s3TPKV1kjDlVtZbl4Ksh": {
+      "count": 3,
+      "characters": [
+        "Senku",
+        "Character_B",
+        "Unnamed Garrison Soldier 1"
+      ]
+    },
+    "2BJW5coyhAzSr8STdHbE": {
+      "count": 3,
+      "characters": [
+        "Grisha",
         "Character_C",
+        "Unnamed Garrison Soldier 2"
+      ]
+    },
+    "3jR9BuQAOPMWUjWpi0ll": {
+      "count": 3,
+      "characters": [
+        "Kalura",
+        "Garrison Soldier 1",
         "Unnamed Garrison Soldier"
       ]
+    },
+    "TWUKKXAylkYxxlPe4gx0": {
+      "count": 2,
+      "characters": [
+        "Sound Effect",
+        "Garrison Soldier 2"
+      ]
     }
+  },
+  "voice_categories": {
+    "male": [
+      "UgBBYS2sOqTuMpoF3BR0",
+      "vBKc2FfBKJfcZNyEt1n6",
+      "XA2bIQ92TabjGbpO2xRr",
+      "s3TPKV1kjDlVtZbl4Ksh",
+      "2BJW5coyhAzSr8STdHbE",
+      "3jR9BuQAOPMWUjWpi0ll",
+      "TWUKKXAylkYxxlPe4gx0"
+    ],
+    "female": [
+      "OYTbf65OHHFELVut7v2H",
+      "uYXf8XasLslADfZ2MB4u",
+      "bMxLr8fP6hzNRRi9nJxU",
+      "TbMNBJ27fH2U0VgpSNko"
+    ],
+    "narrator": [
+      "asDeXBMC8hUkhqqL7agO"
+    ]
   }
 }

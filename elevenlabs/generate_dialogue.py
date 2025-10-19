@@ -24,8 +24,8 @@ from dotenv import load_dotenv
 # Load environment variables from .env file
 load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
 
-# Import config from same directory
-from config import ELEVENLABS_API_KEY
+# Get ElevenLabs API key from environment
+ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
 
 
 def parse_json_script(file_path):
@@ -412,7 +412,7 @@ def main():
         print("This will take longer but provides accurate timestamps...")
         
         # Create output directory if it doesn't exist
-        output_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'assets')
+        output_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'pipeline_output', 'assets')
         os.makedirs(output_dir, exist_ok=True)
         
         # Generate timestamp for all files
@@ -446,9 +446,11 @@ def main():
             transcript_filename = f"{clean_scene_id}_page{page_number:02d}_transcript_{timestamp}.txt"
             
             audio_path = os.path.join(output_dir, audio_filename)
-            transcript_path = os.path.join(output_dir, transcript_filename)
+            text_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'pipeline_output', 'text')
+            os.makedirs(text_dir, exist_ok=True)
+            transcript_path = os.path.join(text_dir, transcript_filename)
             
-            print(f"[INFO] Saving page {page_number} audio to: assets/{audio_filename}")
+            print(f"[INFO] Saving page {page_number} audio to: pipeline_output/assets/{audio_filename}")
             
             # Save the audio data
             with open(audio_path, 'wb') as audio_file:
@@ -470,8 +472,8 @@ def main():
             
             total_lines += len(precise_timestamps)
             print(f"[OK] Page {page_number} complete!")
-            print(f"[INFO] Audio file: assets/{audio_filename}")
-            print(f"[INFO] Transcript file: assets/{transcript_filename}")
+            print(f"[INFO] Audio file: pipeline_output/assets/{audio_filename}")
+            print(f"[INFO] Transcript file: pipeline_output/text/{transcript_filename}")
             print(f"[INFO] Page {page_number} duration: {page_duration:.1f} seconds")
             print(f"[INFO] Precise timestamps generated for {len(precise_timestamps)} lines")
         
@@ -523,7 +525,8 @@ def process_pdf_to_audio(pdf_path, scene_id=None, gemini_api_key=None):
         json_data = process_pdf(
             pdf_path=pdf_path,
             scene_id=scene_id,
-            gemini_api_key=gemini_api_key
+            gemini_api_key=gemini_api_key,
+            output_dir="pipeline_output/intermediate"
         )
         
         print(f"[INFO] Gemini processing complete")
@@ -547,7 +550,7 @@ def process_pdf_to_audio(pdf_path, scene_id=None, gemini_api_key=None):
         print(f"\n[INFO] Generating audio for {len(pages_data)} pages...")
         
         # Create output directory if it doesn't exist
-        output_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'assets')
+        output_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'pipeline_output', 'assets')
         os.makedirs(output_dir, exist_ok=True)
         
         # Generate timestamp for all files
@@ -582,9 +585,11 @@ def process_pdf_to_audio(pdf_path, scene_id=None, gemini_api_key=None):
             transcript_filename = f"{clean_scene_id}_page{page_number:02d}_transcript_{timestamp}.txt"
             
             audio_path = os.path.join(output_dir, audio_filename)
-            transcript_path = os.path.join(output_dir, transcript_filename)
+            text_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'pipeline_output', 'text')
+            os.makedirs(text_dir, exist_ok=True)
+            transcript_path = os.path.join(text_dir, transcript_filename)
             
-            print(f"[INFO] Saving page {page_number} audio to: assets/{audio_filename}")
+            print(f"[INFO] Saving page {page_number} audio to: pipeline_output/assets/{audio_filename}")
             
             # Save the audio data
             with open(audio_path, 'wb') as audio_file:
@@ -613,8 +618,8 @@ def process_pdf_to_audio(pdf_path, scene_id=None, gemini_api_key=None):
             })
             
             print(f"[OK] Page {page_number} complete!")
-            print(f"[INFO] Audio file: assets/{audio_filename}")
-            print(f"[INFO] Transcript file: assets/{transcript_filename}")
+            print(f"[INFO] Audio file: pipeline_output/assets/{audio_filename}")
+            print(f"[INFO] Transcript file: pipeline_output/text/{transcript_filename}")
             print(f"[INFO] Page {page_number} duration: {page_duration:.1f} seconds")
             print(f"[INFO] Precise timestamps generated for {len(precise_timestamps)} lines")
         
@@ -622,7 +627,7 @@ def process_pdf_to_audio(pdf_path, scene_id=None, gemini_api_key=None):
         print(f"[INFO] Total pages processed: {len(pages_data)}")
         print(f"[INFO] Total duration: {total_duration:.1f} seconds")
         print(f"[INFO] Total lines processed: {total_lines}")
-        print(f"[INFO] Files saved to assets folder")
+        print(f"[INFO] Files saved to pipeline_output folder")
         
         return {
             'success': True,

@@ -29,24 +29,25 @@ class VoiceRegistry:
         
         # ElevenLabs voice IDs - Male voices
         self.male_voices = [
-            "5kMbtRSEKIkRZSdXxrZg",
-            "wI49R6YUU5NNP1h0CECc", 
+            "UgBBYS2sOqTuMpoF3BR0",
             "vBKc2FfBKJfcZNyEt1n6",
-            "FIsP50cHv9JY47BkNVR7",
-            "s0XGIcqmceN2l7kjsqoZ"
+            "XA2bIQ92TabjGbpO2xRr",
+            "s3TPKV1kjDlVtZbl4Ksh",
+            "2BJW5coyhAzSr8STdHbE",
+            "3jR9BuQAOPMWUjWpi0ll",
+            "TWUKKXAylkYxxlPe4gx0"
         ]
         
         # ElevenLabs voice IDs - Female voices
         self.female_voices = [
-            "CaT0A6YBELRBgT6Qa2lH",
+            "OYTbf65OHHFELVut7v2H",
+            "uYXf8XasLslADfZ2MB4u",
             "bMxLr8fP6hzNRRi9nJxU",
-            "Bn9xWp6PwkrqKRbq8cX2",
-            "iNwc1Lv2YQLywnCvjfn1",
-            "uYXf8XasLslADfZ2MB4u"
+            "TbMNBJ27fH2U0VgpSNko"
         ]
         
         # Narrator voice ID (special voice for all narrators)
-        self.narrator_voice_id = "L1aJrPa7pLJEyYlh3Ilq"
+        self.narrator_voice_id = "asDeXBMC8hUkhqqL7agO"
         
         # Voice assignment tracking
         self.male_voice_index = 0
