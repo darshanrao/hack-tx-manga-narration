@@ -1,98 +1,482 @@
 {
-  "page_id": "unknown",
-  "scene_title": "Citizens - Page 7",
-  "ambient": "",
+  "scene_id": "scene_scene-3",
+  "scene_title": "Character_A - Complete Scene",
+  "ambient": "A tense and confrontational atmosphere inside a family home. What began as a normal conversation has escalated into a heated argument. | The scene transitions from a peaceful, sunlit town street to the warm, domestic interior of a family's kitchen and dining area. The atmosphere inside is initially calm but carries an undercurrent of concern. | The atmosphere is tense and heavy with emotion, taking place within the family home. The scene is dominated by the sounds of a heated argument and the subsequent abrupt silence. | The scene takes place indoors, by a doorway leading to stairs. The atmosphere is highly tense and emotional due to the family argument. | The scene takes place at the doorway of a home, as a family member is departing. The atmosphere is tense and emotionally charged, shifting from familial conflict to secretive promise-making.",
   "characters": {
-    "Eren Jaeger": {
-      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
-      "expression": "Intense, angry, defiant"
+    "Eren": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "expression": "angry and defiant"
     },
-    "Mikasa Ackerman": {
+    "Kalura": {
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "expression": "worried, stern, and pleading"
+    },
+    "Mikasa": {
       "voice_id": "CaT0A6YBELRBgT6Qa2lH",
-      "expression": "Concerned, worried"
-    },
-    "Hannes": {
-      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
-      "expression": "Relaxed, then shocked/surprised"
-    },
-    "Garrison Soldier 1": {
-      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
-      "expression": "Dismissive, mocking"
-    },
-    "Garrison Soldier 2": {
-      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
-      "expression": "Casual, dismissive"
-    },
-    "Townsperson": {
-      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
-      "expression": "Surprised, gossipy"
+      "expression": "determined and resolute"
     },
     "Narrator": {
+      "voice_id": "L1aJrPa7pLJEyYlh3Ilq",
+      "expression": "neutral"
+    },
+    "Sound Effect": {
       "voice_id": "5kMbtRSEKIkRZSdXxrZg",
       "expression": "neutral"
+    },
+    "Eren's Father": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "expression": "calm, serious, contemplative"
+    },
+    "Grisha": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "expression": "serious, contemplative, resolute"
+    },
+    "Unidentified Man with glasses": {
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "expression": "Transitions from frustrated and exasperated to serious and secretive."
     }
   },
   "dialogue": [
     {
       "speaker": "Narrator",
+      "voice_id": "L1aJrPa7pLJEyYlh3Ilq",
+      "text": "[calm] Eren and Mikasa arrive at their home in a quiet town. Inside, they are greeted by their mother, Kalura, in the kitchen.",
+      "page_number": 1,
+      "emotion": "neutral",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Eren",
       "voice_id": "5kMbtRSEKIkRZSdXxrZg",
-      "text": "[calm] Eren and Mikasa are walking through town and overhear Garrison soldiers, including Hannes, speaking dismissively about the Survey Corps. This angers Eren, who loudly compares living inside the walls to being a caged animal, attracting the attention of the soldiers and other passersby."
+      "text": "[excited] WE'RE HOME!",
+      "page_number": 1,
+      "emotion": "cheerful",
+      "confidence": "high"
     },
     {
-      "speaker": "Garrison Soldier 1",
-      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
-      "text": "[chuckles] IT'S JUST LIKE HANNES SAYS."
-    },
-    {
-      "speaker": "Garrison Soldier 2",
+      "speaker": "Sound Effect",
       "voice_id": "5kMbtRSEKIkRZSdXxrZg",
-      "text": "HELL... I CAN'T UNDERSTAND THOSE GUYS IN THE SURVEY CORPS WHO WANNA GO OUTSIDE THE WALL!"
+      "text": "[door opening] [KA-CHA]",
+      "page_number": 1,
+      "emotion": "neutral",
+      "confidence": "high"
     },
     {
-      "speaker": "Garrison Soldier 2",
+      "speaker": "Kalura",
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "text": "[stern] YOU TWO ARE LATE.",
+      "page_number": 1,
+      "emotion": "concerned",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Kalura",
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "text": "[warmly] WELCOME BACK.",
+      "page_number": 1,
+      "emotion": "welcoming",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Sound Effect",
       "voice_id": "5kMbtRSEKIkRZSdXxrZg",
-      "text": "BUT IF THEY WANNA HAVE FUN PLAYING WAR, LET 'EM, I SAY!!"
+      "text": "[door rattling] [RATTLE RATTLE RATTLE]",
+      "page_number": 1,
+      "emotion": "neutral",
+      "confidence": "high"
     },
     {
-      "speaker": "Eren Jaeger",
-      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
-      "text": "WE DON'T HAVE TO GO OUTSIDE THE WALL FOR OUR WHOLE LIVES..."
+      "speaker": "Mikasa",
+      "voice_id": "CaT0A6YBELRBgT6Qa2lH",
+      "text": "[hesitant] YEAH... WELL...",
+      "page_number": 1,
+      "emotion": "hesitant",
+      "confidence": "high"
     },
     {
-      "speaker": "Eren Jaeger",
-      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
-      "text": "WE CAN EAT, SLEEP AND SURVIVE JUST FINE HERE... BUT..."
-    },
-    {
-      "speaker": "Eren Jaeger",
-      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
-      "text": "[inhale] [angry] [shouts] ...ISN'T THAT..."
-    },
-    {
-      "speaker": "Eren Jaeger",
-      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
-      "text": "...LIKE BEING A CAGED ANIMAL?"
-    },
-    {
-      "speaker": "Garrison Soldier 1",
-      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
-      "text": "PFFT... WHAT A CRACKPOT..."
-    },
-    {
-      "speaker": "Hannes",
-      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
-      "text": "[calm] [softly]... [surprised] [gasp]"
-    },
-    {
-      "speaker": "Townsperson",
+      "speaker": "Eren",
       "voice_id": "5kMbtRSEKIkRZSdXxrZg",
-      "text": "DON'T TELL ME... ...HE WANTS TO JOIN THE SURVEY CORPS?"
+      "text": "[evasive] SOME STUFF HAPPENED.",
+      "page_number": 1,
+      "emotion": "evasive",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Narrator",
+      "voice_id": "L1aJrPa7pLJEyYlh3Ilq",
+      "text": "[calm] Inside their home, Mikasa reveals Eren's secret desire to join the Survey Corps to his parents, sparking a tense and emotional confrontation between Eren and his mother, Kalura.",
+      "page_number": 2,
+      "emotion": "neutral",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Eren",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[surprised] HUH? DAD, YOU'RE GOING OUT NOW?",
+      "page_number": 2,
+      "emotion": "curious",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Eren's Father",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[calmly] YEAH. I HAVE TO SEE A PATIENT TWO TOWNS UP.",
+      "page_number": 2,
+      "emotion": "calm",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Mikasa",
+      "voice_id": "CaT0A6YBELRBgT6Qa2lH",
+      "text": "[serious] ...EREN SAID...",
+      "page_number": 2,
+      "emotion": "serious",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Eren",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[panicked] M-MIKASA!! I TOLD YOU NOT TO TELL THEM!",
+      "page_number": 2,
+      "emotion": "panicked",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Kalura",
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "text": "[shocked] EREN!!",
+      "page_number": 2,
+      "emotion": "shocked",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Mikasa",
+      "voice_id": "CaT0A6YBELRBgT6Qa2lH",
+      "text": "[resolute] ...HE WANTS TO JOIN THE SURVEY CORPS.",
+      "page_number": 2,
+      "emotion": "resolute",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Kalura",
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "text": "[furious] WHAT ARE YOU THINKING?!",
+      "page_number": 2,
+      "emotion": "furious",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Kalura",
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "text": "[furious] DO YOU KNOW HOW MANY PEOPLE HAVE DIED BECAUSE THEY DARED TO VENTURE OUTSIDE THE WALL?!",
+      "page_number": 2,
+      "emotion": "furious",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Eren's Father",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[thoughtful] ...",
+      "page_number": 2,
+      "emotion": "contemplative",
+      "confidence": "medium"
+    },
+    {
+      "speaker": "Eren",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[defiant] Y-YES, I KNOW!!",
+      "page_number": 2,
+      "emotion": "defiant",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Narrator",
+      "voice_id": "L1aJrPa7pLJEyYlh3Ilq",
+      "text": "[calm] Eren is passionately explaining to his parents why he wants to go outside the walls, expressing his frustration with their confined life. The conversation is tense, culminating in his father's abrupt departure.",
+      "page_number": 3,
+      "emotion": "neutral",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Kalura",
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "text": "[worried] EREN...",
+      "page_number": 3,
+      "emotion": "worried",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Kalura",
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "text": "[questioning] WHY DO YOU WANT TO GO OUTSIDE?",
+      "page_number": 3,
+      "emotion": "questioning",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Eren",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[frustrated] I HATE THE IDEA OF SPENDING MY WHOLE LIFE...",
+      "page_number": 3,
+      "emotion": "frustrated",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Eren",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[enraged] ...INSIDE THE WALL, IGNORANT OF WHAT'S HAPPENING IN THE WORLD OUTSIDE!!",
+      "page_number": 3,
+      "emotion": "enraged",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Eren",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[determined] AND BESIDES...",
+      "page_number": 3,
+      "emotion": "determined",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Eren",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[serious] IF THERE'S NO ONE TO CARRY ON...",
+      "page_number": 3,
+      "emotion": "serious",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Eren",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[determined] ...EVERYONE WHO DIED UP TO NOW WILL HAVE DIED IN VAIN!",
+      "page_number": 3,
+      "emotion": "determined",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Grisha",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[contemplative] ...I SEE...",
+      "page_number": 3,
+      "emotion": "contemplative",
+      "confidence": "medium"
+    },
+    {
+      "speaker": "Grisha",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[resolute] WELL, I'D BETTER BE GOING. THE BOAT LEAVES SOON.",
+      "page_number": 3,
+      "emotion": "resolute",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Sound Effect",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[door closing] [RATTLE]",
+      "page_number": 3,
+      "emotion": "neutral",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Kalura",
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "text": "[anxious] WAIT... HONEY!",
+      "page_number": 3,
+      "emotion": "anxious",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Narrator",
+      "voice_id": "L1aJrPa7pLJEyYlh3Ilq",
+      "text": "[calm] Eren's father, after a tense exchange with Kalura, makes a secret promise to Eren about their basement before departing, leaving Kalura worried.",
+      "page_number": 4,
+      "emotion": "neutral",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Unidentified Man with glasses",
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "text": "[frustrated] TALK SOME SENSE INTO YOUR SON!!",
+      "page_number": 4,
+      "emotion": "frustrated",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Unidentified Man with glasses",
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "text": "[pleading] KALURA...",
+      "page_number": 4,
+      "emotion": "pleading",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Sound Effect",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[door closing] [KA-CHA]",
+      "page_number": 4,
+      "emotion": "neutral",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Unidentified Man with glasses",
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "text": "[resigned] IT DOESN'T MATTER WHAT ANYONE SAYS. THERE'S NO HOLDING BACK AN INQUISITIVE MIND.",
+      "page_number": 4,
+      "emotion": "resigned",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Unidentified Man with glasses",
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "text": "[thoughtful] ...",
+      "page_number": 4,
+      "emotion": "thoughtful",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Unidentified Man with glasses",
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "text": "[serious] EREN...",
+      "page_number": 4,
+      "emotion": "serious",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Sound Effect",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[keys jangling] [JINGLE]",
+      "page_number": 4,
+      "emotion": "neutral",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Unidentified Man with glasses",
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "text": "[promising] WHEN I GET HOME... I'LL SHOW YOU WHAT'S IN THE BASEMENT...",
+      "page_number": 4,
+      "emotion": "promising",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Unidentified Man with glasses",
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "text": "[secretive] ...THAT I'VE BEEN KEEPING SECRET ALL THIS TIME.",
+      "page_number": 4,
+      "emotion": "secretive",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Eren",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[surprised] R-REALLY?!",
+      "page_number": 4,
+      "emotion": "surprised",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Kalura",
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "text": "[worried] EREN...",
+      "page_number": 4,
+      "emotion": "worried",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Eren",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[confused] ...WHAT?",
+      "page_number": 4,
+      "emotion": "confused",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Narrator",
+      "voice_id": "L1aJrPa7pLJEyYlh3Ilq",
+      "text": "[calm] Eren has an intense argument with his mother, Kalura, over his desire to join the Survey Corps. He storms out of the house in anger, leaving a worried Kalura to ask Mikasa to protect him.",
+      "page_number": 5,
+      "emotion": "neutral",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Kalura",
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "text": "[determined] I WON'T LET YOU... ...DO ANYTHING AS FOOLISH AS JOINING THE SURVEY CORPS!",
+      "page_number": 5,
+      "emotion": "determined",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Eren",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[shocked] WHAT ?!",
+      "page_number": 5,
+      "emotion": "shocked",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Eren",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[angry] \"FOOLISH\" ...?!",
+      "page_number": 5,
+      "emotion": "angry",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Kalura",
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "text": "[worried] EREN...",
+      "page_number": 5,
+      "emotion": "worried",
+      "confidence": "medium"
+    },
+    {
+      "speaker": "Eren",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[furious] THE WAY I SEE IT... PEOPLE WHO ARE SATISFIED LIVING LIKE CAGED BIRDS... ...ARE THE REAL FOOLS!",
+      "page_number": 5,
+      "emotion": "furious",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Sound Effect",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[footsteps approaching] [FOOTSTEPS]",
+      "page_number": 5,
+      "emotion": "neutral",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Kalura",
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "text": "[pleading] THAT BOY IS FOOLHARDY... ...SO HELP HIM OUT IF HE GETS IN TROUBLE.",
+      "page_number": 5,
+      "emotion": "pleading",
+      "confidence": "high"
+    },
+    {
+      "speaker": "Sound Effect",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[tense music starts] [TENSe]",
+      "page_number": 5,
+      "emotion": "neutral",
+      "confidence": "medium"
+    },
+    {
+      "speaker": "Mikasa",
+      "voice_id": "CaT0A6YBELRBgT6Qa2lH",
+      "text": "[determined] I WILL!",
+      "page_number": 5,
+      "emotion": "determined",
+      "confidence": "high"
     }
   ],
   "metadata": {
-    "generated_at": "2025-10-18T16:31:30.715459",
-    "total_dialogue_lines": 11,
-    "total_characters": 7,
-    "has_narrator": true
+    "generated_at": "2025-10-18T23:07:53.920168",
+    "total_pages": 5,
+    "successful_pages": 5,
+    "failed_pages": 0,
+    "total_dialogue_lines": 54,
+    "total_characters": 8,
+    "pdf_file": "Chapters/scene-3.pdf"
   }
 }

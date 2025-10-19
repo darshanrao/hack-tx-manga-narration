@@ -63,14 +63,16 @@ load_dotenv()
 
 pipeline = PDFToAudioPipeline(
     output_dir='scenes',
-    gemini_api_key=os.getenv('GOOGLE_API_KEY')
+    gemini_api_key=os.getenv('GOOGLE_API_KEY'),
+    batch_size=5
 )
 
 try:
     result = pipeline.process_pdf_scene(
         '$pdf_path',
         scene_id='$scene_id' if '$scene_id' else None,
-        extract_images=$extract_images
+        extract_images=$extract_images,
+        cleanup_images=True
     )
     
     print(f'✅ Successfully processed scene: {result[\"scene_id\"]}')
@@ -107,13 +109,15 @@ load_dotenv()
 
 pipeline = PDFToAudioPipeline(
     output_dir='scenes',
-    gemini_api_key=os.getenv('GOOGLE_API_KEY')
+    gemini_api_key=os.getenv('GOOGLE_API_KEY'),
+    batch_size=5
 )
 
 try:
     results = pipeline.process_multiple_pdfs(
         '$pdf_dir',
-        extract_images=$extract_images
+        extract_images=$extract_images,
+        cleanup_images=True
     )
     
     successful_scenes = [r for r in results if 'error' not in r]
@@ -152,7 +156,8 @@ load_dotenv()
 
 pipeline = PDFToAudioPipeline(
     output_dir='scenes',
-    gemini_api_key=os.getenv('GOOGLE_API_KEY')
+    gemini_api_key=os.getenv('GOOGLE_API_KEY'),
+    batch_size=5
 )
 
 status = pipeline.get_pipeline_status()
@@ -209,7 +214,8 @@ load_dotenv()
 
 pipeline = PDFToAudioPipeline(
     output_dir='scenes',
-    gemini_api_key=os.getenv('GOOGLE_API_KEY')
+    gemini_api_key=os.getenv('GOOGLE_API_KEY'),
+    batch_size=5
 )
 
 # Export character consistency report

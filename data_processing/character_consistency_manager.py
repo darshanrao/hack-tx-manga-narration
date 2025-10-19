@@ -85,7 +85,9 @@ class CharacterConsistencyManager:
             # Extract character information
             characters = scene_analysis["characters"]["all_characters"]
             character_consistency = scene_analysis["characters"]["consistency"]
-            voice_recommendations = scene_analysis["voice_assignment_recommendations"]
+            
+            # Handle voice recommendations - may not exist in new analyzer
+            voice_recommendations = scene_analysis.get("voice_assignment_recommendations", {})
             
             # Register scene
             self.consistency_data["scenes"][scene_id] = {
@@ -190,7 +192,7 @@ class CharacterConsistencyManager:
             logger.info(f"Assigned voice '{assigned_voice}' to '{char_name}' based on similar character '{most_similar['name']}'")
         else:
             # Use recommended voice or assign new one based on gender
-            assigned_voice = self.voice_registry.assign_voice(char_name, recommended_voice, gender)
+            assigned_voice = self.voice_registry.assign_voice(char_name, character_type=gender)
             logger.info(f"Assigned voice '{assigned_voice}' to '{char_name}' (gender: {gender})")
         
         return assigned_voice

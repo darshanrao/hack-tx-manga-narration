@@ -53,7 +53,7 @@ class ElevenLabsJSONBuilder:
             page_id = page_data.get("page_id", "unknown")
             scene_description = page_data.get("scene", "No description available")
             ambient = page_data.get("ambient", "")
-            characters = page_data.get("characters", [])
+            characters = page_data.get("speaking_characters", [])
             dialogue_order = enhanced_dialogue.get("dialogue_order", [])
             
             # Build characters dictionary with voice assignments
@@ -78,12 +78,15 @@ class ElevenLabsJSONBuilder:
             dialogue_list = []
             
             # Add scene description as narrator dialogue if add_narrator is True
-            if add_narrator and scene_description:
+            if add_narrator and scene_description and "Narrator" in characters_dict:
                 narrator_voice_id = characters_dict["Narrator"]["voice_id"]
                 dialogue_list.append({
                     "speaker": "Narrator",
                     "voice_id": narrator_voice_id,
-                    "text": f"[calm] {scene_description}"
+                    "text": f"[calm] {scene_description}",
+                    "page_number": page_data.get("page_id", "unknown"),
+                    "emotion": "neutral",
+                    "confidence": "high"
                 })
             
             # Add character dialogue
@@ -105,7 +108,10 @@ class ElevenLabsJSONBuilder:
                 dialogue_list.append({
                     "speaker": speaker,
                     "voice_id": voice_id,
-                    "text": text
+                    "text": text,
+                    "page_number": page_data.get("page_id", "unknown"),
+                    "emotion": dialogue.get("emotion", "neutral"),
+                    "confidence": dialogue.get("confidence", "medium")
                 })
             
             # Build final JSON structure
