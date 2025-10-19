@@ -661,7 +661,7 @@ export default function HomePage() {
       <div className="border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-xl px-8 py-6 flex items-center justify-between shadow-lg shadow-black/20">
         <div>
           <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
-            Manga Reader
+            Sonokomi
           </h1>
           <p className="text-slate-300 mt-1 font-medium">
             {uploadedFile
