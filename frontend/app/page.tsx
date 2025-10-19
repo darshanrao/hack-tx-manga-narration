@@ -62,9 +62,10 @@ export default function HomePage() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [jobId, setJobId] = useState<string | null>(null);
-  const [jobStatus, setJobStatus] = useState<string | null>(null);
-  const [transcriptUrl, setTranscriptUrl] = useState<string | null>(null);
+  // Cloud upload state (Supabase)
+  const [cloudUploadStatus, setCloudUploadStatus] = useState<'idle' | 'uploading' | 'success' | 'error'>('idle');
+  const [cloudObjectPath, setCloudObjectPath] = useState<string | null>(null);
+  const [cloudBucket] = useState<string>('manga-pdfs');
   const [transcriptData, setTranscriptData] = useState<TranscriptEntry[]>([]);
   const [currentPageAudio, setCurrentPageAudio] = useState<PageAudioData | null>(null);
   const [pageTranscriptData, setPageTranscriptData] = useState<TranscriptEntry[]>([]);
@@ -421,6 +422,8 @@ export default function HomePage() {
     setCurrentPanelIndex(0);
     setIsPlaying(false);
     setPdfZoom(1.0); // Reset zoom for new file
+    setCloudUploadStatus('idle');
+    setCloudObjectPath(null);
     
     // Check if file is PDF
     const isPDFFile = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
@@ -448,15 +451,22 @@ export default function HomePage() {
       setPdfPageCount(7); // Set to 7 pages for your test PDF
     }
 
-    // Backend upload is optional - comment out for testing without backend
-    /*
+    // Automatically upload to Supabase via backend
+    await uploadToSupabase(file);
+
+  };
+
+  // Explicit upload to Supabase via backend API
+  const uploadToSupabase = async (file: File) => {
+    if (!file) return;
+    setCloudUploadStatus('uploading');
     try {
-      const bucket = 'manga-pdfs';
-      const objectPath = `pdfs/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9_.-]/g, '_')}`;
       const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
+      // Keep original filename (sanitized), without timestamp or extra prefix
+      const objectPath = file.name.replace(/[^a-zA-Z0-9_.-]/g, '_');
       const form = new FormData();
       form.append('file', file);
-      form.append('bucket', bucket);
+      form.append('bucket', cloudBucket);
       form.append('object_path', objectPath);
 
       const up = await fetch(`${API_BASE}/api/storage/upload`, {
@@ -465,63 +475,18 @@ export default function HomePage() {
       });
       if (!up.ok) {
         const err = await up.json().catch(() => ({}));
-        console.error('Backend upload failed:', err?.detail || up.status);
+        console.error('Upload failed:', err?.detail || up.status);
+        setCloudUploadStatus('error');
         return;
       }
       const uploaded = await up.json();
-      const uploadedPath: string = uploaded.object_path;
-
-      if (uploadedPath) {
-        console.log('Uploaded to:', uploadedPath);
-        // Optionally kick off backend ingest here
-        try {
-          const res = await fetch(`${API_BASE}/api/ingest/start`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ bucket, object_path: uploadedPath }),
-          });
-          if (res.ok) {
-            const { job_id } = await res.json();
-            console.log('Ingest job started:', job_id);
-            setJobId(job_id);
-            setJobStatus('queued');
-          } else {
-            console.warn('Failed to start ingest, status:', res.status);
-          }
-        } catch (e) {
-          console.warn('Unable to contact backend ingest endpoint:', e);
-        }
-      }
+      setCloudObjectPath(uploaded.object_path || objectPath);
+      setCloudUploadStatus('success');
     } catch (e) {
       console.error('Unexpected upload failure:', e);
+      setCloudUploadStatus('error');
     }
-    */
   };
-
-  // Poll job status if we have a jobId
-  useEffect(() => {
-    if (!jobId) return;
-    const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
-    const interval = setInterval(async () => {
-      try {
-        const res = await fetch(`${API_BASE}/api/ingest/status/${jobId}`);
-        if (!res.ok) return;
-        const data = await res.json();
-        setJobStatus(data.status);
-        if (data.status === 'done') {
-          clearInterval(interval);
-          const tUrl = data.outputs?.transcript_url as string | undefined;
-          if (tUrl) setTranscriptUrl(tUrl);
-        }
-        if (data.status === 'error') {
-          clearInterval(interval);
-        }
-      } catch (e) {
-        // ignore transient errors
-      }
-    }, 1500);
-    return () => clearInterval(interval);
-  }, [jobId]);
 
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
@@ -632,10 +597,8 @@ export default function HomePage() {
         </div>
               <div className="flex gap-3 items-center">
           <KeyboardShortcutsHelp />
-          {/* Backend status indicator */}
-          <div className="px-3 py-2 rounded-md bg-blue-900/80 border border-blue-600 text-blue-200 text-sm">
-            <span className="font-semibold">Backend:</span> Offline (PDF viewer works locally)
-          </div>
+          {/* Backend status indicator removed per request */}
+          {/* Auto-upload occurs on file selection; manual upload button removed */}
           <Link href="/landing">
             <Button
               variant="outline"
