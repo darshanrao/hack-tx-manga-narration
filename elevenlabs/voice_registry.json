@@ -64,6 +64,41 @@
       "voice_id": "s3TPKV1kjDlVtZbl4Ksh",
       "character_type": "unknown",
       "first_seen": "2025-10-19T03:46:01.739345"
+    },
+    "Grisha": {
+      "voice_id": "UgBBYS2sOqTuMpoF3BR0",
+      "character_type": "male",
+      "first_seen": "2025-10-19T04:10:39.074906"
+    },
+    "Carla": {
+      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+      "character_type": "male",
+      "first_seen": "2025-10-19T04:10:39.076338"
+    },
+    "Itadori Yuji": {
+      "voice_id": "UgBBYS2sOqTuMpoF3BR0",
+      "character_type": "male",
+      "first_seen": "2025-10-19T05:11:23.189672"
+    },
+    "Megumi": {
+      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+      "character_type": "male",
+      "first_seen": "2025-10-19T05:11:23.193094"
+    },
+    "Gojo Satoru": {
+      "voice_id": "XA2bIQ92TabjGbpO2xRr",
+      "character_type": "male",
+      "first_seen": "2025-10-19T05:11:23.193444"
+    },
+    "Person A": {
+      "voice_id": "UgBBYS2sOqTuMpoF3BR0",
+      "character_type": "male",
+      "first_seen": "2025-10-19T05:26:52.904842"
+    },
+    "Person B": {
+      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+      "character_type": "male",
+      "first_seen": "2025-10-19T05:26:52.909538"
     }
   },
   "voice_usage": {
@@ -96,25 +131,32 @@
       ]
     },
     "UgBBYS2sOqTuMpoF3BR0": {
-      "count": 3,
+      "count": 6,
       "characters": [
         "Unnamed Garrison Soldier A",
         "Unnamed Garrison Soldier",
-        "Taiju"
+        "Taiju",
+        "Grisha",
+        "Itadori Yuji",
+        "Person A"
       ]
     },
     "vBKc2FfBKJfcZNyEt1n6": {
-      "count": 3,
+      "count": 6,
       "characters": [
         "Unnamed Garrison Soldier B",
         "Garrison Soldier",
-        "Senku"
+        "Senku",
+        "Carla",
+        "Megumi",
+        "Person B"
       ]
     },
     "XA2bIQ92TabjGbpO2xRr": {
-      "count": 1,
+      "count": 2,
       "characters": [
-        "Unnamed Student with Glasses"
+        "Unnamed Student with Glasses",
+        "Gojo Satoru"
       ]
     },
     "s3TPKV1kjDlVtZbl4Ksh": {

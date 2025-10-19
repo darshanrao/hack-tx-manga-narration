@@ -42,6 +42,39 @@
       ],
       "registered_at": "2025-10-19T03:45:58.494802",
       "character_count": 2
+    },
+    "scene3_full_pipeline": {
+      "scene_id": "scene3_full_pipeline",
+      "total_pages": 5,
+      "characters": [
+        "Eren",
+        "Mikasa",
+        "Grisha",
+        "Carla"
+      ],
+      "registered_at": "2025-10-19T04:10:39.074665",
+      "character_count": 4
+    },
+    "scene4_full_pipeline": {
+      "scene_id": "scene4_full_pipeline",
+      "total_pages": 4,
+      "characters": [
+        "Itadori Yuji",
+        "Megumi",
+        "Gojo Satoru"
+      ],
+      "registered_at": "2025-10-19T05:11:23.186863",
+      "character_count": 3
+    },
+    "scene5_full_pipeline": {
+      "scene_id": "scene5_full_pipeline",
+      "total_pages": 5,
+      "characters": [
+        "Person A",
+        "Person B"
+      ],
+      "registered_at": "2025-10-19T05:26:52.901775",
+      "character_count": 2
     }
   },
   "characters": {
@@ -50,7 +83,7 @@
       "character_type": "main",
       "gender": "female",
       "first_seen": "2025-10-19T00:32:41.941836",
-      "last_seen": "2025-10-19T03:24:47.421602",
+      "last_seen": "2025-10-19T04:10:39.074743",
       "scenes": [
         "scene_scene-1",
         "scene_scene-1",
@@ -58,7 +91,8 @@
         "scene_scene-1",
         "scene_scene-1",
         "test_scene",
-        "scene1_full_pipeline"
+        "scene1_full_pipeline",
+        "scene3_full_pipeline"
       ],
       "appearance_count": 4,
       "dominant_emotion": "neutral"
@@ -68,7 +102,7 @@
       "character_type": "main",
       "gender": "male",
       "first_seen": "2025-10-19T00:32:41.946771",
-      "last_seen": "2025-10-19T03:24:47.421544",
+      "last_seen": "2025-10-19T04:10:39.074712",
       "scenes": [
         "scene_scene-1",
         "scene_scene-1",
@@ -76,7 +110,8 @@
         "scene_scene-1",
         "scene_scene-1",
         "test_scene",
-        "scene1_full_pipeline"
+        "scene1_full_pipeline",
+        "scene3_full_pipeline"
       ],
       "appearance_count": 5,
       "dominant_emotion": "neutral"
@@ -122,6 +157,90 @@
       ],
       "appearance_count": 4,
       "dominant_emotion": "neutral"
+    },
+    "Grisha": {
+      "voice_id": "UgBBYS2sOqTuMpoF3BR0",
+      "character_type": "supporting",
+      "gender": "male",
+      "first_seen": "2025-10-19T04:10:39.076222",
+      "last_seen": "2025-10-19T04:10:39.076250",
+      "scenes": [
+        "scene3_full_pipeline"
+      ],
+      "appearance_count": 4,
+      "dominant_emotion": "neutral"
+    },
+    "Carla": {
+      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+      "character_type": "supporting",
+      "gender": "male",
+      "first_seen": "2025-10-19T04:10:39.076884",
+      "last_seen": "2025-10-19T04:10:39.076890",
+      "scenes": [
+        "scene3_full_pipeline"
+      ],
+      "appearance_count": 5,
+      "dominant_emotion": "neutral"
+    },
+    "Itadori Yuji": {
+      "voice_id": "UgBBYS2sOqTuMpoF3BR0",
+      "character_type": "main",
+      "gender": "male",
+      "first_seen": "2025-10-19T05:11:23.193053",
+      "last_seen": "2025-10-19T05:11:23.193057",
+      "scenes": [
+        "scene4_full_pipeline"
+      ],
+      "appearance_count": 4,
+      "dominant_emotion": "neutral"
+    },
+    "Megumi": {
+      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+      "character_type": "main",
+      "gender": "male",
+      "first_seen": "2025-10-19T05:11:23.193412",
+      "last_seen": "2025-10-19T05:11:23.193416",
+      "scenes": [
+        "scene4_full_pipeline"
+      ],
+      "appearance_count": 4,
+      "dominant_emotion": "neutral"
+    },
+    "Gojo Satoru": {
+      "voice_id": "XA2bIQ92TabjGbpO2xRr",
+      "character_type": "main",
+      "gender": "male",
+      "first_seen": "2025-10-19T05:11:23.193717",
+      "last_seen": "2025-10-19T05:11:23.193719",
+      "scenes": [
+        "scene4_full_pipeline"
+      ],
+      "appearance_count": 4,
+      "dominant_emotion": "neutral"
+    },
+    "Person A": {
+      "voice_id": "UgBBYS2sOqTuMpoF3BR0",
+      "character_type": "main",
+      "gender": "male",
+      "first_seen": "2025-10-19T05:26:52.909478",
+      "last_seen": "2025-10-19T05:26:52.909485",
+      "scenes": [
+        "scene5_full_pipeline"
+      ],
+      "appearance_count": 5,
+      "dominant_emotion": "neutral"
+    },
+    "Person B": {
+      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+      "character_type": "supporting",
+      "gender": "male",
+      "first_seen": "2025-10-19T05:26:52.910052",
+      "last_seen": "2025-10-19T05:26:52.910054",
+      "scenes": [
+        "scene5_full_pipeline"
+      ],
+      "appearance_count": 4,
+      "dominant_emotion": "neutral"
     }
   },
   "voice_assignments": {
@@ -143,6 +262,21 @@
     "scene2_test": {
       "Taiju": "UgBBYS2sOqTuMpoF3BR0",
       "Senku": "vBKc2FfBKJfcZNyEt1n6"
+    },
+    "scene3_full_pipeline": {
+      "Eren": "5kMbtRSEKIkRZSdXxrZg",
+      "Mikasa": "CaT0A6YBELRBgT6Qa2lH",
+      "Grisha": "UgBBYS2sOqTuMpoF3BR0",
+      "Carla": "vBKc2FfBKJfcZNyEt1n6"
+    },
+    "scene4_full_pipeline": {
+      "Itadori Yuji": "UgBBYS2sOqTuMpoF3BR0",
+      "Megumi": "vBKc2FfBKJfcZNyEt1n6",
+      "Gojo Satoru": "XA2bIQ92TabjGbpO2xRr"
+    },
+    "scene5_full_pipeline": {
+      "Person A": "UgBBYS2sOqTuMpoF3BR0",
+      "Person B": "vBKc2FfBKJfcZNyEt1n6"
     }
   },
   "consistency_rules": {}
