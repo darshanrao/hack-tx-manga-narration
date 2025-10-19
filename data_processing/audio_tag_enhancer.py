@@ -182,16 +182,29 @@ DIALOGUE TO ENHANCE (ALL PAGES):
             
             enhancement_prompt += f"""
 
-Return ONLY a JSON array with enhanced dialogue text, in this exact format:
+CRITICAL OUTPUT FORMAT REQUIREMENTS:
+1. Return ONLY a valid JSON array
+2. Each element must be a string with audio tags
+3. Maintain exact order of input dialogue
+4. Return exactly {len(all_dialogue_data)} elements
+5. Each string must be properly escaped for JSON
+
+REQUIRED JSON FORMAT:
 [
     "[gentle] Are you crying? [short pause]",
-    "[confused] Huh...? [sighs softly]",
+    "[confused] Huh...? [sighs softly]", 
     "[angry] What are you talking about?!",
     "[calm] I understand your concern."
 ]
 
-Make sure the order matches the input dialogue order exactly.
-Return exactly {len(all_dialogue_data)} enhanced dialogue lines.
+IMPORTANT:
+- Use double quotes for JSON strings
+- Escape any quotes inside dialogue with backslash
+- Do not include any text before or after the JSON array
+- Ensure all {len(all_dialogue_data)} dialogue lines are included
+- Maintain the exact order as provided in the input
+
+Return ONLY the JSON array, nothing else.
 """
             
             # Get enhancement from LLM
@@ -201,19 +214,40 @@ Return exactly {len(all_dialogue_data)} enhanced dialogue lines.
                 logger.warning(f"No enhancement received for {len(all_dialogue_data)} dialogue lines")
                 return all_dialogue_data
             
-            # Parse JSON response
+            # Parse JSON response with robust error handling
             try:
                 response_text = response.text.strip()
+                
+                # Remove common prefixes/suffixes that might cause parsing issues
                 if response_text.startswith("```json"):
                     response_text = response_text[7:]
+                elif response_text.startswith("```"):
+                    response_text = response_text[3:]
+                
                 if response_text.endswith("```"):
                     response_text = response_text[:-3]
                 
+                # Find JSON array boundaries
+                start_idx = response_text.find('[')
+                end_idx = response_text.rfind(']')
+                
+                if start_idx != -1 and end_idx != -1 and end_idx > start_idx:
+                    response_text = response_text[start_idx:end_idx + 1]
+                
+                # Clean up any extra whitespace
+                response_text = response_text.strip()
+                
+                # Parse the JSON
                 enhanced_texts = json.loads(response_text)
                 
                 # Validate response size
                 if len(enhanced_texts) != len(all_dialogue_data):
                     logger.warning(f"Enhancement size mismatch: expected {len(all_dialogue_data)}, got {len(enhanced_texts)}")
+                    return all_dialogue_data
+                
+                # Validate that all elements are strings
+                if not all(isinstance(text, str) for text in enhanced_texts):
+                    logger.warning("Some enhanced texts are not strings")
                     return all_dialogue_data
                 
                 # Create enhanced dialogue entries

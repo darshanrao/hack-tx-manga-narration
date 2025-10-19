@@ -94,11 +94,26 @@
       "voice_id": "wI49R6YUU5NNP1h0CECc",
       "character_type": "unknown",
       "first_seen": "2025-10-18T23:07:53.919047"
+    },
+    "Unnamed Garrison Soldier 1": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "character_type": "unknown",
+      "first_seen": "2025-10-18T23:25:14.812192"
+    },
+    "Unnamed Garrison Soldier 2": {
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "character_type": "unknown",
+      "first_seen": "2025-10-18T23:25:14.813490"
+    },
+    "Unnamed Garrison Soldier": {
+      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+      "character_type": "unknown",
+      "first_seen": "2025-10-18T23:25:14.814414"
     }
   },
   "voice_usage": {
     "5kMbtRSEKIkRZSdXxrZg": {
-      "count": 8,
+      "count": 9,
       "characters": [
         "Eren",
         "Taiju",
@@ -107,7 +122,8 @@
         "Garrison Soldier",
         "Character_A",
         "Garrison Soldier 1",
-        "Eren's Father"
+        "Eren's Father",
+        "Unnamed Garrison Soldier 1"
       ]
     },
     "L1aJrPa7pLJEyYlh3Ilq": {
@@ -123,7 +139,7 @@
       ]
     },
     "wI49R6YUU5NNP1h0CECc": {
-      "count": 7,
+      "count": 8,
       "characters": [
         "Hannes",
         "Senku",
@@ -131,14 +147,16 @@
         "Soldier",
         "Character_B",
         "Garrison Soldier 2",
-        "Unidentified Man with glasses"
+        "Unidentified Man with glasses",
+        "Unnamed Garrison Soldier 2"
       ]
     },
     "vBKc2FfBKJfcZNyEt1n6": {
-      "count": 2,
+      "count": 3,
       "characters": [
         "Narration",
-        "Character_C"
+        "Character_C",
+        "Unnamed Garrison Soldier"
       ]
     }
   }
