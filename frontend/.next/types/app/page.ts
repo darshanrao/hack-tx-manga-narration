@@ -1,4 +1,4 @@
-// File: C:\hacktx25-clone\hack-tx-manga-narration\frontend\app\page.tsx
+// File: C:\Users\brady\Desktop\Portfolio\hack-tx-manga-narration\frontend\app\page.tsx
 import * as entry from '../../../app/page.js'
 import type { ResolvingMetadata, ResolvingViewport } from 'next/dist/lib/metadata/types/metadata-interface.js'
 

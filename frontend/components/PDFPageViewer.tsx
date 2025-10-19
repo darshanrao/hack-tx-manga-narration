@@ -43,7 +43,7 @@ interface PDFPageViewerProps {
   onPageCountChange?: (count: number) => void;
 }
 
-export function PDFPageViewer({ 
+export default function PDFPageViewer({ 
   pdfFile, 
   currentPageIndex, 
   onPageCountChange 

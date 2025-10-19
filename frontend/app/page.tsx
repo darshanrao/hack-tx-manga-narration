@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { UploadArea } from "../components/UploadArea";
 import { MangaPageViewer } from "../components/MangaPageViewer";
 import { PlaybackControls } from "../components/PlaybackControls";
@@ -14,10 +14,12 @@ import { ChevronLeft, ChevronRight, RotateCcw, Home } from "lucide-react";
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { TranscriptEntry, parseTranscript } from '../utils/transcriptParser';
+import { PageAudioManager } from '../components/PageAudioManager';
+import { PageAudioData } from '../utils/pageAudioManager';
 // Supabase client is not needed in the browser for uploads; we use backend-forwarded uploads instead
 
 // Dynamic import for PDF viewer to avoid SSR issues
-const PDFPageViewer = dynamic(() => import('../components/PDFPageViewer').then(mod => ({ default: mod.PDFPageViewer })), {
+const PDFPageViewer = dynamic(() => import('../components/PDFPageViewer'), {
   ssr: false,
   loading: () => (
     <div className="h-full w-full flex items-center justify-center bg-muted/30">
@@ -64,8 +66,32 @@ export default function HomePage() {
   const [jobStatus, setJobStatus] = useState<string | null>(null);
   const [transcriptUrl, setTranscriptUrl] = useState<string | null>(null);
   const [transcriptData, setTranscriptData] = useState<TranscriptEntry[]>([]);
+  const [currentPageAudio, setCurrentPageAudio] = useState<PageAudioData | null>(null);
+  const [pageTranscriptData, setPageTranscriptData] = useState<TranscriptEntry[]>([]);
+  const [activeTranscriptEntry, setActiveTranscriptEntry] = useState<TranscriptEntry | null>(null);
   const previousPanelRef = useRef<string | null>(null);
   const isSeekingRef = useRef<boolean>(false);
+
+  // Define the audio and transcript files for the current PDF - memoize to prevent re-renders
+  const audioFiles = useMemo(() => [
+    'ch01_page01_dialogue_20251018_220717.mp3',
+    'ch01_page02_dialogue_20251018_220717.mp3',
+    'ch01_page03_dialogue_20251018_220717.mp3',
+    'ch01_page04_dialogue_20251018_220717.mp3',
+    'ch01_page05_dialogue_20251018_220717.mp3',
+    'ch01_page06_dialogue_20251018_220717.mp3',
+    'ch01_page07_dialogue_20251018_220717.mp3'
+  ], []);
+
+  const transcriptFiles = useMemo(() => [
+    'ch01_page01_transcript_20251018_220717.txt',
+    'ch01_page02_transcript_20251018_220717.txt',
+    'ch01_page03_transcript_20251018_220717.txt',
+    'ch01_page04_transcript_20251018_220717.txt',
+    'ch01_page05_transcript_20251018_220717.txt',
+    'ch01_page06_transcript_20251018_220717.txt',
+    'ch01_page07_transcript_20251018_220717.txt'
+  ], []);
 
   // Mock manga pages with audio files - in a real app, this would be extracted from the uploaded file
   const mockPages: MangaPage[] = [
@@ -155,37 +181,20 @@ export default function HomePage() {
   const currentPage = mockPages[currentPageIndex];
   const currentPanel = currentPage?.panels[currentPanelIndex];
 
-  // Load transcript data on component mount
+  // Load transcript data on component mount - use page-specific transcripts
   useEffect(() => {
-    const loadTranscript = async () => {
-      try {
-        // In a real app, this would fetch from an API or file system
-        // For now, we'll use the mock transcript content
-        const mockTranscriptContent = `00:00 Narrator: Eren and Mikasa are walking through town and overhear Garrison soldiers, including Hannes, speaking dismissively about the Survey Corps. This angers Eren, who loudly compares living inside the walls to being a caged animal, attracting the attention of the soldiers and other passersby.
-00:15 Garrison Soldier 1: IT'S JUST LIKE HANNES SAYS.
-00:18 Garrison Soldier 2: HELL... I CAN'T UNDERSTAND THOSE GUYS IN THE SURVEY CORPS WHO WANNA GO OUTSIDE THE WALL!
-00:23 Garrison Soldier 2: BUT IF THEY WANNA HAVE FUN PLAYING WAR, LET 'EM, I SAY!!
-00:26 Eren Jaeger: WE DON'T HAVE TO GO OUTSIDE THE WALL FOR OUR WHOLE LIVES...
-00:29 Eren Jaeger: WE CAN EAT, SLEEP AND SURVIVE JUST FINE HERE... BUT...
-00:34 Eren Jaeger: ...ISN'T THAT...
-00:36 Eren Jaeger: ...LIKE BEING A CAGED ANIMAL?
-00:38 Garrison Soldier 1: PFFT... WHAT A CRACKPOT...
-00:40 Hannes: ...
-00:41 Townsperson: DON'T TELL ME... ...HE WANTS TO JOIN THE SURVEY CORPS?`;
-
-        const parsedTranscript = parseTranscript(mockTranscriptContent);
-        setTranscriptData(parsedTranscript);
-      } catch (error) {
-        console.error('Error loading transcript:', error);
-      }
-    };
-
-    loadTranscript();
-  }, []);
+    // The page-specific transcripts are now handled by PageAudioManager
+    // This effect is no longer needed since pageTranscriptData is managed by the hook
+  }, [pageTranscriptData, currentPageAudio]);
 
   // Audio player effect - handles audio playback with real audio files
   useEffect(() => {
     // Only reset time when switching panels/pages, not when pausing
+    // If we're using page-level audio (from PageAudioManager), do not reset on panel changes
+    if (currentPageAudio?.audioUrl) {
+      // When page audio is active, we avoid resetting currentTime on panel changes
+      return;
+    }
     if (!currentPanel?.audioFileUrl) {
       setCurrentTime(0);
       setDuration(0);
@@ -214,23 +223,42 @@ export default function HomePage() {
   };
 
   const handleAudioEnded = () => {
-    // Move to next panel or page
+    // If using page-level audio, advance pages directly (ignore panels)
+    if (currentPageAudio?.audioUrl) {
+      if (currentPageIndex < mockPages.length - 1) {
+        setCurrentPageIndex((prev) => prev + 1);
+        setCurrentPanelIndex(0);
+      } else {
+        setIsPlaying(false);
+      }
+      return;
+    }
+    // Panel-level audio flow
     if (currentPanelIndex < currentPage.panels.length - 1) {
       setCurrentPanelIndex((prev) => prev + 1);
     } else if (currentPageIndex < mockPages.length - 1) {
-      // Move to next page
       setCurrentPageIndex((prev) => prev + 1);
       setCurrentPanelIndex(0);
     } else {
-      // End of manga
       setIsPlaying(false);
     }
   };
 
   const handleAudioError = () => {
-    console.error('Audio playback error');
+    console.error('Audio playback error - file may not exist or be corrupted');
     setIsPlaying(false);
+    // Optionally show user-friendly error message
+    // You could add a toast notification here
   };
+
+  // Debug: log audio URL candidates when they change
+  useEffect(() => {
+    // Helps diagnose NotSupportedError / Failed to fetch
+    console.log('Audio candidates:', {
+      pageAudioUrl: currentPageAudio?.audioUrl,
+      panelAudioUrl: currentPanel?.audioFileUrl
+    });
+  }, [currentPageAudio, currentPanel]);
 
   const handleSeek = (time: number) => {
     console.log('handleSeek called with:', time, 'current duration:', duration);
@@ -378,7 +406,13 @@ export default function HomePage() {
       setPdfPageCount(0);
     }
 
-    // Upload to backend which forwards to Supabase (avoids RLS and service key in frontend host)
+    // Set PDF page count for testing (backend upload is optional)
+    if (isPDFFile) {
+      setPdfPageCount(7); // Set to 7 pages for your test PDF
+    }
+
+    // Backend upload is optional - comment out for testing without backend
+    /*
     try {
       const bucket = 'manga-pdfs';
       const objectPath = `pdfs/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9_.-]/g, '_')}`;
@@ -424,6 +458,7 @@ export default function HomePage() {
     } catch (e) {
       console.error('Unexpected upload failure:', e);
     }
+    */
   };
 
   // Poll job status if we have a jobId
@@ -454,6 +489,16 @@ export default function HomePage() {
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
   };
+
+  const handleVolumeChange = useCallback((value: number[]) => {
+    console.log('Volume changing to:', value);
+    setVolume(value);
+  }, []);
+
+  const handleSpeedChange = useCallback((value: number[]) => {
+    console.log('Speed changing to:', value);
+    setSpeed(value);
+  }, []);
 
   const handlePreviousPanel = () => {
     if (currentPanelIndex > 0) {
@@ -523,7 +568,18 @@ export default function HomePage() {
     currentPanelIndex < currentPage?.panels.length - 1;
 
   return (
-    <div className="h-screen w-screen flex flex-col overflow-hidden bg-slate-900">
+        <PageAudioManager
+          audioFiles={audioFiles}
+          transcriptFiles={transcriptFiles}
+          baseUrl="/"
+          currentPageIndex={currentPageIndex}
+          currentChapterIndex={0}
+          onPageAudioChange={setCurrentPageAudio}
+          onTranscriptChange={setPageTranscriptData}
+          onActiveTranscriptChange={setActiveTranscriptEntry}
+          currentTime={currentTime}
+        >
+      <div className="h-screen w-screen flex flex-col overflow-hidden bg-slate-900">
       {/* Header */}
       <div className="border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-xl px-8 py-6 flex items-center justify-between shadow-lg shadow-black/20">
         <div>
@@ -538,14 +594,10 @@ export default function HomePage() {
         </div>
         <div className="flex gap-3">
           <KeyboardShortcutsHelp />
-          {jobId && (
-            <div className="px-3 py-2 rounded-md bg-slate-800/80 border border-slate-600 text-slate-200 text-sm">
-              Job: {jobStatus || '...'}
-              {transcriptUrl && (
-                <a className="ml-2 underline text-blue-300" href={transcriptUrl} target="_blank" rel="noreferrer">transcript</a>
-              )}
-            </div>
-          )}
+          {/* Backend status indicator */}
+          <div className="px-3 py-2 rounded-md bg-blue-900/80 border border-blue-600 text-blue-200 text-sm">
+            <span className="font-semibold">Backend:</span> Offline (PDF viewer works locally)
+          </div>
           <Link href="/landing">
             <Button
               variant="outline"
@@ -602,7 +654,7 @@ export default function HomePage() {
                   className="h-full"
                   onCollapseChange={setIsTranscriptCollapsed}
                   currentTime={currentTime}
-                  transcriptData={transcriptData}
+                  transcriptData={pageTranscriptData.length > 0 ? pageTranscriptData : transcriptData}
                   onSeek={handleSeek}
                 />
               </div>
@@ -620,9 +672,9 @@ export default function HomePage() {
                     isPlaying={isPlaying}
                     onPlayPause={handlePlayPause}
                     volume={volume}
-                    onVolumeChange={setVolume}
+                    onVolumeChange={handleVolumeChange}
                     speed={speed}
-                    onSpeedChange={setSpeed}
+                    onSpeedChange={handleSpeedChange}
                     currentTime={currentTime}
                     duration={duration}
                     onSeek={handleSeek}
@@ -668,9 +720,9 @@ export default function HomePage() {
       </div>
       
       {/* Audio Player - Hidden component that handles audio playback */}
-      {currentPanel?.audioFileUrl && (
+      {(currentPanel?.audioFileUrl || (currentPageAudio?.audioUrl && currentPageAudio.audioUrl !== '')) && (
         <AudioPlayer
-          audioUrl={currentPanel.audioFileUrl}
+          audioUrl={currentPageAudio?.audioUrl || currentPanel?.audioFileUrl || ''}
           isPlaying={isPlaying}
           volume={volume[0]}
           speed={speed[0]}
@@ -685,5 +737,6 @@ export default function HomePage() {
         />
       )}
     </div>
+    </PageAudioManager>
   );
 }

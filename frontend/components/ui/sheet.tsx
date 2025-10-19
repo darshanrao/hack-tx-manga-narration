@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import * as SheetPrimitive from " $matches[0] -replace '@[0-9\.]+', '' ";
-import { XIcon } from "lucide-react@0.487.0";
+import { XIcon } from "lucide-react";
 
 import { cn } from "./utils";
 
@@ -137,4 +137,7 @@ export {
   SheetTitle,
   SheetDescription,
 };
+
+
+
 

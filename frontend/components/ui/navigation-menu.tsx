@@ -1,7 +1,7 @@
 import * as React from "react";
 import * as NavigationMenuPrimitive from " $matches[0] -replace '@[0-9\.]+', '' ";
 import { cva } from "class-variance-authority";
-import { ChevronDownIcon } from "lucide-react@0.487.0";
+import { ChevronDownIcon } from "lucide-react";
 
 import { cn } from "./utils";
 
@@ -166,4 +166,7 @@ export {
   NavigationMenuViewport,
   navigationMenuTriggerStyle,
 };
+
+
+
 

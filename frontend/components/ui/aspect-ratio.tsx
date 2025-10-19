@@ -1,6 +1,6 @@
 "use client";
 
-import * as AspectRatioPrimitive from " $matches[0] -replace '@[0-9\.]+', '' ";
+import * as AspectRatioPrimitive from "@radix-ui/react-aspect-ratio";
 
 function AspectRatio({
   ...props
@@ -9,4 +9,5 @@ function AspectRatio({
 }
 
 export { AspectRatio };
+
 

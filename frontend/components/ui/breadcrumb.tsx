@@ -1,5 +1,6 @@
 import * as React from "react";
-import { Slot } from " $matches[0] -replace '@[0-9\.]+', '' ";
+import { Slot } from "@radix-ui/react-slot";
+import { ChevronRight, MoreHorizontal } from "lucide-react";
 
 import { cn } from "./utils";
 
@@ -106,4 +107,6 @@ export {
   BreadcrumbSeparator,
   BreadcrumbEllipsis,
 };
+
+
 
