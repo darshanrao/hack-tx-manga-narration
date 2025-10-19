@@ -90,7 +90,11 @@ async def list_scenes():
                 scenes.append(scene)
         
         # Sort by scene number
-        scenes.sort(key=lambda x: int(re.search(r'scene[-_](\d+)', x.filename.lower()).group(1)) if re.search(r'scene[-_](\d+)', x.filename.lower()) else 999)
+        def get_scene_number(scene):
+            match = re.search(r'scene[-_](\d+)', scene.filename.lower())
+            return int(match.group(1)) if match else 999
+        
+        scenes.sort(key=get_scene_number)
         
         print(f"Returning {len(scenes)} scenes")
         return SceneListResponse(scenes=scenes)
@@ -104,15 +108,18 @@ async def list_scenes():
 
 def _estimate_pages_from_scene(scene_number: str) -> int:
     """Estimate page count based on scene number (for demo purposes)."""
-    scene_num = int(scene_number)
-    if scene_num == 1:
-        return 7  # ch01 has 7 pages
-    elif scene_num == 2:
-        return 4  # ch02 has 4 pages
-    elif scene_num == 3:
-        return 5  # ch03 has 5 pages
-    else:
-        return 5  # Default estimate
+    try:
+        scene_num = int(scene_number)
+        if scene_num == 1:
+            return 7  # ch01 has 7 pages
+        elif scene_num == 2:
+            return 4  # ch02 has 4 pages
+        elif scene_num == 3:
+            return 5  # ch03 has 5 pages
+        else:
+            return 5  # Default estimate
+    except ValueError:
+        return 5  # Default estimate for unknown scenes
 
 
 @router.get("/{scene_id}", response_model=Scene)

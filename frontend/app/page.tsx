@@ -79,13 +79,13 @@ export default function HomePage() {
 
   // Define the audio and transcript files for the current PDF - memoize to prevent re-renders
   const audioFiles = useMemo(() => [
-    'ch01_page01_dialogue_20251018_220717.mp3',
-    'ch01_page02_dialogue_20251018_220717.mp3',
-    'ch01_page03_dialogue_20251018_220717.mp3',
-    'ch01_page04_dialogue_20251018_220717.mp3',
-    'ch01_page05_dialogue_20251018_220717.mp3',
-    'ch01_page06_dialogue_20251018_220717.mp3',
-    'ch01_page07_dialogue_20251018_220717.mp3',
+    'ch01_page01_dialogue_20251019_032452.mp3',
+    'ch01_page02_dialogue_20251019_032452.mp3',
+    'ch01_page03_dialogue_20251019_032452.mp3',
+    'ch01_page04_dialogue_20251019_032452.mp3',
+    'ch01_page05_dialogue_20251019_032452.mp3',
+    'ch01_page06_dialogue_20251019_032452.mp3',
+    'ch01_page07_dialogue_20251019_032452.mp3',
     // ch02
     'ch02_page01_dialogue_20251018_222240.mp3',
     'ch02_page02_dialogue_20251018_222240.mp3',
@@ -96,17 +96,28 @@ export default function HomePage() {
     'ch03_page02_dialogue_20251018_222416.mp3',
     'ch03_page03_dialogue_20251018_222416.mp3',
     'ch03_page04_dialogue_20251018_222416.mp3',
-    'ch03_page05_dialogue_20251018_222416.mp3'
+    'ch03_page05_dialogue_20251018_222416.mp3',
+    // ch04 (renamed from scene4)
+    'ch04_page01_dialogue_20251019_051126.mp3',
+    'ch04_page02_dialogue_20251019_051126.mp3',
+    'ch04_page03_dialogue_20251019_051126.mp3',
+    'ch04_page04_dialogue_20251019_051126.mp3',
+    // ch05 (renamed from scene5)
+    'ch05_page01_dialogue_20251019_052656.mp3',
+    'ch05_page02_dialogue_20251019_052656.mp3',
+    'ch05_page03_dialogue_20251019_052656.mp3',
+    'ch05_page04_dialogue_20251019_052656.mp3',
+    'ch05_page05_dialogue_20251019_052656.mp3'
   ], []);
 
   const transcriptFiles = useMemo(() => [
-    'ch01_page01_transcript_20251018_220717.txt',
-    'ch01_page02_transcript_20251018_220717.txt',
-    'ch01_page03_transcript_20251018_220717.txt',
-    'ch01_page04_transcript_20251018_220717.txt',
-    'ch01_page05_transcript_20251018_220717.txt',
-    'ch01_page06_transcript_20251018_220717.txt',
-    'ch01_page07_transcript_20251018_220717.txt',
+    'ch01_page01_transcript_20251019_032452.txt',
+    'ch01_page02_transcript_20251019_032452.txt',
+    'ch01_page03_transcript_20251019_032452.txt',
+    'ch01_page04_transcript_20251019_032452.txt',
+    'ch01_page05_transcript_20251019_032452.txt',
+    'ch01_page06_transcript_20251019_032452.txt',
+    'ch01_page07_transcript_20251019_032452.txt',
     // ch02
     'ch02_page01_transcript_20251018_222240.txt',
     'ch02_page02_transcript_20251018_222240.txt',
@@ -117,7 +128,18 @@ export default function HomePage() {
     'ch03_page02_transcript_20251018_222416.txt',
     'ch03_page03_transcript_20251018_222416.txt',
     'ch03_page04_transcript_20251018_222416.txt',
-    'ch03_page05_transcript_20251018_222416.txt'
+    'ch03_page05_transcript_20251018_222416.txt',
+    // ch04 (renamed from scene4)
+    'ch04_page01_transcript_20251019_051126.txt',
+    'ch04_page02_transcript_20251019_051126.txt',
+    'ch04_page03_transcript_20251019_051126.txt',
+    'ch04_page04_transcript_20251019_051126.txt',
+    // ch05 (renamed from scene5)
+    'ch05_page01_transcript_20251019_052656.txt',
+    'ch05_page02_transcript_20251019_052656.txt',
+    'ch05_page03_transcript_20251019_052656.txt',
+    'ch05_page04_transcript_20251019_052656.txt',
+    'ch05_page05_transcript_20251019_052656.txt'
   ], []);
 
   // Mock manga pages with audio files - in a real app, this would be extracted from the uploaded file
@@ -201,6 +223,24 @@ export default function HomePage() {
         { id: "4", x: 5, y: 48, width: 90, height: 23, text: "Now, the question becomes: Is Eren humanity's greatest weapon, or their greatest threat?" },
         { id: "5", x: 5, y: 74, width: 43, height: 21, text: "The fate of humanity hangs in the balance." },
         { id: "6", x: 52, y: 74, width: 43, height: 21, text: "And the truth is far more complex than anyone imagined." },
+      ],
+    },
+    {
+      id: 4,
+      panels: [
+        { id: "1", x: 5, y: 5, width: 43, height: 30, text: "Chapter 4 begins with new challenges and revelations." },
+        { id: "2", x: 52, y: 5, width: 43, height: 30, text: "The characters face their greatest test yet." },
+        { id: "3", x: 5, y: 38, width: 90, height: 25, text: "As the story unfolds, deeper mysteries are revealed about the world they inhabit." },
+        { id: "4", x: 5, y: 66, width: 90, height: 29, text: "The stakes have never been higher as our heroes prepare for the ultimate confrontation." },
+      ],
+    },
+    {
+      id: 5,
+      panels: [
+        { id: "1", x: 5, y: 5, width: 43, height: 30, text: "Chapter 5 opens with a dramatic shift in the narrative." },
+        { id: "2", x: 52, y: 5, width: 43, height: 30, text: "New alliances are formed as old ones crumble." },
+        { id: "3", x: 5, y: 38, width: 90, height: 25, text: "The characters must navigate treacherous waters filled with betrayal and deception." },
+        { id: "4", x: 5, y: 66, width: 90, height: 29, text: "Every choice carries weight as the story reaches its climactic turning point." },
       ],
     },
   ];
