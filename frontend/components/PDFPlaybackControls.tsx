@@ -54,11 +54,11 @@ export function PDFPlaybackControls({
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
   return (
-    <div className={`${fullWidth ? 'w-full bg-transparent border-0 p-0' : 'bg-transparent border-0 p-6'}`}>
-      <div className={`space-y-6 ${fullWidth ? 'w-full flex flex-col items-center' : 'max-w-4xl mx-auto flex flex-col items-center'}`}>
+    <div className={`${fullWidth ? 'w-full bg-transparent border-0 p-6' : 'bg-transparent border-0 p-6'}`}>
+      <div className={`space-y-6 ${fullWidth ? 'w-full max-w-4xl mx-auto flex flex-col items-center' : 'max-w-4xl mx-auto flex flex-col items-center'}`}>
         
         {/* Enhanced Progress Bar */}
-        <div className={`w-full space-y-3 ${fullWidth ? 'max-w-4xl mx-auto' : ''}`}>
+        <div className={`w-full space-y-3 ${fullWidth ? 'max-w-4xl mx-auto' : 'max-w-4xl mx-auto'}`}>
           <div className="relative">
             <LightSlider
               value={Number.isFinite(currentTime) ? Math.min(Math.max(currentTime, 0), duration || 1) : 0}
@@ -141,7 +141,7 @@ export function PDFPlaybackControls({
         </div>
 
         {/* Enhanced Page Indicator with Volume and Speed Controls */}
-        <div className={`flex items-center gap-6 ${fullWidth ? 'w-full max-w-4xl mx-auto' : 'w-full'}`}>
+        <div className={`flex items-center gap-6 ${fullWidth ? 'w-full max-w-4xl mx-auto' : 'w-full max-w-4xl mx-auto'}`}>
           {/* Volume Control */}
           <div className="glass-dark rounded-2xl p-4 border border-slate-600/60 shadow-xl flex-1">
             <div className="flex items-center gap-3">
