@@ -5,7 +5,6 @@ Turn manga PDFs into immersive, accessible audio with page-synced transcripts an
 ### What it does
 - Page-by-page audio playback aligned with transcripts
 - Multi-speaker dialogue with performance tags (e.g., `[whispers]`, `[angry]`)
-- Local demo assets included in `frontend/public` for instant playback
 - Backend API for ingesting PDFs and serving scene data
 - Optional pipelines for Gemini+ElevenLabs generation
 
