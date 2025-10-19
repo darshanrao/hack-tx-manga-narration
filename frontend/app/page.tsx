@@ -14,6 +14,7 @@ import { ChevronLeft, ChevronRight, RotateCcw, Home } from "lucide-react";
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { TranscriptEntry, parseTranscript } from '../utils/transcriptParser';
+// Supabase client is not needed in the browser for uploads; we use backend-forwarded uploads instead
 
 // Dynamic import for PDF viewer to avoid SSR issues
 const PDFPageViewer = dynamic(() => import('../components/PDFPageViewer').then(mod => ({ default: mod.PDFPageViewer })), {
@@ -59,6 +60,9 @@ export default function HomePage() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [jobId, setJobId] = useState<string | null>(null);
+  const [jobStatus, setJobStatus] = useState<string | null>(null);
+  const [transcriptUrl, setTranscriptUrl] = useState<string | null>(null);
   const [transcriptData, setTranscriptData] = useState<TranscriptEntry[]>([]);
   const previousPanelRef = useRef<string | null>(null);
   const isSeekingRef = useRef<boolean>(false);
@@ -359,7 +363,7 @@ export default function HomePage() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [uploadedFile, isPDF, isPlaying, currentPageIndex, currentPanelIndex, volume, speed, isMuted, currentTime, duration]);
 
-  const handleFileUpload = (file: File) => {
+  const handleFileUpload = async (file: File) => {
     setUploadedFile(file);
     setCurrentPageIndex(0);
     setCurrentPanelIndex(0);
@@ -373,7 +377,79 @@ export default function HomePage() {
     if (!isPDFFile) {
       setPdfPageCount(0);
     }
+
+    // Upload to backend which forwards to Supabase (avoids RLS and service key in frontend host)
+    try {
+      const bucket = 'manga-pdfs';
+      const objectPath = `pdfs/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9_.-]/g, '_')}`;
+      const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
+      const form = new FormData();
+      form.append('file', file);
+      form.append('bucket', bucket);
+      form.append('object_path', objectPath);
+
+      const up = await fetch(`${API_BASE}/api/storage/upload`, {
+        method: 'POST',
+        body: form,
+      });
+      if (!up.ok) {
+        const err = await up.json().catch(() => ({}));
+        console.error('Backend upload failed:', err?.detail || up.status);
+        return;
+      }
+      const uploaded = await up.json();
+      const uploadedPath: string = uploaded.object_path;
+
+      if (uploadedPath) {
+        console.log('Uploaded to:', uploadedPath);
+        // Optionally kick off backend ingest here
+        try {
+          const res = await fetch(`${API_BASE}/api/ingest/start`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ bucket, object_path: uploadedPath }),
+          });
+          if (res.ok) {
+            const { job_id } = await res.json();
+            console.log('Ingest job started:', job_id);
+            setJobId(job_id);
+            setJobStatus('queued');
+          } else {
+            console.warn('Failed to start ingest, status:', res.status);
+          }
+        } catch (e) {
+          console.warn('Unable to contact backend ingest endpoint:', e);
+        }
+      }
+    } catch (e) {
+      console.error('Unexpected upload failure:', e);
+    }
   };
+
+  // Poll job status if we have a jobId
+  useEffect(() => {
+    if (!jobId) return;
+    const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
+    const interval = setInterval(async () => {
+      try {
+        const res = await fetch(`${API_BASE}/api/ingest/status/${jobId}`);
+        if (!res.ok) return;
+        const data = await res.json();
+        setJobStatus(data.status);
+        if (data.status === 'done') {
+          clearInterval(interval);
+          const tUrl = data.outputs?.transcript_url as string | undefined;
+          if (tUrl) setTranscriptUrl(tUrl);
+        }
+        if (data.status === 'error') {
+          clearInterval(interval);
+        }
+      } catch (e) {
+        // ignore transient errors
+      }
+    }, 1500);
+    return () => clearInterval(interval);
+  }, [jobId]);
 
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
@@ -462,6 +538,14 @@ export default function HomePage() {
         </div>
         <div className="flex gap-3">
           <KeyboardShortcutsHelp />
+          {jobId && (
+            <div className="px-3 py-2 rounded-md bg-slate-800/80 border border-slate-600 text-slate-200 text-sm">
+              Job: {jobStatus || '...'}
+              {transcriptUrl && (
+                <a className="ml-2 underline text-blue-300" href={transcriptUrl} target="_blank" rel="noreferrer">transcript</a>
+              )}
+            </div>
+          )}
           <Link href="/landing">
             <Button
               variant="outline"
