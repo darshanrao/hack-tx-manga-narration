@@ -24,6 +24,21 @@
       "voice_id": "L1aJrPa7pLJEyYlh3Ilq",
       "character_type": "unknown",
       "first_seen": "2025-10-19T00:32:45.289120"
+    },
+    "Unnamed Garrison Soldier 1": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "character_type": "unknown",
+      "first_seen": "2025-10-19T02:27:24.130545"
+    },
+    "Unnamed Garrison Soldier 2": {
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "character_type": "unknown",
+      "first_seen": "2025-10-19T02:27:24.132546"
+    },
+    "unknown": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "character_type": "unknown",
+      "first_seen": "2025-10-19T03:07:21.917539"
     }
   },
   "voice_usage": {
@@ -34,15 +49,18 @@
       ]
     },
     "5kMbtRSEKIkRZSdXxrZg": {
-      "count": 1,
+      "count": 3,
       "characters": [
-        "Eren"
+        "Eren",
+        "Unnamed Garrison Soldier 1",
+        "unknown"
       ]
     },
     "wI49R6YUU5NNP1h0CECc": {
-      "count": 1,
+      "count": 2,
       "characters": [
-        "Hannes"
+        "Hannes",
+        "Unnamed Garrison Soldier 2"
       ]
     },
     "L1aJrPa7pLJEyYlh3Ilq": {

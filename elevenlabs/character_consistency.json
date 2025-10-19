@@ -4,11 +4,11 @@
       "scene_id": "scene_scene-1",
       "total_pages": 7,
       "characters": [
-        "Eren",
         "Mikasa",
+        "Eren",
         "Hannes"
       ],
-      "registered_at": "2025-10-19T01:11:10.511810",
+      "registered_at": "2025-10-19T03:16:21.129541",
       "character_count": 3
     }
   },
@@ -18,8 +18,13 @@
       "character_type": "main",
       "gender": "female",
       "first_seen": "2025-10-19T00:32:41.941836",
-      "last_seen": "2025-10-19T01:11:10.511810",
+      "last_seen": "2025-10-19T03:16:21.129541",
       "scenes": [
+        "scene_scene-1",
+        "scene_scene-1",
+        "scene_scene-1",
+        "scene_scene-1",
+        "scene_scene-1",
         "scene_scene-1",
         "scene_scene-1",
         "scene_scene-1",
@@ -34,8 +39,13 @@
       "character_type": "main",
       "gender": "male",
       "first_seen": "2025-10-19T00:32:41.946771",
-      "last_seen": "2025-10-19T01:11:10.511810",
+      "last_seen": "2025-10-19T03:16:21.129541",
       "scenes": [
+        "scene_scene-1",
+        "scene_scene-1",
+        "scene_scene-1",
+        "scene_scene-1",
+        "scene_scene-1",
         "scene_scene-1",
         "scene_scene-1",
         "scene_scene-1",
@@ -50,8 +60,13 @@
       "character_type": "supporting",
       "gender": "male",
       "first_seen": "2025-10-19T00:32:41.948783",
-      "last_seen": "2025-10-19T01:11:10.511810",
+      "last_seen": "2025-10-19T03:16:21.129541",
       "scenes": [
+        "scene_scene-1",
+        "scene_scene-1",
+        "scene_scene-1",
+        "scene_scene-1",
+        "scene_scene-1",
         "scene_scene-1",
         "scene_scene-1",
         "scene_scene-1",
@@ -64,8 +79,8 @@
   },
   "voice_assignments": {
     "scene_scene-1": {
-      "Eren": "5kMbtRSEKIkRZSdXxrZg",
       "Mikasa": "CaT0A6YBELRBgT6Qa2lH",
+      "Eren": "5kMbtRSEKIkRZSdXxrZg",
       "Hannes": "wI49R6YUU5NNP1h0CECc"
     }
   },
