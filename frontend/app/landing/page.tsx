@@ -23,7 +23,7 @@ export default function LandingPage() {
             <div className="w-8 h-8 rounded-lg bg-gradient-to-br from-purple-500 to-blue-500 flex items-center justify-center">
               <Sparkles className="w-5 h-5" />
             </div>
-            <span className="text-xl">MangaVoice</span>
+            <span className="text-xl">Sonokomi</span>
           </div>
           <div className="flex items-center gap-6">
             <a href="#features" className="text-gray-300 hover:text-white transition-colors">Features</a>
@@ -148,7 +148,7 @@ export default function LandingPage() {
         <footer className="relative z-10 border-t border-gray-800 mt-20">
           <div className="container mx-auto px-6 py-8">
             <div className="flex items-center justify-between text-gray-400 text-sm">
-              <p>© 2025 MangaVoice. Built for hackathon.</p>
+              <p>© 2025 Sonokomi. Built for hackathon.</p>
               <div className="flex items-center gap-6">
                 <a href="#" className="hover:text-white transition-colors">Privacy</a>
                 <a href="#" className="hover:text-white transition-colors">Terms</a>
