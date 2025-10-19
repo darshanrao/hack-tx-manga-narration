@@ -1,250 +1,359 @@
-# Manga Analysis Pipeline
+# PDF-to-Audio Pipeline
 
-A comprehensive pipeline for processing manga PDFs and analyzing them with Google's Gemini AI model.
+A comprehensive pipeline that processes manga PDFs and generates audio-ready JSON for ElevenLabs voice generation.
 
-## Features
+## 🚀 Quick Start
 
-- **PDF Processing**: Extract pages from PDFs as high-quality images
-- **AI Analysis**: Use Gemini AI to understand and describe manga pages
-- **Batch Processing**: Process single PDFs or entire directories
-- **Flexible Output**: Save images, analysis results, or both
-- **Custom Prompts**: Use custom analysis prompts for specific needs
+### Prerequisites
 
-## Installation
+1. **Python 3.8+**
+2. **Google AI API Key** - Get one from [Google AI Studio](https://aistudio.google.com/)
+3. **PDF files** to process
 
-### Quick Setup (Recommended)
+### Setup
 
-1. **Run the automated setup script:**
-```bash
-cd data_processing
-chmod +x setup.sh
-./setup.sh
-```
+1. **Clone and navigate to the data processing folder:**
+   ```bash
+   cd data_processing
+   ```
 
-This script will:
-- Create a Python virtual environment
-- Install all required dependencies
-- Check for system dependencies
-- Create configuration files
-- Set up the output directory
+2. **Set up virtual environment:**
+   ```bash
+   source venv/bin/activate
+   ```
 
-2. **Activate the environment:**
-```bash
-# Option 1: Use the activation script
-./activate.sh
-
-# Option 2: Manual activation
-source venv/bin/activate
-```
-
-3. **Configure your API key:**
-```bash
-# Edit the .env file and add your Google AI API key
-nano .env
-# Get your API key from: https://makersuite.google.com/app/apikey
-```
-
-### Manual Setup
-
-If you prefer manual setup:
-
-1. **Create virtual environment:**
-```bash
-python3 -m venv venv
-source venv/bin/activate
-```
-
-2. **Install Python dependencies:**
-```bash
-pip install -r requirements.txt
-```
-
-3. **Install system dependencies for PDF processing:**
-```bash
-# On macOS
-brew install poppler
-
-# On Ubuntu/Debian
-sudo apt-get install poppler-utils
-
-# On Windows
-# Download poppler from: https://github.com/oschwartz10612/poppler-windows
-```
-
-4. **Set up your Google AI API key:**
-```bash
-# Copy the example environment file
-cp .env.example .env
-
-# Edit .env and add your API key
-# Get your API key from: https://makersuite.google.com/app/apikey
-```
-
-## Usage
-
-### Command Line Interface
-
-**Make sure to activate the virtual environment first:**
-```bash
-source venv/bin/activate
-# or use: ./activate.sh
-```
-
-Process a single PDF:
-```bash
-python cli.py Chapters/scene-1.pdf --api-key YOUR_API_KEY
-```
-
-Process all PDFs in a directory:
-```bash
-python cli.py Chapters/ --api-key YOUR_API_KEY
-```
-
-With custom analysis prompt:
-```bash
-python cli.py Chapters/scene-1.pdf --prompt "Describe the characters and their emotions in this manga page" --api-key YOUR_API_KEY
-```
-
-**Note:** If you've set up the `.env` file with your API key, you can omit the `--api-key` parameter:
-```bash
-python cli.py Chapters/scene-1.pdf
-```
-
-### Python API
-
-**Make sure to activate the virtual environment first:**
-```bash
-source venv/bin/activate
-# or use: ./activate.sh
-```
-
-```python
-from manga_pipeline import MangaAnalysisPipeline
-
-# Initialize pipeline
-pipeline = MangaAnalysisPipeline(
-    output_dir="output",
-    gemini_api_key="your_api_key",  # or None if using .env file
-    gemini_model="gemini-1.5-flash"
-)
-
-# Process a single PDF
-results = pipeline.process_pdf("Chapters/scene-1.pdf")
-
-# Process multiple PDFs
-results = pipeline.process_multiple_pdfs("Chapters/")
-```
-
-## Configuration
-
-### Environment Variables
-
-- `GOOGLE_API_KEY`: Your Google AI API key (required)
-- `GEMINI_MODEL`: Gemini model to use (default: gemini-1.5-flash)
-- `PDF_DPI`: DPI for PDF to image conversion (default: 300)
-- `OUTPUT_DIRECTORY`: Output directory for results (default: output)
-
-### Available Gemini Models
-
-- `gemini-1.5-flash`: Fast and efficient (recommended)
-- `gemini-1.5-pro`: More capable but slower
-- `gemini-1.0-pro`: Legacy model
-
-## Output Structure
-
-```
-output/
-├── scene-1/
-│   ├── scene-1_page_1.png
-│   ├── scene-1_page_2.png
-│   └── scene-1_analysis.json
-└── scene-2/
-    ├── scene-2_page_1.png
-    └── scene-2_analysis.json
-```
-
-## API Reference
-
-### MangaAnalysisPipeline
-
-Main pipeline class that orchestrates PDF processing and AI analysis.
-
-#### Methods
-
-- `process_pdf(pdf_path, custom_prompt=None, save_images=True, save_analysis=True)`: Process a single PDF
-- `process_multiple_pdfs(pdf_directory, ...)`: Process multiple PDFs from a directory
-- `get_pipeline_status()`: Get current pipeline status and configuration
-
-### PDFProcessor
-
-Handles PDF to image conversion.
-
-#### Methods
-
-- `extract_pages_as_images(pdf_path, output_dir=None)`: Extract all pages as PIL Images
-- `get_page_count(pdf_path)`: Get number of pages in PDF
-- `process_single_page(pdf_path, page_number)`: Extract a single page
-
-### GeminiImageAnalyzer
-
-Handles communication with Google's Gemini AI model.
-
-#### Methods
-
-- `analyze_image(image, prompt=None)`: Analyze a single image
-- `analyze_multiple_images(images, prompt=None)`: Analyze multiple images
-- `analyze_with_custom_prompt(image, custom_prompt)`: Analyze with custom prompt
-
-## Examples
+3. **Set your Google API key:**
+   ```bash
+   export GOOGLE_API_KEY="your_api_key_here"
+   ```
 
 ### Basic Usage
 
 ```python
-from manga_pipeline import MangaAnalysisPipeline
+from standalone_pipeline import process_pdf
 
-pipeline = MangaAnalysisPipeline(gemini_api_key="your_key")
-results = pipeline.process_pdf("manga.pdf")
-print(f"Analyzed {results['total_pages']} pages")
+# Process a single PDF
+result = process_pdf("Chapters/scene-1.pdf")
+
+print(f"Scene: {result['scene_title']}")
+print(f"Characters: {list(result['characters'].keys())}")
+print(f"Dialogue lines: {len(result['dialogue'])}")
 ```
 
-### Custom Analysis Prompt
+## 📖 Function Reference
+
+### `process_pdf()`
+
+The main function to process PDFs and return audio-ready JSON.
 
 ```python
-custom_prompt = """
-Analyze this manga page and focus on:
-1. Character emotions and expressions
-2. Action sequences and movement
-3. Dialogue and speech bubbles
-4. Setting and background details
-"""
-
-results = pipeline.process_pdf("manga.pdf", custom_prompt=custom_prompt)
+def process_pdf(
+    pdf_path: str,
+    scene_id: Optional[str] = None,
+    gemini_api_key: Optional[str] = None,
+    pass1_model: str = "gemini-2.0-flash",
+    pass2_model: str = "gemini-2.5-pro", 
+    enhancement_model: str = "gemini-2.5-flash-lite",
+    pdf_dpi: int = 300,
+    cleanup_images: bool = True,
+    output_dir: str = "scenes"
+) -> Dict[str, Any]:
 ```
 
-### Batch Processing
+#### Parameters
+
+- **`pdf_path`** (str): Path to the PDF file
+- **`scene_id`** (Optional[str]): Scene identifier (auto-generated if not provided)
+- **`gemini_api_key`** (Optional[str]): Google AI API key (uses env var if not provided)
+- **`pass1_model`** (str): Gemini model for Pass 1 character identification (default: `gemini-2.0-flash`)
+- **`pass2_model`** (str): Gemini model for Pass 2 dialogue extraction (default: `gemini-2.5-pro`)
+- **`enhancement_model`** (str): Gemini model for audio enhancement (default: `gemini-2.5-flash-lite`)
+- **`pdf_dpi`** (int): DPI for PDF to image conversion (default: 300)
+- **`cleanup_images`** (bool): Whether to clean up extracted images (default: True)
+- **`output_dir`** (str): Directory to save outputs (default: "scenes")
+
+#### Returns
+
+Dictionary containing the complete audio-ready JSON with:
+- `scene_id`: Scene identifier
+- `scene_title`: Generated scene title
+- `ambient`: Environmental context
+- `characters`: Character voice assignments
+- `dialogue`: Enhanced dialogue with audio tags
+
+#### Raises
+
+- `ValueError`: If PDF file doesn't exist or API key is missing
+- `Exception`: If processing fails
+
+## 🎯 Usage Examples
+
+### Example 1: Basic Processing
 
 ```python
+from standalone_pipeline import process_pdf
+
+# Simple processing
+result = process_pdf("Chapters/scene-1.pdf")
+
+# Check results
+print(f"✅ Processed: {result['scene_id']}")
+print(f"📄 Pages: {len(set(d['page_number'] for d in result['dialogue']))}")
+print(f"👥 Characters: {len(result['characters'])}")
+print(f"💬 Dialogue lines: {len(result['dialogue'])}")
+```
+
+### Example 2: Advanced Configuration
+
+```python
+from standalone_pipeline import process_pdf
+
+# Advanced processing with custom models
+result = process_pdf(
+    pdf_path="Chapters/scene-1.pdf",
+    scene_id="my_custom_scene",
+    pass1_model="gemini-2.0-flash",      # Fast character identification
+    pass2_model="gemini-2.5-pro",        # Powerful dialogue extraction
+    enhancement_model="gemini-2.5-flash-lite",  # Lite audio enhancement
+    pdf_dpi=300,
+    cleanup_images=True,
+    output_dir="my_output"
+)
+
+# Save custom output
+import json
+with open("my_scene.json", "w", encoding="utf-8") as f:
+    json.dump(result, f, indent=2, ensure_ascii=False)
+```
+
+### Example 3: Process Multiple PDFs
+
+```python
+from standalone_pipeline import process_multiple_pdfs_to_json
+import os
+
 # Process all PDFs in a directory
-results = pipeline.process_multiple_pdfs("manga_chapters/")
+results = process_multiple_pdfs_to_json(
+    pdf_directory="Chapters",
+    cleanup_images=True
+)
 
-for result in results:
-    if 'error' not in result:
-        print(f"✓ {result['pdf_file']}: {result['total_pages']} pages")
+# Check results
+for pdf_name, json_data in results.items():
+    if "error" not in json_data:
+        print(f"✅ {pdf_name}: {len(json_data['dialogue'])} dialogue lines")
     else:
-        print(f"✗ {result['pdf_file']}: {result['error']}")
+        print(f"❌ {pdf_name}: {json_data['error']}")
 ```
 
-## Troubleshooting
+### Example 4: Command Line Usage
+
+```bash
+# Using the CLI script
+./pdf_cli.sh pdf Chapters/scene-1.pdf my_scene
+
+# Process all PDFs in directory
+./pdf_cli.sh dir Chapters
+```
+
+## 🧠 How It Works
+
+### Two-Pass Hybrid Algorithm
+
+The pipeline uses an optimized two-pass approach:
+
+1. **Pass 1 (Character Identification)**: 
+   - Uses `gemini-2.0-flash` (fast model)
+   - Analyzes all pages together
+   - Identifies characters consistently across pages
+   - Creates character context for Pass 2
+
+2. **Pass 2 (Dialogue Extraction)**:
+   - Uses `gemini-2.5-pro` (powerful model)
+   - Processes each page individually
+   - Uses character context from Pass 1
+   - Extracts dialogue with proper speaker attribution
+
+3. **Audio Enhancement**:
+   - Uses `gemini-2.5-flash-lite` (lite model)
+   - Enhances all dialogue with ElevenLabs v3 audio tags
+   - Single API call for all dialogue
+
+### Output Format
+
+The generated JSON follows this structure:
+
+```json
+{
+  "scene_id": "scene_1",
+  "scene_title": "Eren - Complete Scene",
+  "ambient": "Environmental context and atmosphere",
+  "characters": {
+    "Eren": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "expression": "determined, frustrated"
+    },
+    "Mikasa": {
+      "voice_id": "CaT0A6YBELRBgT6Qa2lH", 
+      "expression": "stoic, concerned"
+    },
+    "Narrator": {
+      "voice_id": "L1aJrPa7pLJEyYlh3Ilq",
+      "expression": "neutral"
+    }
+  },
+  "dialogue": [
+    {
+      "speaker": "Eren",
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "text": "[angry] I will destroy all Titans!",
+      "page_number": 1,
+      "emotion": "angry",
+      "confidence": "high"
+    }
+  ]
+}
+```
+
+## 🎭 Voice Management
+
+### Voice IDs
+
+The pipeline uses ElevenLabs voice IDs:
+
+**Male Voices:**
+- `5kMbtRSEKIkRZSdXxrZg`
+- `wI49R6YUU5NNP1h0CECc`
+- `vBKc2FfBKJfcZNyEt1n6`
+- `FIsP50cHv9JY47BkNVR7`
+- `s0XGIcqmceN2l7kjsqoZ`
+
+**Female Voices:**
+- `CaT0A6YBELRBgT6Qa2lH`
+- `bMxLr8fP6hzNRRi9nJxU`
+- `Bn9xWp6PwkrqKRbq8cX2`
+- `iNwc1Lv2YQLywnCvjfn1`
+- `uYXf8XasLslADfZ2MB4u`
+
+**Narrator Voice:**
+- `L1aJrPa7pLJEyYlh3Ilq`
+
+### Character Consistency
+
+- Characters maintain the same voice ID across all scenes
+- Voice assignments are stored in `voice_registry.json`
+- Gender-based voice assignment (male/female)
+- Special narrator voice for all narration
+
+## 🔧 Configuration
+
+### Model Selection
+
+**For Speed (Faster Processing):**
+```python
+result = process_pdf(
+    pdf_path="file.pdf",
+    pass1_model="gemini-2.0-flash",
+    pass2_model="gemini-2.0-flash", 
+    enhancement_model="gemini-2.5-flash-lite"
+)
+```
+
+**For Quality (Better Results):**
+```python
+result = process_pdf(
+    pdf_path="file.pdf",
+    pass1_model="gemini-2.0-flash",
+    pass2_model="gemini-2.5-pro",
+    enhancement_model="gemini-2.5-flash-lite"
+)
+```
+
+### Performance Optimization
+
+- **Pass 1**: Use Flash model for speed (character identification)
+- **Pass 2**: Use Pro model for accuracy (dialogue extraction)
+- **Enhancement**: Use Lite model for efficiency (audio tags)
+- **Cleanup**: Enable `cleanup_images=True` to save disk space
+
+## 📁 File Structure
+
+```
+data_processing/
+├── standalone_pipeline.py      # Main function
+├── pdf_to_audio_pipeline.py   # Core pipeline
+├── two_pass_hybrid_analyzer.py # Two-pass algorithm
+├── audio_tag_enhancer.py      # Audio enhancement
+├── voice_registry.py          # Voice management
+├── pdf_cli.sh                # CLI script
+├── example_usage.py          # Usage examples
+├── quick_test.py             # Quick test script
+├── scenes/                   # Output directory
+├── voice_registry.json       # Voice assignments
+└── character_consistency.json # Character data
+```
+
+## 🐛 Troubleshooting
 
 ### Common Issues
 
-1. **API Key Error**: Make sure your Google AI API key is valid and has proper permissions
-2. **PDF Processing Error**: Ensure poppler is installed correctly
-3. **Memory Issues**: For large PDFs, consider reducing DPI or processing pages individually
-4. **Rate Limiting**: Gemini API has rate limits; add delays between requests if needed
+1. **API Key Error**:
+   ```bash
+   export GOOGLE_API_KEY="your_key_here"
+   ```
 
-### Getting Help
+2. **PDF Not Found**:
+   - Check file path is correct
+   - Ensure file is a PDF
 
-- Check the logs for detailed error messages
-- Verify your API key at: https://makersuite.google.com/app/apikey
-- Ensure all dependencies are installed correctly
+3. **Processing Slow**:
+   - Use faster models (`gemini-2.0-flash`)
+   - Process fewer pages for testing
+
+4. **Memory Issues**:
+   - Reduce PDF DPI: `pdf_dpi=150`
+   - Enable cleanup: `cleanup_images=True`
+
+### Error Handling
+
+```python
+try:
+    result = process_pdf("file.pdf")
+except ValueError as e:
+    print(f"Input error: {e}")
+except Exception as e:
+    print(f"Processing error: {e}")
+```
+
+## 📊 Performance Metrics
+
+**Typical Processing Times:**
+- **7-page PDF**: ~2-3 minutes
+- **API Calls**: 8 total (1 + 7)
+- **Models Used**: 3 different Gemini models
+- **Output Size**: ~500 lines JSON
+
+**Optimization Results:**
+- **Pass 1**: Fast character identification with Flash
+- **Pass 2**: Accurate dialogue with Pro
+- **Enhancement**: Efficient audio tags with Lite
+
+## 🎯 Best Practices
+
+1. **Use appropriate models** for your needs (speed vs quality)
+2. **Enable image cleanup** to save disk space
+3. **Process in batches** for multiple PDFs
+4. **Check voice assignments** in `voice_registry.json`
+5. **Monitor API usage** to avoid quotas
+
+## 📞 Support
+
+For issues or questions:
+1. Check the troubleshooting section
+2. Review the example usage
+3. Check API key and file paths
+4. Monitor logs for detailed error messages
+
+---
+
+**Happy Processing!** 🚀

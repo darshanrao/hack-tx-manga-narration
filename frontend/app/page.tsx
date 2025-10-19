@@ -63,9 +63,7 @@ export default function HomePage() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [jobId, setJobId] = useState<string | null>(null);
-  const [jobStatus, setJobStatus] = useState<string | null>(null);
-  const [transcriptUrl, setTranscriptUrl] = useState<string | null>(null);
+  // Removed ingest job logic per request; keeping UI simple
   const [transcriptData, setTranscriptData] = useState<TranscriptEntry[]>([]);
   const [currentPageAudio, setCurrentPageAudio] = useState<PageAudioData | null>(null);
   const [pageTranscriptData, setPageTranscriptData] = useState<TranscriptEntry[]>([]);
@@ -479,25 +477,6 @@ export default function HomePage() {
       if (uploadedPath) {
         console.log('Successfully uploaded to Supabase:', uploadedPath);
         console.log('Public URL:', uploaded.public_url);
-        
-        // Optionally kick off backend ingest here
-        try {
-          const res = await fetch(`${API_BASE}/api/ingest/start`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ bucket, object_path: uploadedPath }),
-          });
-          if (res.ok) {
-            const { job_id } = await res.json();
-            console.log('Ingest job started:', job_id);
-            setJobId(job_id);
-            setJobStatus('queued');
-          } else {
-            console.warn('Failed to start ingest, status:', res.status);
-          }
-        } catch (e) {
-          console.warn('Unable to contact backend ingest endpoint:', e);
-        }
       }
     } catch (e) {
       console.error('Unexpected upload failure:', e);
@@ -574,31 +553,6 @@ export default function HomePage() {
       }
     }
   };
-
-  // Poll job status if we have a jobId
-  useEffect(() => {
-    if (!jobId) return;
-    const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
-    const interval = setInterval(async () => {
-      try {
-        const res = await fetch(`${API_BASE}/api/ingest/status/${jobId}`);
-        if (!res.ok) return;
-        const data = await res.json();
-        setJobStatus(data.status);
-        if (data.status === 'done') {
-          clearInterval(interval);
-          const tUrl = data.outputs?.transcript_url as string | undefined;
-          if (tUrl) setTranscriptUrl(tUrl);
-        }
-        if (data.status === 'error') {
-          clearInterval(interval);
-        }
-      } catch (e) {
-        // ignore transient errors
-      }
-    }, 1500);
-    return () => clearInterval(interval);
-  }, [jobId]);
 
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
@@ -682,18 +636,18 @@ export default function HomePage() {
     currentPanelIndex < currentPage?.panels.length - 1;
 
   return (
-        <PageAudioManager
-          audioFiles={audioFiles}
-          transcriptFiles={transcriptFiles}
-          baseUrl="/"
-          currentPageIndex={currentPageIndex}
-          currentChapterIndex={chapterIndex}
-          onPageAudioChange={setCurrentPageAudio}
-          onTranscriptChange={setPageTranscriptData}
-          onActiveTranscriptChange={setActiveTranscriptEntry}
-          onMetaChange={setChapterMeta}
-          currentTime={currentTime}
-        >
+    <PageAudioManager
+      audioFiles={audioFiles}
+      transcriptFiles={transcriptFiles}
+      baseUrl="/"
+      currentPageIndex={currentPageIndex}
+      currentChapterIndex={chapterIndex}
+      onPageAudioChange={setCurrentPageAudio}
+      onTranscriptChange={setPageTranscriptData}
+      onActiveTranscriptChange={setActiveTranscriptEntry}
+      onMetaChange={setChapterMeta}
+      currentTime={currentTime}
+    >
       <div className="h-screen w-screen flex flex-col overflow-hidden bg-slate-900">
       {/* Scene Sidebar */}
       <SceneSidebar
@@ -717,7 +671,6 @@ export default function HomePage() {
         </div>
               <div className="flex gap-3 items-center">
           <KeyboardShortcutsHelp />
-          
           <Link href="/landing">
             <Button
               variant="outline"

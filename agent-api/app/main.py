@@ -1,9 +1,9 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from .routers import parse
-from .routers import ingest
 from .routers import storage_upload
 from .routers import scenes
+from .routers import ingest
 from .settings import get_settings
 
 settings = get_settings()
@@ -28,4 +28,4 @@ api_prefix = settings.API_PREFIX.rstrip("/")
 app.include_router(parse.router, prefix=f"{api_prefix}/agent", tags=["agent"]) 
 app.include_router(ingest.router, prefix=f"{api_prefix}/ingest", tags=["ingest"]) 
 app.include_router(storage_upload.router, prefix=f"{api_prefix}/storage", tags=["storage"])
-app.include_router(scenes.router, prefix=f"{api_prefix}/scenes", tags=["scenes"]) 
+app.include_router(scenes.router, prefix=f"{api_prefix}/scenes", tags=["scenes"])
