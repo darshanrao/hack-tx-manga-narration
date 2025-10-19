@@ -74,6 +74,8 @@ export default function HomePage() {
   const [currentScene, setCurrentScene] = useState<any>(null);
   const previousPanelRef = useRef<string | null>(null);
   const isSeekingRef = useRef<boolean>(false);
+  const isTransitioningRef = useRef<boolean>(false);
+  const previousAudioUrlRef = useRef<string | null>(null);
 
   // Define the audio and transcript files for the current PDF - memoize to prevent re-renders
   const audioFiles = useMemo(() => [
@@ -215,9 +217,15 @@ export default function HomePage() {
   // Audio player effect - handles audio playback with real audio files
   useEffect(() => {
     // Only reset time when switching panels/pages, not when pausing
-    // If we're using page-level audio (from PageAudioManager), do not reset on panel changes
+    // If we're using page-level audio (from PageAudioManager), reset on page changes
     if (currentPageAudio?.audioUrl) {
-      // When page audio is active, we avoid resetting currentTime on panel changes
+      // Only reset time if the audio URL actually changed and we're not transitioning
+      if (currentPageAudio.audioUrl !== previousAudioUrlRef.current && !isTransitioningRef.current) {
+        console.log('Resetting audio time for new page:', currentPageAudio.audioUrl);
+        setCurrentTime(0);
+        setDuration(0);
+        previousAudioUrlRef.current = currentPageAudio.audioUrl;
+      }
       return;
     }
     if (!currentPanel?.audioFileUrl) {
@@ -233,7 +241,7 @@ export default function HomePage() {
       setCurrentTime(0);
       previousPanelRef.current = currentPanelId;
     }
-  }, [currentPanelIndex, currentPageIndex, currentPanel]);
+  }, [currentPanelIndex, currentPageIndex, currentPanel, currentPageAudio]);
 
   // Audio event handlers
   const handleTimeUpdate = (time: number) => {
@@ -248,11 +256,31 @@ export default function HomePage() {
   };
 
   const handleAudioEnded = () => {
+    // Prevent multiple rapid calls during transition
+    if (isTransitioningRef.current) return;
+    
+    console.log('Audio ended, transitioning to next page...');
+    
     // If using page-level audio, advance pages directly (ignore panels)
     if (currentPageAudio?.audioUrl) {
-      if (currentPageIndex < mockPages.length - 1) {
-        setCurrentPageIndex((prev) => prev + 1);
-        setCurrentPanelIndex(0);
+      const maxPages = chapterMeta.totalPages || (isPDF ? pdfPageCount : mockPages.length);
+      if (currentPageIndex < maxPages - 1) {
+        isTransitioningRef.current = true;
+        
+        // Temporarily pause to ensure clean transition
+        setIsPlaying(false);
+        
+        // Advance page after a brief delay
+        setTimeout(() => {
+          setCurrentPageIndex((prev) => prev + 1);
+          setCurrentPanelIndex(0);
+          
+          // Resume playing after page transition
+          setTimeout(() => {
+            setIsPlaying(true);
+            isTransitioningRef.current = false;
+          }, 100);
+        }, 150);
       } else {
         setIsPlaying(false);
       }
@@ -261,9 +289,11 @@ export default function HomePage() {
     // Panel-level audio flow
     if (currentPanelIndex < currentPage.panels.length - 1) {
       setCurrentPanelIndex((prev) => prev + 1);
+      // Keep playing automatically when advancing panels
     } else if (currentPageIndex < mockPages.length - 1) {
       setCurrentPageIndex((prev) => prev + 1);
       setCurrentPanelIndex(0);
+      // Keep playing automatically when advancing pages
     } else {
       setIsPlaying(false);
     }
@@ -278,12 +308,18 @@ export default function HomePage() {
 
   // Debug: log audio URL candidates when they change
   useEffect(() => {
-    // Helps diagnose NotSupportedError / Failed to fetch
-    console.log('Audio candidates:', {
-      pageAudioUrl: currentPageAudio?.audioUrl,
-      panelAudioUrl: currentPanel?.audioFileUrl
-    });
-  }, [currentPageAudio, currentPanel]);
+    // Only log when the audio URL actually changes to reduce noise
+    const currentAudioUrl = currentPageAudio?.audioUrl || currentPanel?.audioFileUrl;
+    if (currentAudioUrl !== previousAudioUrlRef.current) {
+      console.log('Audio candidates:', {
+        pageAudioUrl: currentPageAudio?.audioUrl,
+        panelAudioUrl: currentPanel?.audioFileUrl,
+        isPlaying,
+        currentPageIndex,
+        isTransitioning: isTransitioningRef.current
+      });
+    }
+  }, [currentPageAudio?.audioUrl, currentPanel?.audioFileUrl, isPlaying, currentPageIndex]);
 
   const handleSeek = (time: number) => {
     console.log('handleSeek called with:', time, 'current duration:', duration);

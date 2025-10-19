@@ -35,6 +35,7 @@ export function AudioPlayer({
   const previousUrlRef = useRef<string>('');
   const lastSeekTimeRef = useRef<number>(0);
   const isSeekingRef = useRef<boolean>(false);
+  const hasEndedRef = useRef<boolean>(false);
 
   // Update audio properties when they change
   useEffect(() => {
@@ -66,6 +67,13 @@ export function AudioPlayer({
     if (isPlaying) {
       // If not ready, wait for canplay then attempt to play once
       if (!audio.src) return;
+      
+      // Only play if we haven't already ended this audio
+      if (hasEndedRef.current) {
+        console.log('Audio has already ended, not playing');
+        return;
+      }
+      
       const tryPlay = () => {
         audio.play().catch((error) => {
           if (error.name === 'AbortError') {
@@ -98,7 +106,13 @@ export function AudioPlayer({
 
     const handleTimeUpdate = () => onTimeUpdate(audio.currentTime);
     const handleLoadedMetadata = () => onDurationChange(audio.duration);
-    const handleEnded = () => onEnded();
+    const handleEnded = () => {
+      // Prevent multiple ended events from firing
+      if (!hasEndedRef.current) {
+        hasEndedRef.current = true;
+        onEnded();
+      }
+    };
     const handleError = () => {
       // Prevent looping caused by rapid error -> play attempts
       audio.pause();
@@ -131,20 +145,25 @@ export function AudioPlayer({
 
     // Only change source if the URL actually changed
     if (audioUrl && audioUrl !== previousUrlRef.current) {
+      // Reset ended flag for new audio
+      hasEndedRef.current = false;
       // Normalize relative URLs to root-relative
       const normalizedUrl = (audioUrl.startsWith('http') || audioUrl.startsWith('/'))
         ? audioUrl
         : `/${audioUrl}`;
+      // Add cache-busting parameter to prevent audio caching issues
+      const cacheBustedUrl = `${normalizedUrl}?t=${Date.now()}`;
       // Pause current audio before changing source to prevent AbortError
       audio.pause();
-      audio.src = normalizedUrl;
+      audio.src = cacheBustedUrl;
       audio.load();
       // Re-apply current playback settings after changing source
       audio.playbackRate = speed;
       audio.volume = isMuted ? 0 : volume;
       previousUrlRef.current = normalizedUrl;
       // If we should be playing, attempt to play or wait for readiness
-      if (isPlaying) {
+      if (isPlaying && !hasEndedRef.current) {
+        console.log('Starting new audio:', cacheBustedUrl);
         const tryPlay = () => {
           audio.play().catch((error) => {
             if (error.name === 'AbortError') {
