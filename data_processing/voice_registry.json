@@ -1,165 +1,162 @@
 {
   "characters": {
-    "Garrison Soldier 1": {
-      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
+    "Eren": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
       "character_type": "male",
-      "first_seen": "2025-10-18T16:22:26.225367"
-    },
-    "Garrison Soldier": {
-      "voice_id": "wI49R6YUU5NNP1h0CECc",
-      "character_type": "male",
-      "first_seen": "2025-10-18T16:22:26.228971"
-    },
-    "Garrison Soldiers": {
-      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
-      "character_type": "male",
-      "first_seen": "2025-10-18T16:22:26.229877"
+      "first_seen": "2025-10-18T19:52:53.876056"
     },
     "Mikasa": {
-      "voice_id": "Bn9xWp6PwkrqKRbq8cX2",
-      "character_type": "female",
-      "first_seen": "2025-10-18T16:22:26.230390"
-    },
-    "Garrison Soldier 3": {
-      "voice_id": "FIsP50cHv9JY47BkNVR7",
-      "character_type": "male",
-      "first_seen": "2025-10-18T16:22:26.230815"
-    },
-    "Mikasa Ackerman": {
       "voice_id": "CaT0A6YBELRBgT6Qa2lH",
       "character_type": "female",
-      "first_seen": "2025-10-18T16:22:26.231195"
-    },
-    "Giant Titan": {
-      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
-      "character_type": "male",
-      "first_seen": "2025-10-18T16:22:26.231573"
-    },
-    "Townsperson": {
-      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
-      "character_type": "male",
-      "first_seen": "2025-10-18T16:22:26.231958"
-    },
-    "Townsfolk": {
-      "voice_id": "FIsP50cHv9JY47BkNVR7",
-      "character_type": "male",
-      "first_seen": "2025-10-18T16:22:26.232370"
-    },
-    "Citizens": {
-      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
-      "character_type": "male",
-      "first_seen": "2025-10-18T16:22:26.232764"
-    },
-    "Garrison Soldier 2": {
-      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
-      "character_type": "male",
-      "first_seen": "2025-10-18T16:22:26.233190"
-    },
-    "Eren Yeager": {
-      "voice_id": "wI49R6YUU5NNP1h0CECc",
-      "character_type": "male",
-      "first_seen": "2025-10-18T16:22:26.233610"
+      "first_seen": "2025-10-18T19:52:53.878843"
     },
     "Hannes": {
-      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
-      "character_type": "male",
-      "first_seen": "2025-10-18T16:22:26.233944"
-    },
-    "Other Garrison Soldiers": {
-      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
-      "character_type": "male",
-      "first_seen": "2025-10-18T16:22:26.234637"
-    },
-    "Eren": {
-      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
-      "character_type": "male",
-      "first_seen": "2025-10-18T16:22:26.235097"
-    },
-    "Reiner": {
-      "voice_id": "FIsP50cHv9JY47BkNVR7",
-      "character_type": "male",
-      "first_seen": "2025-10-18T16:22:26.235555"
-    },
-    "Mikasa Ackermann": {
-      "voice_id": "bMxLr8fP6hzNRRi9nJxU",
-      "character_type": "female",
-      "first_seen": "2025-10-18T16:22:26.236022"
-    },
-    "Garrison Soldier (cards)": {
       "voice_id": "wI49R6YUU5NNP1h0CECc",
       "character_type": "male",
-      "first_seen": "2025-10-18T16:22:26.236505"
-    },
-    "Eren Jaeger": {
-      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
-      "character_type": "male",
-      "first_seen": "2025-10-18T16:22:26.236999"
+      "first_seen": "2025-10-18T19:52:53.879521"
     },
     "Narrator": {
-      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "voice_id": "L1aJrPa7pLJEyYlh3Ilq",
       "character_type": "narrator",
-      "first_seen": "2025-10-18T16:22:26.239278"
+      "first_seen": "2025-10-18T19:52:56.868582"
+    },
+    "Taiju": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "character_type": "male",
+      "first_seen": "2025-10-18T19:54:54.598592"
+    },
+    "Senku": {
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "character_type": "male",
+      "first_seen": "2025-10-18T19:54:54.601192"
+    },
+    "Grisha": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "character_type": "male",
+      "first_seen": "2025-10-18T20:00:36.639422"
+    },
+    "Kalura": {
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "character_type": "male",
+      "first_seen": "2025-10-18T20:00:36.641126"
+    },
+    "Sound Effect": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "character_type": "unknown",
+      "first_seen": "2025-10-18T21:48:19.717771"
+    },
+    "Soldier": {
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "character_type": "unknown",
+      "first_seen": "2025-10-18T21:48:19.720805"
+    },
+    "Narration": {
+      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+      "character_type": "unknown",
+      "first_seen": "2025-10-18T21:48:19.722065"
+    },
+    "Garrison Soldier": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "character_type": "unknown",
+      "first_seen": "2025-10-18T22:24:21.382784"
+    },
+    "Character_A": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "character_type": "male",
+      "first_seen": "2025-10-18T22:47:52.197093"
+    },
+    "Character_B": {
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "character_type": "male",
+      "first_seen": "2025-10-18T22:47:52.201075"
+    },
+    "Character_C": {
+      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+      "character_type": "male",
+      "first_seen": "2025-10-18T22:47:52.202472"
+    },
+    "Garrison Soldier 1": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "character_type": "unknown",
+      "first_seen": "2025-10-18T22:54:16.385699"
+    },
+    "Garrison Soldier 2": {
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "character_type": "unknown",
+      "first_seen": "2025-10-18T22:54:16.387255"
+    },
+    "Eren's Father": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "character_type": "unknown",
+      "first_seen": "2025-10-18T23:07:53.917578"
+    },
+    "Unidentified Man with glasses": {
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "character_type": "unknown",
+      "first_seen": "2025-10-18T23:07:53.919047"
+    },
+    "Unnamed Garrison Soldier 1": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "character_type": "unknown",
+      "first_seen": "2025-10-18T23:25:14.812192"
+    },
+    "Unnamed Garrison Soldier 2": {
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "character_type": "unknown",
+      "first_seen": "2025-10-18T23:25:14.813490"
+    },
+    "Unnamed Garrison Soldier": {
+      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+      "character_type": "unknown",
+      "first_seen": "2025-10-18T23:25:14.814414"
     }
   },
   "voice_usage": {
-    "s0XGIcqmceN2l7kjsqoZ": {
-      "count": 3,
+    "5kMbtRSEKIkRZSdXxrZg": {
+      "count": 9,
       "characters": [
-        "Garrison Soldier 1",
-        "Garrison Soldiers",
-        "Eren Jaeger"
-      ]
-    },
-    "wI49R6YUU5NNP1h0CECc": {
-      "count": 3,
-      "characters": [
+        "Eren",
+        "Taiju",
+        "Grisha",
+        "Sound Effect",
         "Garrison Soldier",
-        "Eren Yeager",
-        "Garrison Soldier (cards)"
+        "Character_A",
+        "Garrison Soldier 1",
+        "Eren's Father",
+        "Unnamed Garrison Soldier 1"
       ]
     },
-    "Bn9xWp6PwkrqKRbq8cX2": {
+    "L1aJrPa7pLJEyYlh3Ilq": {
       "count": 1,
       "characters": [
-        "Mikasa"
-      ]
-    },
-    "FIsP50cHv9JY47BkNVR7": {
-      "count": 3,
-      "characters": [
-        "Garrison Soldier 3",
-        "Townsfolk",
-        "Reiner"
+        "Narrator"
       ]
     },
     "CaT0A6YBELRBgT6Qa2lH": {
       "count": 1,
       "characters": [
-        "Mikasa Ackerman"
+        "Mikasa"
       ]
     },
-    "5kMbtRSEKIkRZSdXxrZg": {
-      "count": 5,
+    "wI49R6YUU5NNP1h0CECc": {
+      "count": 8,
       "characters": [
-        "Giant Titan",
-        "Townsperson",
-        "Citizens",
+        "Hannes",
+        "Senku",
+        "Kalura",
+        "Soldier",
+        "Character_B",
         "Garrison Soldier 2",
-        "Narrator"
+        "Unidentified Man with glasses",
+        "Unnamed Garrison Soldier 2"
       ]
     },
     "vBKc2FfBKJfcZNyEt1n6": {
       "count": 3,
       "characters": [
-        "Hannes",
-        "Other Garrison Soldiers",
-        "Eren"
-      ]
-    },
-    "bMxLr8fP6hzNRRi9nJxU": {
-      "count": 1,
-      "characters": [
-        "Mikasa Ackermann"
+        "Narration",
+        "Character_C",
+        "Unnamed Garrison Soldier"
       ]
     }
   }

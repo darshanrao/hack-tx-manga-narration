@@ -1,284 +1,335 @@
 {
   "scenes": {
-    "ch01": {
-      "scene_id": "ch01",
+    "ch01_fixed": {
+      "scene_id": "ch01_fixed",
       "total_pages": 7,
       "characters": [
-        "Garrison Soldier 1",
-        "Garrison Soldier",
-        "Garrison Soldiers",
-        "Mikasa",
-        "Garrison Soldier 3",
-        "Mikasa Ackerman",
-        "Giant Titan",
-        "Townsperson",
-        "Townsfolk",
-        "Citizens",
-        "Garrison Soldier 2",
-        "Eren Yeager",
-        "Hannes",
-        "Other Garrison Soldiers",
         "Eren",
-        "Reiner",
-        "Mikasa Ackermann",
-        "Garrison Soldier (cards)",
-        "Eren Jaeger"
+        "Mikasa",
+        "Hannes"
       ],
-      "registered_at": "2025-10-18T16:22:26.225072",
-      "character_count": 19
+      "registered_at": "2025-10-18T22:24:17.907520",
+      "character_count": 3
+    },
+    "ch02_test": {
+      "scene_id": "ch02_test",
+      "total_pages": 4,
+      "characters": [
+        "Taiju",
+        "Senku"
+      ],
+      "registered_at": "2025-10-18T19:54:54.598327",
+      "character_count": 2
+    },
+    "ch03_cleanup_test": {
+      "scene_id": "ch03_cleanup_test",
+      "total_pages": 5,
+      "characters": [
+        "Eren",
+        "Mikasa",
+        "Grisha",
+        "Kalura"
+      ],
+      "registered_at": "2025-10-18T20:00:36.639008",
+      "character_count": 4
+    },
+    "ch01_final": {
+      "scene_id": "ch01_final",
+      "total_pages": 7,
+      "characters": [
+        "Eren",
+        "Mikasa",
+        "Hannes"
+      ],
+      "registered_at": "2025-10-18T21:48:16.730976",
+      "character_count": 3
+    },
+    "ch01_updated": {
+      "scene_id": "ch01_updated",
+      "total_pages": 7,
+      "characters": [
+        "Eren",
+        "Mikasa",
+        "Hannes"
+      ],
+      "registered_at": "2025-10-18T22:36:22.704516",
+      "character_count": 3
+    },
+    "ch01_final_test": {
+      "scene_id": "ch01_final_test",
+      "total_pages": 7,
+      "characters": [
+        "Eren",
+        "Mikasa",
+        "Hannes"
+      ],
+      "registered_at": "2025-10-18T22:38:03.566048",
+      "character_count": 3
+    },
+    "test_scene": {
+      "scene_id": "test_scene",
+      "total_pages": 7,
+      "characters": [
+        "Eren",
+        "Mikasa",
+        "Hannes"
+      ],
+      "registered_at": "2025-10-19T01:05:49.344604",
+      "character_count": 3
+    },
+    "scene_scene-2": {
+      "scene_id": "scene_scene-2",
+      "total_pages": 4,
+      "characters": [
+        "Character_A",
+        "Character_B"
+      ],
+      "registered_at": "2025-10-18T23:03:34.892464",
+      "character_count": 2
+    },
+    "scene_scene-1": {
+      "scene_id": "scene_scene-1",
+      "total_pages": 7,
+      "characters": [
+        "Character_A",
+        "Character_B",
+        "Character_C"
+      ],
+      "registered_at": "2025-10-18T23:00:28.191215",
+      "character_count": 3
+    },
+    "scene_scene-3": {
+      "scene_id": "scene_scene-3",
+      "total_pages": 5,
+      "characters": [
+        "Character_A",
+        "Character_B",
+        "Character_C"
+      ],
+      "registered_at": "2025-10-18T23:07:51.299134",
+      "character_count": 3
+    },
+    "quick_test": {
+      "scene_id": "quick_test",
+      "total_pages": 7,
+      "characters": [
+        "Eren",
+        "Mikasa",
+        "Hannes"
+      ],
+      "registered_at": "2025-10-18T23:25:11.664789",
+      "character_count": 3
     }
   },
   "characters": {
-    "Garrison Soldier 1": {
-      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
+    "Eren": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
       "character_type": "main",
       "gender": "male",
-      "first_seen": "2025-10-18T16:22:26.228834",
-      "last_seen": "2025-10-18T16:22:26.228853",
+      "first_seen": "2025-10-18T19:52:53.878694",
+      "last_seen": "2025-10-19T01:05:49.344604",
       "scenes": [
-        "ch01"
+        "ch01_fixed",
+        "ch03_cleanup_test",
+        "ch01_final",
+        "ch01_fixed",
+        "ch01_updated",
+        "ch01_final_test",
+        "test_scene",
+        "quick_test",
+        "test_scene"
       ],
-      "appearance_count": 2,
-      "dominant_emotion": "drunk, relaxed"
-    },
-    "Garrison Soldier": {
-      "voice_id": "wI49R6YUU5NNP1h0CECc",
-      "character_type": "main",
-      "gender": "male",
-      "first_seen": "2025-10-18T16:22:26.229806",
-      "last_seen": "2025-10-18T16:22:26.229818",
-      "scenes": [
-        "ch01"
-      ],
-      "appearance_count": 1,
-      "dominant_emotion": "smug, dismissive"
-    },
-    "Garrison Soldiers": {
-      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
-      "character_type": "main",
-      "gender": "male",
-      "first_seen": "2025-10-18T16:22:26.230328",
-      "last_seen": "2025-10-18T16:22:26.230333",
-      "scenes": [
-        "ch01"
-      ],
-      "appearance_count": 1,
-      "dominant_emotion": "on duty, neutral"
+      "appearance_count": 6,
+      "dominant_emotion": "neutral"
     },
     "Mikasa": {
-      "voice_id": "Bn9xWp6PwkrqKRbq8cX2",
-      "character_type": "main",
-      "gender": "female",
-      "first_seen": "2025-10-18T16:22:26.230772",
-      "last_seen": "2025-10-18T16:22:26.230775",
-      "scenes": [
-        "ch01"
-      ],
-      "appearance_count": 1,
-      "dominant_emotion": "concerned, quiet"
-    },
-    "Garrison Soldier 3": {
-      "voice_id": "FIsP50cHv9JY47BkNVR7",
-      "character_type": "main",
-      "gender": "male",
-      "first_seen": "2025-10-18T16:22:26.231147",
-      "last_seen": "2025-10-18T16:22:26.231151",
-      "scenes": [
-        "ch01"
-      ],
-      "appearance_count": 1,
-      "dominant_emotion": "amused"
-    },
-    "Mikasa Ackerman": {
       "voice_id": "CaT0A6YBELRBgT6Qa2lH",
       "character_type": "main",
       "gender": "female",
-      "first_seen": "2025-10-18T16:22:26.231527",
-      "last_seen": "2025-10-18T16:22:26.231530",
+      "first_seen": "2025-10-18T19:52:53.879449",
+      "last_seen": "2025-10-19T01:05:49.344604",
       "scenes": [
-        "ch01"
-      ],
-      "appearance_count": 3,
-      "dominant_emotion": "concerned, stoic"
-    },
-    "Giant Titan": {
-      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
-      "character_type": "main",
-      "gender": "male",
-      "first_seen": "2025-10-18T16:22:26.231913",
-      "last_seen": "2025-10-18T16:22:26.231917",
-      "scenes": [
-        "ch01"
-      ],
-      "appearance_count": 1,
-      "dominant_emotion": "neutral, walking"
-    },
-    "Townsperson": {
-      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
-      "character_type": "main",
-      "gender": "male",
-      "first_seen": "2025-10-18T16:22:26.232327",
-      "last_seen": "2025-10-18T16:22:26.232330",
-      "scenes": [
-        "ch01"
-      ],
-      "appearance_count": 1,
-      "dominant_emotion": "Surprised, gossipy"
-    },
-    "Townsfolk": {
-      "voice_id": "FIsP50cHv9JY47BkNVR7",
-      "character_type": "main",
-      "gender": "male",
-      "first_seen": "2025-10-18T16:22:26.232719",
-      "last_seen": "2025-10-18T16:22:26.232722",
-      "scenes": [
-        "ch01"
-      ],
-      "appearance_count": 1,
-      "dominant_emotion": "neutral"
-    },
-    "Citizens": {
-      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
-      "character_type": "main",
-      "gender": "male",
-      "first_seen": "2025-10-18T16:22:26.233143",
-      "last_seen": "2025-10-18T16:22:26.233146",
-      "scenes": [
-        "ch01"
-      ],
-      "appearance_count": 1,
-      "dominant_emotion": "Indiscernible"
-    },
-    "Garrison Soldier 2": {
-      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
-      "character_type": "main",
-      "gender": "male",
-      "first_seen": "2025-10-18T16:22:26.233562",
-      "last_seen": "2025-10-18T16:22:26.233565",
-      "scenes": [
-        "ch01"
-      ],
-      "appearance_count": 3,
-      "dominant_emotion": "drunk, relaxed"
-    },
-    "Eren Yeager": {
-      "voice_id": "wI49R6YUU5NNP1h0CECc",
-      "character_type": "main",
-      "gender": "male",
-      "first_seen": "2025-10-18T16:22:26.233910",
-      "last_seen": "2025-10-18T16:22:26.233912",
-      "scenes": [
-        "ch01"
+        "ch01_fixed",
+        "ch03_cleanup_test",
+        "ch01_final",
+        "ch01_fixed",
+        "ch01_updated",
+        "ch01_final_test",
+        "test_scene",
+        "quick_test",
+        "test_scene"
       ],
       "appearance_count": 4,
-      "dominant_emotion": "crying, embarrassed, angry, startled"
+      "dominant_emotion": "neutral"
     },
     "Hannes": {
-      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
-      "character_type": "main",
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "character_type": "supporting",
       "gender": "male",
-      "first_seen": "2025-10-18T16:22:26.234581",
-      "last_seen": "2025-10-18T16:22:26.234584",
+      "first_seen": "2025-10-18T19:52:53.880055",
+      "last_seen": "2025-10-19T01:05:49.344604",
       "scenes": [
-        "ch01"
+        "ch01_fixed",
+        "ch01_final",
+        "ch01_fixed",
+        "ch01_updated",
+        "ch01_final_test",
+        "test_scene",
+        "quick_test",
+        "test_scene"
       ],
       "appearance_count": 5,
-      "dominant_emotion": "inquisitive, concerned"
+      "dominant_emotion": "neutral"
     },
-    "Other Garrison Soldiers": {
-      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+    "Taiju": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
       "character_type": "main",
       "gender": "male",
-      "first_seen": "2025-10-18T16:22:26.235045",
-      "last_seen": "2025-10-18T16:22:26.235048",
+      "first_seen": "2025-10-18T19:54:54.601055",
+      "last_seen": "2025-10-18T19:54:54.601086",
       "scenes": [
-        "ch01"
+        "ch02_test"
       ],
-      "appearance_count": 1,
-      "dominant_emotion": "relaxed, inattentive"
+      "appearance_count": 4,
+      "dominant_emotion": "neutral"
     },
-    "Eren": {
-      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
-      "character_type": "main",
-      "gender": "male",
-      "first_seen": "2025-10-18T16:22:26.235501",
-      "last_seen": "2025-10-18T16:22:26.235504",
-      "scenes": [
-        "ch01"
-      ],
-      "appearance_count": 1,
-      "dominant_emotion": "angry, indignant"
-    },
-    "Reiner": {
-      "voice_id": "FIsP50cHv9JY47BkNVR7",
-      "character_type": "main",
-      "gender": "male",
-      "first_seen": "2025-10-18T16:22:26.235963",
-      "last_seen": "2025-10-18T16:22:26.235966",
-      "scenes": [
-        "ch01"
-      ],
-      "appearance_count": 1,
-      "dominant_emotion": "amused, cynical"
-    },
-    "Mikasa Ackermann": {
-      "voice_id": "bMxLr8fP6hzNRRi9nJxU",
-      "character_type": "main",
-      "gender": "female",
-      "first_seen": "2025-10-18T16:22:26.236446",
-      "last_seen": "2025-10-18T16:22:26.236449",
-      "scenes": [
-        "ch01"
-      ],
-      "appearance_count": 1,
-      "dominant_emotion": "neutral, observant"
-    },
-    "Garrison Soldier (cards)": {
+    "Senku": {
       "voice_id": "wI49R6YUU5NNP1h0CECc",
       "character_type": "main",
       "gender": "male",
-      "first_seen": "2025-10-18T16:22:26.236941",
-      "last_seen": "2025-10-18T16:22:26.236944",
+      "first_seen": "2025-10-18T19:54:54.601890",
+      "last_seen": "2025-10-18T19:54:54.601897",
       "scenes": [
-        "ch01"
+        "ch02_test"
       ],
-      "appearance_count": 1,
-      "dominant_emotion": "inquisitive, complacent"
+      "appearance_count": 4,
+      "dominant_emotion": "neutral"
     },
-    "Eren Jaeger": {
-      "voice_id": "s0XGIcqmceN2l7kjsqoZ",
+    "Grisha": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
+      "character_type": "supporting",
+      "gender": "male",
+      "first_seen": "2025-10-18T20:00:36.641054",
+      "last_seen": "2025-10-18T20:00:36.641063",
+      "scenes": [
+        "ch03_cleanup_test"
+      ],
+      "appearance_count": 4,
+      "dominant_emotion": "neutral"
+    },
+    "Kalura": {
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "character_type": "supporting",
+      "gender": "male",
+      "first_seen": "2025-10-18T20:00:36.641578",
+      "last_seen": "2025-10-18T20:00:36.641582",
+      "scenes": [
+        "ch03_cleanup_test"
+      ],
+      "appearance_count": 5,
+      "dominant_emotion": "neutral"
+    },
+    "Character_A": {
+      "voice_id": "5kMbtRSEKIkRZSdXxrZg",
       "character_type": "main",
       "gender": "male",
-      "first_seen": "2025-10-18T16:22:26.237452",
-      "last_seen": "2025-10-18T16:22:26.237455",
+      "first_seen": "2025-10-18T22:47:52.200971",
+      "last_seen": "2025-10-18T23:07:51.299191",
       "scenes": [
-        "ch01"
+        "test_scene",
+        "scene_scene-2",
+        "scene_scene-1",
+        "scene_scene-2",
+        "scene_scene-3"
       ],
-      "appearance_count": 1,
-      "dominant_emotion": "Intense, angry, defiant"
+      "appearance_count": 6,
+      "dominant_emotion": "neutral"
+    },
+    "Character_B": {
+      "voice_id": "wI49R6YUU5NNP1h0CECc",
+      "character_type": "main",
+      "gender": "male",
+      "first_seen": "2025-10-18T22:47:52.202367",
+      "last_seen": "2025-10-18T23:07:51.299205",
+      "scenes": [
+        "test_scene",
+        "scene_scene-2",
+        "scene_scene-1",
+        "scene_scene-2",
+        "scene_scene-3"
+      ],
+      "appearance_count": 6,
+      "dominant_emotion": "neutral"
+    },
+    "Character_C": {
+      "voice_id": "vBKc2FfBKJfcZNyEt1n6",
+      "character_type": "supporting",
+      "gender": "male",
+      "first_seen": "2025-10-18T22:47:52.203126",
+      "last_seen": "2025-10-18T23:07:51.299213",
+      "scenes": [
+        "test_scene",
+        "scene_scene-1",
+        "scene_scene-3"
+      ],
+      "appearance_count": 6,
+      "dominant_emotion": "neutral"
     }
   },
   "voice_assignments": {
-    "ch01": {
-      "Garrison Soldier 1": "s0XGIcqmceN2l7kjsqoZ",
-      "Garrison Soldier": "wI49R6YUU5NNP1h0CECc",
-      "Garrison Soldiers": "s0XGIcqmceN2l7kjsqoZ",
-      "Mikasa": "Bn9xWp6PwkrqKRbq8cX2",
-      "Garrison Soldier 3": "FIsP50cHv9JY47BkNVR7",
-      "Mikasa Ackerman": "CaT0A6YBELRBgT6Qa2lH",
-      "Giant Titan": "5kMbtRSEKIkRZSdXxrZg",
-      "Townsperson": "5kMbtRSEKIkRZSdXxrZg",
-      "Townsfolk": "FIsP50cHv9JY47BkNVR7",
-      "Citizens": "5kMbtRSEKIkRZSdXxrZg",
-      "Garrison Soldier 2": "5kMbtRSEKIkRZSdXxrZg",
-      "Eren Yeager": "wI49R6YUU5NNP1h0CECc",
-      "Hannes": "vBKc2FfBKJfcZNyEt1n6",
-      "Other Garrison Soldiers": "vBKc2FfBKJfcZNyEt1n6",
-      "Eren": "vBKc2FfBKJfcZNyEt1n6",
-      "Reiner": "FIsP50cHv9JY47BkNVR7",
-      "Mikasa Ackermann": "bMxLr8fP6hzNRRi9nJxU",
-      "Garrison Soldier (cards)": "wI49R6YUU5NNP1h0CECc",
-      "Eren Jaeger": "s0XGIcqmceN2l7kjsqoZ"
+    "ch01_fixed": {
+      "Eren": "5kMbtRSEKIkRZSdXxrZg",
+      "Mikasa": "CaT0A6YBELRBgT6Qa2lH",
+      "Hannes": "wI49R6YUU5NNP1h0CECc"
+    },
+    "ch02_test": {
+      "Taiju": "5kMbtRSEKIkRZSdXxrZg",
+      "Senku": "wI49R6YUU5NNP1h0CECc"
+    },
+    "ch03_cleanup_test": {
+      "Eren": "5kMbtRSEKIkRZSdXxrZg",
+      "Mikasa": "CaT0A6YBELRBgT6Qa2lH",
+      "Grisha": "5kMbtRSEKIkRZSdXxrZg",
+      "Kalura": "wI49R6YUU5NNP1h0CECc"
+    },
+    "ch01_final": {
+      "Eren": "5kMbtRSEKIkRZSdXxrZg",
+      "Mikasa": "CaT0A6YBELRBgT6Qa2lH",
+      "Hannes": "wI49R6YUU5NNP1h0CECc"
+    },
+    "ch01_updated": {
+      "Eren": "5kMbtRSEKIkRZSdXxrZg",
+      "Mikasa": "CaT0A6YBELRBgT6Qa2lH",
+      "Hannes": "wI49R6YUU5NNP1h0CECc"
+    },
+    "ch01_final_test": {
+      "Eren": "5kMbtRSEKIkRZSdXxrZg",
+      "Mikasa": "CaT0A6YBELRBgT6Qa2lH",
+      "Hannes": "wI49R6YUU5NNP1h0CECc"
+    },
+    "test_scene": {
+      "Eren": "5kMbtRSEKIkRZSdXxrZg",
+      "Mikasa": "CaT0A6YBELRBgT6Qa2lH",
+      "Hannes": "wI49R6YUU5NNP1h0CECc"
+    },
+    "scene_scene-2": {
+      "Character_A": "5kMbtRSEKIkRZSdXxrZg",
+      "Character_B": "wI49R6YUU5NNP1h0CECc"
+    },
+    "scene_scene-1": {
+      "Character_A": "5kMbtRSEKIkRZSdXxrZg",
+      "Character_B": "wI49R6YUU5NNP1h0CECc",
+      "Character_C": "vBKc2FfBKJfcZNyEt1n6"
+    },
+    "scene_scene-3": {
+      "Character_A": "5kMbtRSEKIkRZSdXxrZg",
+      "Character_B": "wI49R6YUU5NNP1h0CECc",
+      "Character_C": "vBKc2FfBKJfcZNyEt1n6"
+    },
+    "quick_test": {
+      "Eren": "5kMbtRSEKIkRZSdXxrZg",
+      "Mikasa": "CaT0A6YBELRBgT6Qa2lH",
+      "Hannes": "wI49R6YUU5NNP1h0CECc"
     }
   },
   "consistency_rules": {}

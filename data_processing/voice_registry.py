@@ -45,6 +45,9 @@ class VoiceRegistry:
             "uYXf8XasLslADfZ2MB4u"
         ]
         
+        # Narrator voice ID (special voice for all narrators)
+        self.narrator_voice_id = "L1aJrPa7pLJEyYlh3Ilq"
+        
         # Voice assignment tracking
         self.male_voice_index = 0
         self.female_voice_index = 0
@@ -139,13 +142,17 @@ class VoiceRegistry:
             self.female_voice_index += 1
             return voice_id
         elif character_type == "narrator":
-            return self.male_voices[0]  # Use first male voice for narrator
+            return self.narrator_voice_id  # Use dedicated narrator voice
         
         # Analyze character name for gender hints
         name_lower = character_name.lower()
         
+        # Narrator patterns
+        if any(keyword in name_lower for keyword in ["narrator", "narration", "sound effect"]):
+            return self.narrator_voice_id
+        
         # Female name patterns
-        if any(keyword in name_lower for keyword in ["mikasa", "mrs", "miss", "lady", "woman", "girl", "female", "mother", "sister", "daughter"]):
+        elif any(keyword in name_lower for keyword in ["mikasa", "mrs", "miss", "lady", "woman", "girl", "female", "mother", "sister", "daughter"]):
             voice_id = self.female_voices[self.female_voice_index % len(self.female_voices)]
             self.female_voice_index += 1
             return voice_id

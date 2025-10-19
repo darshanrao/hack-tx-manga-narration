@@ -19,6 +19,10 @@ import io
 import time
 from datetime import datetime, timedelta
 from elevenlabs.client import ElevenLabs
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
 
 # Import config from same directory
 from config import ELEVENLABS_API_KEY
@@ -365,8 +369,27 @@ def main():
         print("2. Added your ElevenLabs API key to the ELEVENLABS_API_KEY variable")
         return
     
-    # Parse the JSON script file - accept any filename
+    # Check if we're processing a PDF file directly
     import sys
+    if len(sys.argv) > 1 and sys.argv[1].endswith('.pdf'):
+        # Process PDF directly to audio
+        pdf_path = sys.argv[1]
+        scene_id = sys.argv[2] if len(sys.argv) > 2 else None
+        
+        print(f"\n[INFO] Processing PDF directly: {pdf_path}")
+        result = process_pdf_to_audio(pdf_path, scene_id)
+        
+        if result['success']:
+            print(f"\n[OK] PDF processing complete!")
+            print(f"[INFO] Scene ID: {result['scene_id']}")
+            print(f"[INFO] Total pages: {result['total_pages']}")
+            print(f"[INFO] Total duration: {result['total_duration']:.1f} seconds")
+            print(f"[INFO] Generated {len(result['generated_files'])} file pairs")
+        else:
+            print(f"[ERROR] PDF processing failed: {result['error']}")
+        return
+    
+    # Parse the JSON script file - accept any filename
     if len(sys.argv) > 1:
         # Use filename from command line argument
         script_filename = sys.argv[1]
@@ -466,6 +489,223 @@ def main():
         print("- Ensure you have sufficient credits in your ElevenLabs account")
         print("- Verify your voice IDs are correct")
         return
+
+
+def process_pdf_to_audio(pdf_path, scene_id=None, gemini_api_key=None):
+    """
+    Process a PDF file directly to audio files without creating intermediate JSON files.
+    
+    This function:
+    1. Processes PDF with Gemini to get JSON data
+    2. Converts JSON to audio-ready format
+    3. Generates audio files for each page
+    4. Saves audio and transcript files to assets folder
+    
+    Args:
+        pdf_path (str): Path to the PDF file
+        scene_id (str, optional): Scene identifier (auto-generated if not provided)
+        gemini_api_key (str, optional): Google AI API key (uses env var if not provided)
+    
+    Returns:
+        dict: Processing results with file paths and metadata
+    """
+    print("PDF-to-Audio Direct Processing")
+    print("=" * 50)
+    
+    try:
+        # Import data_processing module
+        import sys
+        sys.path.append('../data_processing')
+        from standalone_pipeline import process_pdf
+        
+        # Step 1: Process PDF with Gemini to get JSON data
+        print(f"[INFO] Processing PDF with Gemini: {pdf_path}")
+        json_data = process_pdf(
+            pdf_path=pdf_path,
+            scene_id=scene_id,
+            gemini_api_key=gemini_api_key
+        )
+        
+        print(f"[INFO] Gemini processing complete")
+        print(f"[INFO] Scene ID: {json_data.get('scene_id', 'Unknown')}")
+        print(f"[INFO] Characters: {len(json_data.get('characters', {}))}")
+        print(f"[INFO] Dialogue lines: {len(json_data.get('dialogue', []))}")
+        
+        # Step 2: Process the JSON data directly (no file I/O)
+        print(f"[INFO] Converting JSON to audio format...")
+        pages_data, scene_id = parse_json_data(json_data)
+        
+        # Step 3: Initialize ElevenLabs client
+        if not ELEVENLABS_API_KEY or ELEVENLABS_API_KEY == "your_api_key_here":
+            raise ValueError("ELEVENLABS_API_KEY not configured. "
+                           "Please update the config.py file with your API key.")
+        
+        client = ElevenLabs(api_key=ELEVENLABS_API_KEY)
+        print("[OK] ElevenLabs client initialized successfully")
+        
+        # Step 4: Generate audio for each page
+        print(f"\n[INFO] Generating audio for {len(pages_data)} pages...")
+        
+        # Create output directory if it doesn't exist
+        output_dir = os.path.join(os.path.dirname(os.path.dirname(__file__)), 'assets')
+        os.makedirs(output_dir, exist_ok=True)
+        
+        # Generate timestamp for all files
+        timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+        # Clean scene_id for filename (remove special characters)
+        clean_scene_id = re.sub(r'[^\w\s-]', '', scene_id).strip()
+        clean_scene_id = re.sub(r'[-\s]+', '_', clean_scene_id)
+        
+        total_duration = 0.0
+        total_lines = 0
+        generated_files = []
+        
+        # Process each page separately
+        for page_number in sorted(pages_data.keys()):
+            print(f"\n[INFO] Processing Page {page_number}...")
+            
+            page_data = pages_data[page_number]
+            dialogue_payload = page_data['dialogue_payload']
+            transcript_data = page_data['transcript_data']
+            
+            if not dialogue_payload:
+                print(f"[WARNING] No dialogue found for page {page_number}, skipping")
+                continue
+            
+            # Generate individual audio segments for precise timing
+            audio_data, precise_timestamps = generate_individual_audio_segments(
+                client, dialogue_payload, transcript_data
+            )
+            
+            # Generate filenames with page number
+            audio_filename = f"{clean_scene_id}_page{page_number:02d}_dialogue_{timestamp}.mp3"
+            transcript_filename = f"{clean_scene_id}_page{page_number:02d}_transcript_{timestamp}.txt"
+            
+            audio_path = os.path.join(output_dir, audio_filename)
+            transcript_path = os.path.join(output_dir, transcript_filename)
+            
+            print(f"[INFO] Saving page {page_number} audio to: assets/{audio_filename}")
+            
+            # Save the audio data
+            with open(audio_path, 'wb') as audio_file:
+                audio_file.write(audio_data)
+            
+            # Get page duration
+            page_duration = get_audio_duration_from_mp3(audio_data)
+            total_duration += page_duration
+            
+            print(f"[INFO] Generating precise transcript with timestamps for page {page_number}...")
+            print(f"[INFO] Page {page_number} audio duration: {page_duration:.1f} seconds")
+            
+            # Generate transcript with precise timestamps
+            transcript_content = generate_precise_transcript(precise_timestamps)
+            
+            # Save transcript file
+            with open(transcript_path, 'w', encoding='utf-8') as transcript_file:
+                transcript_file.write(transcript_content)
+            
+            total_lines += len(precise_timestamps)
+            generated_files.append({
+                'page': page_number,
+                'audio_file': audio_filename,
+                'transcript_file': transcript_filename,
+                'duration': page_duration
+            })
+            
+            print(f"[OK] Page {page_number} complete!")
+            print(f"[INFO] Audio file: assets/{audio_filename}")
+            print(f"[INFO] Transcript file: assets/{transcript_filename}")
+            print(f"[INFO] Page {page_number} duration: {page_duration:.1f} seconds")
+            print(f"[INFO] Precise timestamps generated for {len(precise_timestamps)} lines")
+        
+        print(f"\n[OK] All pages audio generation complete!")
+        print(f"[INFO] Total pages processed: {len(pages_data)}")
+        print(f"[INFO] Total duration: {total_duration:.1f} seconds")
+        print(f"[INFO] Total lines processed: {total_lines}")
+        print(f"[INFO] Files saved to assets folder")
+        
+        return {
+            'success': True,
+            'scene_id': scene_id,
+            'total_pages': len(pages_data),
+            'total_duration': total_duration,
+            'total_lines': total_lines,
+            'generated_files': generated_files
+        }
+        
+    except Exception as e:
+        print(f"[ERROR] Error processing PDF: {str(e)}")
+        return {
+            'success': False,
+            'error': str(e)
+        }
+
+
+def parse_json_data(json_data):
+    """
+    Parse JSON data directly (no file I/O) into the format required by the ElevenLabs API.
+    
+    Args:
+        json_data (dict): JSON data from Gemini processing
+        
+    Returns:
+        tuple: (pages_data, scene_id) where:
+            - pages_data: Dict with page numbers as keys, each containing dialogue_payload and transcript_data
+            - scene_id: Title of the scene for output naming
+    """
+    # Group dialogue by page number
+    pages_data = {}
+    
+    for entry in json_data.get('dialogue', []):
+        speaker = entry.get('speaker', 'Unknown')
+        voice_id = entry.get('voice_id', '')
+        text = entry.get('text', '')
+        page_number = entry.get('page_number', 1)
+        
+        if not voice_id:
+            print(f"Warning: No voice_id for speaker '{speaker}', skipping")
+            continue
+        
+        if not text.strip():
+            print(f"Warning: Empty text for speaker '{speaker}', skipping")
+            continue
+        
+        # Initialize page data if not exists
+        if page_number not in pages_data:
+            pages_data[page_number] = {
+                'dialogue_payload': [],
+                'transcript_data': []
+            }
+        
+        # Add to dialogue payload for ElevenLabs
+        pages_data[page_number]['dialogue_payload'].append({
+            "text": text,
+            "voice_id": voice_id
+        })
+        
+        # Clean text for transcript (remove audio tags)
+        clean_text = clean_audio_tags(text)
+        
+        # Add to transcript data
+        pages_data[page_number]['transcript_data'].append({
+            "speaker": speaker,
+            "text": clean_text,
+            "original_text": text,
+            "voice_id": voice_id
+        })
+        
+        print(f"Parsed Page {page_number}: {speaker} ({voice_id[:8]}...) -> {text[:50]}{'...' if len(text) > 50 else ''}")
+    
+    if not pages_data:
+        raise ValueError("No valid dialogue found in JSON data")
+    
+    # Extract scene_id for output naming
+    scene_id = json_data.get('scene_id', 'Unknown_Scene')
+    
+    total_entries = sum(len(page['dialogue_payload']) for page in pages_data.values())
+    print(f"Successfully parsed {total_entries} dialogue entries across {len(pages_data)} pages")
+    print(f"Scene ID: {scene_id}")
+    return pages_data, scene_id
 
 
 if __name__ == "__main__":
