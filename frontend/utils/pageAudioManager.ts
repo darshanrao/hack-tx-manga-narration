@@ -25,56 +25,92 @@ export interface ChapterAudioData {
 
 /**
  * Parses filename to extract chapter and page information
- * Expected format: ch{chapter}_page{page}_dialogue_{timestamp}.mp3
- * Example: ch01_page01_dialogue_20251018_220717.mp3
+ * Supports multiple formats:
+ * - scene{scene}_full_pipeline_page{page}_dialogue_{timestamp}.mp3
+ * - ch{chapter}_page{page}_dialogue_{timestamp}.mp3
+ * Example: scene1_full_pipeline_page01_dialogue_20251019_032452.mp3
  */
 export function parseAudioFilename(filename: string): { chapterNumber: number; pageNumber: number } | null {
-  const match = filename.match(/ch(\d+)_page(\d+)_dialogue/);
-  if (!match) return null;
+  // Try scene format first: scene1_full_pipeline_page01_dialogue_...
+  let match = filename.match(/scene(\d+)_full_pipeline_page(\d+)_dialogue/);
+  if (match) {
+    return {
+      chapterNumber: parseInt(match[1], 10),
+      pageNumber: parseInt(match[2], 10)
+    };
+  }
   
-  return {
-    chapterNumber: parseInt(match[1], 10),
-    pageNumber: parseInt(match[2], 10)
-  };
+  // Fallback to original ch format: ch01_page01_dialogue_...
+  match = filename.match(/ch(\d+)_page(\d+)_dialogue/);
+  if (match) {
+    return {
+      chapterNumber: parseInt(match[1], 10),
+      pageNumber: parseInt(match[2], 10)
+    };
+  }
+  
+  return null;
 }
 
 /**
  * Parses transcript filename to extract chapter and page information
- * Expected format: ch{chapter}_page{page}_transcript_{timestamp}.txt
- * Example: ch01_page01_transcript_20251018_220717.txt
+ * Supports multiple formats:
+ * - scene{scene}_full_pipeline_page{page}_transcript_{timestamp}.txt
+ * - ch{chapter}_page{page}_transcript_{timestamp}.txt
+ * Example: scene1_full_pipeline_page01_transcript_20251019_032452.txt
  */
 export function parseTranscriptFilename(filename: string): { chapterNumber: number; pageNumber: number } | null {
-  const match = filename.match(/ch(\d+)_page(\d+)_transcript/);
-  if (!match) return null;
+  // Try scene format first: scene1_full_pipeline_page01_transcript_...
+  let match = filename.match(/scene(\d+)_full_pipeline_page(\d+)_transcript/);
+  if (match) {
+    return {
+      chapterNumber: parseInt(match[1], 10),
+      pageNumber: parseInt(match[2], 10)
+    };
+  }
   
-  return {
-    chapterNumber: parseInt(match[1], 10),
-    pageNumber: parseInt(match[2], 10)
-  };
+  // Fallback to original ch format: ch01_page01_transcript_...
+  match = filename.match(/ch(\d+)_page(\d+)_transcript/);
+  if (match) {
+    return {
+      chapterNumber: parseInt(match[1], 10),
+      pageNumber: parseInt(match[2], 10)
+    };
+  }
+  
+  return null;
 }
 
 /**
  * Groups audio and transcript files by chapter and page
  */
-export function organizePageAudioFiles(
-  audioFiles: string[],
-  transcriptFiles: string[],
-  baseUrl: string = '/assets'
-): ChapterAudioData[] {
-  // Ensure we join baseUrl and filenames without producing protocol-relative URLs (e.g., //file)
-  const joinUrlPath = (root: string, filename: string): string => {
-    if (!root || root === '/') {
-      return `/${filename}`;
-    }
-    const trimmed = root.endsWith('/') ? root.slice(0, -1) : root;
-    return `${trimmed}/${filename}`;
-  };
+        export function organizePageAudioFiles(
+          audioFiles: string[],
+          transcriptFiles: string[],
+          baseUrl: string = '/assets'
+        ): ChapterAudioData[] {
+  
+          // Handle both full URLs and filenames
+          const joinUrlPath = (root: string, filename: string): string => {
+            // If filename is already a full URL, return it as-is
+            if (filename.startsWith('http://') || filename.startsWith('https://')) {
+              return filename;
+            }
+            // Otherwise, join with baseUrl
+            if (!root || root === '/') {
+              return `/${filename}`;
+            }
+            const trimmed = root.endsWith('/') ? root.slice(0, -1) : root;
+            return `${trimmed}/${filename}`;
+          };
   const chaptersMap = new Map<number, Map<number, PageAudioData>>();
   
-  // Process audio files
-  audioFiles.forEach(filename => {
-    const parsed = parseAudioFilename(filename);
-    if (!parsed) return;
+          // Process audio files
+          audioFiles.forEach(filePath => {
+            // Extract filename from URL if it's a full URL
+            const filename = filePath.includes('/') ? filePath.split('/').pop() || filePath : filePath;
+            const parsed = parseAudioFilename(filename);
+            if (!parsed) return;
     
     const { chapterNumber, pageNumber } = parsed;
     
@@ -92,13 +128,15 @@ export function organizePageAudioFiles(
       });
     }
     
-    chapterPages.get(pageNumber)!.audioUrl = joinUrlPath(baseUrl, filename);
+            chapterPages.get(pageNumber)!.audioUrl = joinUrlPath(baseUrl, filePath);
   });
   
-  // Process transcript files
-  transcriptFiles.forEach(filename => {
-    const parsed = parseTranscriptFilename(filename);
-    if (!parsed) return;
+          // Process transcript files
+          transcriptFiles.forEach(filePath => {
+            // Extract filename from URL if it's a full URL
+            const filename = filePath.includes('/') ? filePath.split('/').pop() || filePath : filePath;
+            const parsed = parseTranscriptFilename(filename);
+            if (!parsed) return;
     
     const { chapterNumber, pageNumber } = parsed;
     
@@ -116,7 +154,7 @@ export function organizePageAudioFiles(
       });
     }
     
-    chapterPages.get(pageNumber)!.transcriptUrl = joinUrlPath(baseUrl, filename);
+            chapterPages.get(pageNumber)!.transcriptUrl = joinUrlPath(baseUrl, filePath);
   });
   
   // Convert to array format

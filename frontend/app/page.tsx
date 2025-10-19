@@ -66,7 +66,12 @@ export default function HomePage() {
   // Removed ingest job logic per request; keeping UI simple
   const [transcriptData, setTranscriptData] = useState<TranscriptEntry[]>([]);
   const [currentPageAudio, setCurrentPageAudio] = useState<PageAudioData | null>(null);
+  
+  const handlePageAudioChange = useCallback((pageAudio: PageAudioData | null) => {
+    setCurrentPageAudio(pageAudio);
+  }, []);
   const [pageTranscriptData, setPageTranscriptData] = useState<TranscriptEntry[]>([]);
+  const [syncedTranscriptData, setSyncedTranscriptData] = useState<TranscriptEntry[]>([]);
   const [activeTranscriptEntry, setActiveTranscriptEntry] = useState<TranscriptEntry | null>(null);
   const [chapterIndex, setChapterIndex] = useState(0);
   const [chapterMeta, setChapterMeta] = useState<{ totalPages: number; canGoNext: boolean; canGoPrevious: boolean }>({ totalPages: 0, canGoNext: false, canGoPrevious: false });
@@ -77,8 +82,28 @@ export default function HomePage() {
   const isTransitioningRef = useRef<boolean>(false);
   const previousAudioUrlRef = useRef<string | null>(null);
 
-  // Define the audio and transcript files for the current PDF - memoize to prevent re-renders
-  const audioFiles = useMemo(() => [
+  // Extract scene number from current scene or uploaded file
+  const currentSceneNumber = useMemo(() => {
+    // Prefer explicit filename from selected scene
+    if (currentScene?.filename) {
+      const match = currentScene.filename.match(/scene[-_](\d+)/i);
+      if (match) return parseInt(match[1], 10);
+    }
+    // Fallback: parse from scene id like "scene-1"
+    if (currentScene?.id) {
+      const match = String(currentScene.id).match(/scene[-_](\d+)/i);
+      if (match) return parseInt(match[1], 10);
+    }
+    // Fallback: parse from uploaded file name
+    if (uploadedFile?.name) {
+      const match = uploadedFile.name.match(/scene[-_](\d+)/i);
+      if (match) return parseInt(match[1], 10);
+    }
+    return undefined;
+  }, [currentScene, uploadedFile]);
+
+  // Fallback audio files for when Supabase is not available
+  const fallbackAudioFiles = useMemo(() => [
     'ch01_page01_dialogue_20251018_220717.mp3',
     'ch01_page02_dialogue_20251018_220717.mp3',
     'ch01_page03_dialogue_20251018_220717.mp3',
@@ -86,20 +111,9 @@ export default function HomePage() {
     'ch01_page05_dialogue_20251018_220717.mp3',
     'ch01_page06_dialogue_20251018_220717.mp3',
     'ch01_page07_dialogue_20251018_220717.mp3',
-    // ch02
-    'ch02_page01_dialogue_20251018_222240.mp3',
-    'ch02_page02_dialogue_20251018_222240.mp3',
-    'ch02_page03_dialogue_20251018_222240.mp3',
-    'ch02_page04_dialogue_20251018_222240.mp3',
-    // ch03
-    'ch03_page01_dialogue_20251018_222416.mp3',
-    'ch03_page02_dialogue_20251018_222416.mp3',
-    'ch03_page03_dialogue_20251018_222416.mp3',
-    'ch03_page04_dialogue_20251018_222416.mp3',
-    'ch03_page05_dialogue_20251018_222416.mp3'
   ], []);
 
-  const transcriptFiles = useMemo(() => [
+  const fallbackTranscriptFiles = useMemo(() => [
     'ch01_page01_transcript_20251018_220717.txt',
     'ch01_page02_transcript_20251018_220717.txt',
     'ch01_page03_transcript_20251018_220717.txt',
@@ -107,18 +121,11 @@ export default function HomePage() {
     'ch01_page05_transcript_20251018_220717.txt',
     'ch01_page06_transcript_20251018_220717.txt',
     'ch01_page07_transcript_20251018_220717.txt',
-    // ch02
-    'ch02_page01_transcript_20251018_222240.txt',
-    'ch02_page02_transcript_20251018_222240.txt',
-    'ch02_page03_transcript_20251018_222240.txt',
-    'ch02_page04_transcript_20251018_222240.txt',
-    // ch03
-    'ch03_page01_transcript_20251018_222416.txt',
-    'ch03_page02_transcript_20251018_222416.txt',
-    'ch03_page03_transcript_20251018_222416.txt',
-    'ch03_page04_transcript_20251018_222416.txt',
-    'ch03_page05_transcript_20251018_222416.txt'
   ], []);
+
+  // Determine if we should use Supabase or fallback
+  const useSupabase = currentSceneNumber !== undefined;
+  
 
   // Mock manga pages with audio files - in a real app, this would be extracted from the uploaded file
   const mockPages: MangaPage[] = [
@@ -243,19 +250,23 @@ export default function HomePage() {
     }
   }, [currentPanelIndex, currentPageIndex, currentPanel, currentPageAudio]);
 
-  // Audio event handlers
-  const handleTimeUpdate = (time: number) => {
-    // Only update if we're not currently seeking
-    if (!isSeekingRef.current) {
+  // Audio event handlers with debounce to reduce render churn
+  const lastTimeUpdateRef = useRef(0);
+  const handleTimeUpdate = useCallback((time: number) => {
+    if (isSeekingRef.current) return;
+    // Only update UI every 0.5 seconds to minimize re-renders
+    const diff = Math.abs(time - lastTimeUpdateRef.current);
+    if (diff >= 0.5) {
+      lastTimeUpdateRef.current = time;
       setCurrentTime(time);
     }
-  };
+  }, []);
 
-  const handleDurationChange = (dur: number) => {
+  const handleDurationChange = useCallback((dur: number) => {
     setDuration(dur);
-  };
+  }, []);
 
-  const handleAudioEnded = () => {
+  const handleAudioEnded = useCallback(() => {
     // Prevent multiple rapid calls during transition
     if (isTransitioningRef.current) return;
     
@@ -297,21 +308,21 @@ export default function HomePage() {
     } else {
       setIsPlaying(false);
     }
-  };
+  }, [currentPageAudio, chapterMeta, isPDF, pdfPageCount, mockPages.length, currentPageIndex, currentPanelIndex, currentPage.panels.length]);
 
-  const handleAudioError = () => {
+  const handleAudioError = useCallback(() => {
     console.error('Audio playback error - file may not exist or be corrupted');
     setIsPlaying(false);
     // Optionally show user-friendly error message
     // You could add a toast notification here
-  };
+  }, []);
 
   // Debug: log audio URL candidates when they change
   useEffect(() => {
     // Only log when the audio URL actually changes to reduce noise
     const currentAudioUrl = currentPageAudio?.audioUrl || currentPanel?.audioFileUrl;
     if (currentAudioUrl !== previousAudioUrlRef.current) {
-      console.log('Audio candidates:', {
+      /* debug removed */ ({
         pageAudioUrl: currentPageAudio?.audioUrl,
         panelAudioUrl: currentPanel?.audioFileUrl,
         isPlaying,
@@ -322,7 +333,7 @@ export default function HomePage() {
   }, [currentPageAudio?.audioUrl, currentPanel?.audioFileUrl, isPlaying, currentPageIndex]);
 
   const handleSeek = (time: number) => {
-    console.log('handleSeek called with:', time, 'current duration:', duration);
+    
     isSeekingRef.current = true;
     setCurrentTime(time);
     
@@ -369,12 +380,12 @@ export default function HomePage() {
           break;
         
         case 'ArrowLeft': // Left Arrow - Rewind 5 seconds
-          console.log('Left arrow pressed, seeking from', currentTime, 'to', Math.max(0, currentTime - 5));
+          
           handleSeek(Math.max(0, currentTime - 5));
           break;
         
         case 'ArrowRight': // Right Arrow - Skip 5 seconds
-          console.log('Right arrow pressed, seeking from', currentTime, 'to', Math.min(duration, currentTime + 5));
+          
           handleSeek(Math.min(duration, currentTime + 5));
           break;
         
@@ -497,7 +508,7 @@ export default function HomePage() {
       form.append('bucket', bucket);
       form.append('object_path', objectPath);
 
-      console.log('Uploading to Supabase:', { bucket, objectPath });
+      
       const up = await fetch(`${API_BASE}/api/storage/upload`, {
         method: 'POST',
         body: form,
@@ -511,8 +522,7 @@ export default function HomePage() {
       const uploadedPath: string = uploaded.object_path;
 
       if (uploadedPath) {
-        console.log('Successfully uploaded to Supabase:', uploadedPath);
-        console.log('Public URL:', uploaded.public_url);
+        
       }
     } catch (e) {
       console.error('Unexpected upload failure:', e);
@@ -522,7 +532,7 @@ export default function HomePage() {
   // Handle scene selection from sidebar
   const handleSceneSelect = async (scene: any) => {
     try {
-      console.log('Selected scene:', scene);
+      
       setCurrentScene(scene);
 
       // Extract chapter index from scene filename
@@ -540,29 +550,23 @@ export default function HomePage() {
       setPdfZoom(1.0);
       if (scene.total_pages) setPdfPageCount(scene.total_pages);
 
-      // Resolve a public URL for the PDF (direct or via backend details)
-      let publicUrl: string | null = scene.public_url || null;
-      if (!publicUrl && scene.id) {
+      // Load the associated PDF from manga-pdfs using scene filename directly
         try {
           const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
-          const detailsRes = await fetch(`${API_BASE}/api/scenes/${encodeURIComponent(scene.id)}`);
-          if (detailsRes.ok) {
-            const details = await detailsRes.json();
-            publicUrl = details.public_url || null;
-          }
-        } catch {}
-      }
+        const pdfPath = scene?.filename || (scene?.id ? `${scene.id}.pdf` : null);
+        if (!pdfPath) throw new Error('Missing scene filename for PDF');
 
-      if (publicUrl) {
-        let res = await fetch(publicUrl);
+        // Try direct public URL first
+        let res: Response | null = null;
+        const directUrl = `${API_BASE}/storage/v1/object/public/manga-pdfs/${encodeURIComponent(pdfPath)}`;
+        res = await fetch(directUrl);
+
         if (!res.ok) {
-          // Try backend-signed URL fallback for private buckets
-          try {
-            const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
+          // Sign and fetch if direct public URL fails (private bucket)
             const signRes = await fetch(`${API_BASE}/api/storage/sign`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ bucket: 'manga-pdfs', object_path: scene.id, expires_in: 3600 })
+            body: JSON.stringify({ bucket: 'manga-pdfs', object_path: pdfPath, expires_in: 3600 })
             });
             if (signRes.ok) {
               const signed = await signRes.json();
@@ -570,16 +574,19 @@ export default function HomePage() {
                 res = await fetch(signed.signed_url);
               }
             }
-          } catch {}
         }
-        if (!res.ok) throw new Error(`Failed to download PDF: ${res.status}`);
+
+        if (res && res.ok) {
         const blob = await res.blob();
         const fileName = scene.filename || 'scene.pdf';
         const file = new File([blob], fileName, { type: blob.type || 'application/pdf' });
         setUploadedFile(file);
         setIsPDF(true);
       } else {
-        console.warn('Scene has no resolvable public_url; cannot download PDF');
+          console.warn('Unable to fetch PDF for scene');
+        }
+      } catch (err) {
+        console.warn('PDF load attempt failed:', err);
       }
     } catch (e) {
       console.error('Error selecting scene:', e);
@@ -595,14 +602,39 @@ export default function HomePage() {
   };
 
   const handleVolumeChange = useCallback((value: number[]) => {
-    console.log('Volume changing to:', value);
+    
     setVolume(value);
   }, []);
 
   const handleSpeedChange = useCallback((value: number[]) => {
-    console.log('Speed changing to:', value);
+    
     setSpeed(value);
   }, []);
+
+  // Attempt to sync plain-text transcripts (no timestamps) to audio duration by linear distribution
+  useEffect(() => {
+    const entries = pageTranscriptData;
+    if (!entries || entries.length === 0) {
+      setSyncedTranscriptData([]);
+      return;
+    }
+    if (!currentPageAudio?.audioUrl || duration <= 0) {
+      setSyncedTranscriptData(entries);
+      return;
+    }
+    // Detect fallback timestamps (index * 2)
+    const isFallback = entries.every((e, i) => e.timestamp === i * 2);
+    if (isFallback) {
+      const n = entries.length;
+      const distributed = entries.map((e, i) => ({
+        ...e,
+        timestamp: (i * Math.max(0, duration - 0.01)) / Math.max(1, n - 1) // spread across full duration
+      }));
+      setSyncedTranscriptData(distributed);
+    } else {
+      setSyncedTranscriptData(entries);
+    }
+  }, [pageTranscriptData, duration, currentPageAudio?.audioUrl]);
 
   const handlePreviousPanel = () => {
     if (currentPanelIndex > 0) {
@@ -672,13 +704,189 @@ export default function HomePage() {
     currentPanelIndex < currentPage?.panels.length - 1;
 
   return (
+    <>
+      {useSupabase ? (
     <PageAudioManager
-      audioFiles={audioFiles}
-      transcriptFiles={transcriptFiles}
+          sceneNumber={currentSceneNumber}
+          currentPageIndex={currentPageIndex}
+          currentChapterIndex={chapterIndex}
+                onPageAudioChange={handlePageAudioChange}
+          onTranscriptChange={setPageTranscriptData}
+          onActiveTranscriptChange={setActiveTranscriptEntry}
+          onMetaChange={setChapterMeta}
+          currentTime={currentTime}
+        >
+          <div className="h-screen w-screen flex flex-col overflow-hidden bg-slate-900">
+            {/* Scene Sidebar */}
+            <SceneSidebar
+              isOpen={isSidebarOpen}
+              onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+              onSceneSelect={handleSceneSelect}
+              currentScene={currentScene}
+            />
+            
+            {/* Header */}
+            <div className="border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-xl px-8 py-6 flex items-center justify-between shadow-lg shadow-black/20">
+              <div>
+                <h1 className="text-2xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent">
+                  Sonokomi
+                </h1>
+                <p className="text-slate-300 mt-1 font-medium">
+                  {uploadedFile
+                    ? `${uploadedFile.name} - Page ${currentPageIndex + 1} of ${isPDF ? pdfPageCount : mockPages.length}`
+                    : "Upload a manga file to begin reading"}
+                </p>
+              </div>
+              <div className="flex gap-3 items-center">
+                <KeyboardShortcutsHelp />
+                <Link href="/landing">
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    className="gap-2 bg-slate-700/80 backdrop-blur-sm border-slate-500/60 hover:bg-slate-600/90 hover:border-blue-400/80 hover:text-blue-300 transition-all duration-200 shadow-lg text-slate-200"
+                  >
+                    <Home className="h-5 w-5" />
+                    Home
+                  </Button>
+                </Link>
+                {uploadedFile && (
+                  <Button
+                    variant="outline"
+                    size="lg"
+                    onClick={handleReset}
+                    className="gap-2 bg-slate-700/80 backdrop-blur-sm border-slate-500/60 hover:bg-slate-600/90 hover:border-blue-400/80 hover:text-blue-300 transition-all duration-200 shadow-lg text-slate-200"
+                  >
+                    <RotateCcw className="h-5 w-5" />
+                    Upload New File
+                  </Button>
+                )}
+              </div>
+            </div>
+
+            {/* Main Content - Split Screen Layout */}
+            <div className={`flex-1 flex overflow-hidden transition-all duration-300 ${isSidebarOpen ? 'lg:ml-80' : ''}`}>
+              {uploadedFile ? (
+                <>
+                  {/* Left Side - Manga/PDF Viewer (75% width) */}
+                  <div className="w-2/5 overflow-hidden">
+                    {isPDF ? (
+                      <PDFPageViewer
+                        pdfFile={uploadedFile}
+                        currentPageIndex={currentPageIndex}
+                        onPageCountChange={setPdfPageCount}
+                      />
+                    ) : (
+                      <MangaPageViewer
+                        panels={currentPage.panels}
+                        currentPanelId={currentPanel?.id || null}
+                      />
+                    )}
+                  </div>
+                  
+                  {/* Right Side - Transcript and Controls (25% width) */}
+                  <div className="w-3/5 flex flex-col border-l border-slate-700/50 h-full min-h-0">
+                    {/* Transcript - Fixed height with scroll */}
+                    <div className={`transition-[height] duration-300 ease-out ${
+                      isTranscriptCollapsed ? 'h-auto' : 'h-3/5 flex-shrink-0'
+                    }`}>
+                          <Transcript
+                        currentText={currentPanel?.text}
+                        isPlaying={isPlaying}
+                        className="h-full"
+                        onCollapseChange={setIsTranscriptCollapsed}
+                        currentTime={currentTime}
+                            transcriptData={syncedTranscriptData.length > 0 ? syncedTranscriptData : (pageTranscriptData.length > 0 ? pageTranscriptData : transcriptData)}
+                        onSeek={handleSeek}
+                      />
+                    </div>
+                    
+                    {/* Playback Controls - Takes remaining space */}
+                    <div className={`transition-[background-color,border-color] duration-300 ease-out ${
+                      isTranscriptCollapsed 
+                        ? 'flex-1 flex items-center justify-center bg-slate-900 min-h-0' 
+                        : 'flex-1 border-t border-slate-700/50 bg-slate-900 min-h-0'
+                    }`}>
+                      {isPDF ? (
+                        <PDFPlaybackControls
+                          currentPage={currentPageIndex + 1}
+                          totalPages={pdfPageCount}
+                          isPlaying={isPlaying}
+                          onPlayPause={handlePlayPause}
+                          volume={volume}
+                          onVolumeChange={handleVolumeChange}
+                          speed={speed}
+                          onSpeedChange={handleSpeedChange}
+                          currentTime={currentTime}
+                          duration={duration}
+                          onSeek={handleSeek}
+                          onSeekBackward={handleSeekBackward}
+                          onSeekForward={handleSeekForward}
+                          onPreviousPage={handlePreviousPage}
+                          onNextPage={handleNextPage}
+                          canGoPreviousPage={currentPageIndex > 0}
+                          canGoNextPage={currentPageIndex < pdfPageCount - 1}
+                          fullWidth={isTranscriptCollapsed}
+                        />
+                      ) : (
+                        <EnhancedPlaybackControls
+                          isPlaying={isPlaying}
+                          onPlayPause={handlePlayPause}
+                          onPrevious={handlePreviousPanel}
+                          onNext={handleNextPanel}
+                          canGoPrevious={canGoPreviousPanel}
+                          canGoNext={canGoNextPanel}
+                          currentPanel={currentPanelIndex + 1}
+                          totalPanels={currentPage.panels.length}
+                          currentTime={currentTime}
+                          duration={duration}
+                          volume={volume}
+                          onVolumeChange={setVolume}
+                          speed={speed}
+                          onSpeedChange={setSpeed}
+                          onSeek={handleSeek}
+                          fullWidth={isTranscriptCollapsed}
+                        />
+                      )}
+                    </div>
+                  </div>
+                </>
+              ) : (
+                <div className="w-full">
+                  <UploadArea
+                    onFileUpload={handleFileUpload}
+                    uploadedFileName={uploadedFile?.name}
+                  />
+                </div>
+              )}
+            </div>
+            
+                    {/* Audio Player - Hidden component that handles audio playback (Supabase only) */}
+                    {currentPageAudio?.audioUrl && (
+                      <AudioPlayer
+                        audioUrl={currentPageAudio.audioUrl}
+                        isPlaying={isPlaying}
+                        volume={volume[0]}
+                        speed={speed[0]}
+                        isMuted={isMuted}
+                        currentTime={currentTime}
+                        onTimeUpdate={handleTimeUpdate}
+                        onDurationChange={handleDurationChange}
+                        onEnded={handleAudioEnded}
+                        onError={handleAudioError}
+                        onLoadStart={() => setIsLoading(true)}
+                        onCanPlay={() => setIsLoading(false)}
+                      />
+                    )}
+          </div>
+        </PageAudioManager>
+      ) : (
+        <PageAudioManager
+          audioFiles={fallbackAudioFiles}
+          transcriptFiles={fallbackTranscriptFiles}
       baseUrl="/"
       currentPageIndex={currentPageIndex}
       currentChapterIndex={chapterIndex}
-      onPageAudioChange={setCurrentPageAudio}
+                onPageAudioChange={handlePageAudioChange}
       onTranscriptChange={setPageTranscriptData}
       onActiveTranscriptChange={setActiveTranscriptEntry}
       onMetaChange={setChapterMeta}
@@ -828,10 +1036,10 @@ export default function HomePage() {
         )}
       </div>
       
-      {/* Audio Player - Hidden component that handles audio playback */}
-      {(currentPanel?.audioFileUrl || (currentPageAudio?.audioUrl && currentPageAudio.audioUrl !== '')) && (
+      {/* Audio Player - Hidden component that handles audio playback (Supabase only) */}
+      {currentPageAudio?.audioUrl && (
         <AudioPlayer
-          audioUrl={currentPageAudio?.audioUrl || currentPanel?.audioFileUrl || ''}
+          audioUrl={currentPageAudio.audioUrl}
           isPlaying={isPlaying}
           volume={volume[0]}
           speed={speed[0]}
@@ -847,5 +1055,7 @@ export default function HomePage() {
       )}
     </div>
     </PageAudioManager>
+      )}
+    </>
   );
 }

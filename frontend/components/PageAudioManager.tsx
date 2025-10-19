@@ -1,13 +1,13 @@
 // File: frontend/components/PageAudioManager.tsx
 
 import React, { useState, useEffect, useRef } from 'react';
+import { useSupabasePageAudio } from '../hooks/useSupabasePageAudio';
 import { usePageAudio } from '../hooks/usePageAudio';
 import { PageAudioData, ChapterAudioData } from '../utils/pageAudioManager';
 
 interface PageAudioManagerProps {
-  audioFiles: string[];
-  transcriptFiles: string[];
-  baseUrl?: string;
+  // New Supabase props
+  sceneNumber?: number;
   currentPageIndex: number;
   currentChapterIndex?: number;
   onPageAudioChange?: (pageAudio: PageAudioData | null) => void;
@@ -16,12 +16,15 @@ interface PageAudioManagerProps {
   currentTime?: number;
   onMetaChange?: (meta: { totalPages: number; canGoNext: boolean; canGoPrevious: boolean }) => void;
   children?: React.ReactNode;
+  
+  // Legacy props for fallback support
+  audioFiles?: string[];
+  transcriptFiles?: string[];
+  baseUrl?: string;
 }
 
 export function PageAudioManager({
-  audioFiles,
-  transcriptFiles,
-  baseUrl = '/assets',
+  sceneNumber,
   currentPageIndex,
   currentChapterIndex = 0,
   onPageAudioChange,
@@ -29,27 +32,48 @@ export function PageAudioManager({
   onActiveTranscriptChange,
   currentTime = 0,
   onMetaChange,
-  children
+  children,
+  // Legacy props
+  audioFiles,
+  transcriptFiles,
+  baseUrl = '/assets'
 }: PageAudioManagerProps) {
   
-  const {
-    currentPageAudio,
-    currentTranscript,
-    activeTranscriptEntry,
-    chapters,
-    currentChapter,
-    isLoadingTranscript,
-    updateActiveTranscript,
-    canGoNext,
-    canGoPrevious,
-    totalPages
-  } = usePageAudio({
-    audioFiles,
-    transcriptFiles,
+  // Determine if we should use Supabase or legacy mode
+  const useSupabase = sceneNumber !== undefined;
+  
+  // Supabase mode
+  const supabaseData = useSupabasePageAudio({
+    sceneNumber,
+    currentPageIndex,
+    currentChapterIndex
+  });
+  
+  // Legacy mode - use the old hook
+  const legacyData = usePageAudio({
+    audioFiles: audioFiles || [],
+    transcriptFiles: transcriptFiles || [],
     baseUrl,
     currentPageIndex,
     currentChapterIndex
   });
+  
+  // Use the appropriate data source
+  const currentPageAudio = useSupabase ? supabaseData.currentPageAudio : legacyData.currentPageAudio;
+  const currentTranscript = useSupabase ? supabaseData.currentTranscript : legacyData.currentTranscript;
+  const activeTranscriptEntry = useSupabase ? supabaseData.activeTranscriptEntry : legacyData.activeTranscriptEntry;
+  const chapters = useSupabase ? supabaseData.chapters : legacyData.chapters;
+  const currentChapter = useSupabase ? supabaseData.currentChapter : legacyData.currentChapter;
+  const isLoadingTranscript = useSupabase ? supabaseData.isLoadingTranscript : legacyData.isLoadingTranscript;
+  const isLoadingAudio = useSupabase ? supabaseData.isLoadingAudio : legacyData.isLoadingAudio;
+  const isLoadingScenes = useSupabase ? supabaseData.isLoadingScenes : false;
+  const updateActiveTranscript = useSupabase ? supabaseData.updateActiveTranscript : legacyData.updateActiveTranscript;
+  const canGoNext = useSupabase ? supabaseData.canGoNext : legacyData.canGoNext;
+  const canGoPrevious = useSupabase ? supabaseData.canGoPrevious : legacyData.canGoPrevious;
+  const totalPages = useSupabase ? supabaseData.totalPages : legacyData.totalPages;
+  const error = useSupabase ? supabaseData.error : null;
+  
+  
   
   // Notify parent components of changes
   useEffect(() => {
@@ -79,17 +103,51 @@ export function PageAudioManager({
     updateActiveTranscriptRef.current = updateActiveTranscript;
   }, [updateActiveTranscript]);
 
-  // Update active transcript when time changes (depend only on time)
+  // Update active transcript when time changes (heavily throttled)
   useEffect(() => {
-    if (currentTime > 0) {
+    if (currentTime <= 0) return;
+    let raf = 0;
+    const run = () => {
       updateActiveTranscriptRef.current(currentTime);
-    }
+    };
+    // throttle to every 1 second to minimize transcript updates
+    const timeout = setTimeout(() => {
+      raf = requestAnimationFrame(run);
+    }, 1000);
+    return () => {
+      clearTimeout(timeout);
+      cancelAnimationFrame(raf);
+    };
   }, [currentTime]);
 
   // Expose meta (totalPages and navigation availability)
   useEffect(() => {
     onMetaChange?.({ totalPages, canGoNext, canGoPrevious });
   }, [totalPages, canGoNext, canGoPrevious, onMetaChange]);
+  
+  // Show error state if there's an error
+  if (error) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <div className="text-center text-red-400">
+          <p className="text-lg font-semibold">Error loading audio files</p>
+          <p className="text-sm mt-2">{error}</p>
+        </div>
+      </div>
+    );
+  }
+  
+  // Show loading state
+  if (isLoadingScenes) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <div className="text-center text-slate-400">
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-400 mx-auto mb-4"></div>
+          <p>Loading scenes...</p>
+        </div>
+      </div>
+    );
+  }
   
   // Just render children
   return <>{children}</>;

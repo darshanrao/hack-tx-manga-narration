@@ -28,27 +28,41 @@ export function SceneSidebar({ isOpen, onToggle, onSceneSelect, currentScene }: 
 
   // Fetch scenes from backend
   useEffect(() => {
-    const fetchScenes = async () => {
-      try {
-        setLoading(true);
-        const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
-        const response = await fetch(`${API_BASE}/api/scenes/list`);
-        
-        if (!response.ok) {
-          throw new Error(`Failed to fetch scenes: ${response.status}`);
-        }
-        
-        const data = await response.json();
-        setScenes(data.scenes || []);
-        setError(null);
-      } catch (err) {
-        console.error('Error fetching scenes:', err);
-        setError(err instanceof Error ? err.message : 'Failed to fetch scenes');
-        // Do not populate mock scenes; force user to fix backend/API
-      } finally {
-        setLoading(false);
-      }
-    };
+          const fetchScenes = async () => {
+            try {
+              setLoading(true);
+              const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
+              const url = `${API_BASE}/api/supabase-audio/scenes`;
+              
+              const response = await fetch(url);
+              
+              if (!response.ok) {
+                throw new Error(`Failed to fetch scenes: ${response.status}`);
+              }
+              
+              const data = await response.json();
+              
+              // Transform Supabase SceneFolderInfo to the format expected by SceneSidebar
+              const transformedScenes = (data.scenes || []).map((sceneFolder: any) => ({
+                id: `scene-${sceneFolder.sceneNumber}`,
+                status: 'completed', // Assume completed since files exist
+                name: `Scene ${sceneFolder.sceneNumber}`,
+                filename: `scene-${sceneFolder.sceneNumber}.pdf`, // Assume PDF format
+                uploaded_at: sceneFolder.audioFiles[0]?.created_at || new Date().toISOString(),
+                total_pages: sceneFolder.audioFiles.length, // Use audio file count as page count
+                public_url: null // Will be handled by the scene selection logic
+              }));
+              
+              setScenes(transformedScenes);
+              setError(null);
+            } catch (err) {
+              console.error('Error fetching scenes:', err);
+              setError(err instanceof Error ? err.message : 'Failed to fetch scenes');
+              // Do not populate mock scenes; force user to fix backend/API
+            } finally {
+              setLoading(false);
+            }
+          };
 
     fetchScenes();
   }, []);

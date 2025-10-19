@@ -36,6 +36,7 @@ export function AudioPlayer({
   const lastSeekTimeRef = useRef<number>(0);
   const isSeekingRef = useRef<boolean>(false);
   const hasEndedRef = useRef<boolean>(false);
+  const pendingSeekRef = useRef<number | null>(null);
 
   // Update audio properties when they change
   useEffect(() => {
@@ -51,13 +52,38 @@ export function AudioPlayer({
     const audio = audioRef.current;
     if (!audio) return;
 
-    // Only seek if the difference is significant (more than 0.5 seconds)
-    // This prevents stuttering during normal playback while allowing proper seeking
+    const applySeek = (t: number) => {
+      isSeekingRef.current = true;
+      audio.currentTime = t;
+      if (hasEndedRef.current && t < (audio.duration || Infinity) - 0.25) {
+        hasEndedRef.current = false;
+        if (isPlaying) {
+          audio.play().catch(() => {/* ignore autoplay errors */});
+        }
+      }
+      setTimeout(() => {
+        isSeekingRef.current = false;
+      }, 100);
+    };
+
     const timeDifference = Math.abs(audio.currentTime - currentTime);
-    if (timeDifference > 0.5) {
-      audio.currentTime = currentTime;
+    if (timeDifference <= 0.05) return; // ignore tiny deltas
+
+    // If audio not ready with metadata, defer seek until it can play
+    if (audio.readyState < 2) {
+      pendingSeekRef.current = currentTime;
+      const onCanPlayOnce = () => {
+        audio.removeEventListener('canplay', onCanPlayOnce);
+        const t = pendingSeekRef.current;
+        pendingSeekRef.current = null;
+        if (t != null) applySeek(t);
+      };
+      audio.addEventListener('canplay', onCanPlayOnce);
+      return;
     }
-  }, [currentTime]);
+
+    applySeek(currentTime);
+  }, [currentTime, isPlaying]);
 
   // Handle play/pause with readiness guard
   useEffect(() => {
@@ -69,17 +95,11 @@ export function AudioPlayer({
       if (!audio.src) return;
       
       // Only play if we haven't already ended this audio
-      if (hasEndedRef.current) {
-        console.log('Audio has already ended, not playing');
-        return;
-      }
+      if (hasEndedRef.current) return;
       
       const tryPlay = () => {
         audio.play().catch((error) => {
-          if (error.name === 'AbortError') {
-            console.log('Audio play was aborted (likely due to source change)');
-            return;
-          }
+          if (error.name === 'AbortError') return;
           console.error('Error playing audio:', error);
           onError();
         });
@@ -99,12 +119,21 @@ export function AudioPlayer({
     }
   }, [isPlaying, onError]);
 
-  // Set up event listeners
+  // Set up event listeners with throttled time updates
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    const handleTimeUpdate = () => onTimeUpdate(audio.currentTime);
+    let lastEmitted = 0;
+    const handleTimeUpdate = () => {
+      if (isSeekingRef.current) return;
+      const now = performance.now();
+      // throttle to ~2Hz (every 500ms) to minimize React updates
+      if (now - lastEmitted >= 500) {
+        lastEmitted = now;
+        onTimeUpdate(audio.currentTime);
+      }
+    };
     const handleLoadedMetadata = () => onDurationChange(audio.duration);
     const handleEnded = () => {
       // Prevent multiple ended events from firing
@@ -151,38 +180,44 @@ export function AudioPlayer({
       const normalizedUrl = (audioUrl.startsWith('http') || audioUrl.startsWith('/'))
         ? audioUrl
         : `/${audioUrl}`;
-      // Add cache-busting parameter to prevent audio caching issues
-      const cacheBustedUrl = `${normalizedUrl}?t=${Date.now()}`;
       // Pause current audio before changing source to prevent AbortError
       audio.pause();
-      audio.src = cacheBustedUrl;
+      audio.src = normalizedUrl;
       audio.load();
       // Re-apply current playback settings after changing source
       audio.playbackRate = speed;
       audio.volume = isMuted ? 0 : volume;
       previousUrlRef.current = normalizedUrl;
       // If we should be playing, attempt to play or wait for readiness
-      if (isPlaying && !hasEndedRef.current) {
-        console.log('Starting new audio:', cacheBustedUrl);
-        const tryPlay = () => {
-          audio.play().catch((error) => {
-            if (error.name === 'AbortError') {
-              console.log('Audio play was aborted (likely due to source change)');
-              return;
-            }
-            console.error('Error playing audio:', error);
-            onError();
-          });
-        };
-        if (audio.readyState >= 2) {
-          tryPlay();
-        } else {
-          const onCanPlayOnce = () => {
-            audio.removeEventListener('canplay', onCanPlayOnce);
-            tryPlay();
-          };
-          audio.addEventListener('canplay', onCanPlayOnce);
+      const tryPlay = () => {
+        if (!isPlaying || hasEndedRef.current) return;
+        audio.play().catch((error) => {
+          if (error.name === 'AbortError') return;
+          console.error('Error playing audio:', error);
+          onError();
+        });
+      };
+
+      if (audio.readyState >= 2) {
+        // Apply any pending seek now that metadata is available
+        if (pendingSeekRef.current != null) {
+          const t = pendingSeekRef.current;
+          pendingSeekRef.current = null;
+          audio.currentTime = t;
         }
+        tryPlay();
+      } else {
+        const onCanPlayOnce = () => {
+          audio.removeEventListener('canplay', onCanPlayOnce);
+          // Apply any pending seek on readiness
+          if (pendingSeekRef.current != null) {
+            const t = pendingSeekRef.current;
+            pendingSeekRef.current = null;
+            audio.currentTime = t;
+          }
+          tryPlay();
+        };
+        audio.addEventListener('canplay', onCanPlayOnce);
       }
     }
   }, [audioUrl, onError, isPlaying, speed, volume, isMuted]);
@@ -190,8 +225,10 @@ export function AudioPlayer({
   return (
     <audio
       ref={audioRef}
-      preload="metadata"
+      preload="auto"
+      crossOrigin="anonymous"
       style={{ display: 'none' }}
+      onLoadStart={() => {/* prevent default behavior */}}
     >
       {/* Provide a source element with type to help browser recognize format */}
       {previousUrlRef.current && (
