@@ -454,7 +454,9 @@ export default function HomePage() {
     // Upload to Supabase storage
     try {
       const bucket = 'manga-pdfs';
-      const objectPath = `${Date.now()}_${file.name.replace(/[^a-zA-Z0-9_.-]/g, '_')}`;
+      // Create a cleaner filename: just use the original filename with scene number extraction
+      const originalName = file.name.replace(/[^a-zA-Z0-9_.-]/g, '_');
+      const objectPath = originalName;
       const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
       const form = new FormData();
       form.append('file', file);
