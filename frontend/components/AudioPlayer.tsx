@@ -124,7 +124,7 @@ export function AudioPlayer({
     };
   }, [onTimeUpdate, onDurationChange, onEnded, onError, onLoadStart, onCanPlay]);
 
-  // Update src when audioUrl changes
+  // Update src when audioUrl changes and preserve playback settings
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
@@ -139,9 +139,34 @@ export function AudioPlayer({
       audio.pause();
       audio.src = normalizedUrl;
       audio.load();
+      // Re-apply current playback settings after changing source
+      audio.playbackRate = speed;
+      audio.volume = isMuted ? 0 : volume;
       previousUrlRef.current = normalizedUrl;
+      // If we should be playing, attempt to play or wait for readiness
+      if (isPlaying) {
+        const tryPlay = () => {
+          audio.play().catch((error) => {
+            if (error.name === 'AbortError') {
+              console.log('Audio play was aborted (likely due to source change)');
+              return;
+            }
+            console.error('Error playing audio:', error);
+            onError();
+          });
+        };
+        if (audio.readyState >= 2) {
+          tryPlay();
+        } else {
+          const onCanPlayOnce = () => {
+            audio.removeEventListener('canplay', onCanPlayOnce);
+            tryPlay();
+          };
+          audio.addEventListener('canplay', onCanPlayOnce);
+        }
+      }
     }
-  }, [audioUrl, onError]);
+  }, [audioUrl, onError, isPlaying, speed, volume, isMuted]);
 
   return (
     <audio

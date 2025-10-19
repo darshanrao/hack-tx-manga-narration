@@ -14,6 +14,7 @@ interface PageAudioManagerProps {
   onTranscriptChange?: (transcript: any[]) => void;
   onActiveTranscriptChange?: (activeEntry: any) => void;
   currentTime?: number;
+  onMetaChange?: (meta: { totalPages: number; canGoNext: boolean; canGoPrevious: boolean }) => void;
   children?: React.ReactNode;
 }
 
@@ -27,6 +28,7 @@ export function PageAudioManager({
   onTranscriptChange,
   onActiveTranscriptChange,
   currentTime = 0,
+  onMetaChange,
   children
 }: PageAudioManagerProps) {
   
@@ -83,6 +85,11 @@ export function PageAudioManager({
       updateActiveTranscriptRef.current(currentTime);
     }
   }, [currentTime]);
+
+  // Expose meta (totalPages and navigation availability)
+  useEffect(() => {
+    onMetaChange?.({ totalPages, canGoNext, canGoPrevious });
+  }, [totalPages, canGoNext, canGoPrevious, onMetaChange]);
   
   // Just render children
   return <>{children}</>;

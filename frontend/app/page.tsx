@@ -69,6 +69,8 @@ export default function HomePage() {
   const [currentPageAudio, setCurrentPageAudio] = useState<PageAudioData | null>(null);
   const [pageTranscriptData, setPageTranscriptData] = useState<TranscriptEntry[]>([]);
   const [activeTranscriptEntry, setActiveTranscriptEntry] = useState<TranscriptEntry | null>(null);
+  const [chapterIndex, setChapterIndex] = useState(0);
+  const [chapterMeta, setChapterMeta] = useState<{ totalPages: number; canGoNext: boolean; canGoPrevious: boolean }>({ totalPages: 0, canGoNext: false, canGoPrevious: false });
   const previousPanelRef = useRef<string | null>(null);
   const isSeekingRef = useRef<boolean>(false);
 
@@ -80,7 +82,18 @@ export default function HomePage() {
     'ch01_page04_dialogue_20251018_220717.mp3',
     'ch01_page05_dialogue_20251018_220717.mp3',
     'ch01_page06_dialogue_20251018_220717.mp3',
-    'ch01_page07_dialogue_20251018_220717.mp3'
+    'ch01_page07_dialogue_20251018_220717.mp3',
+    // ch02
+    'ch02_page01_dialogue_20251018_222240.mp3',
+    'ch02_page02_dialogue_20251018_222240.mp3',
+    'ch02_page03_dialogue_20251018_222240.mp3',
+    'ch02_page04_dialogue_20251018_222240.mp3',
+    // ch03
+    'ch03_page01_dialogue_20251018_222416.mp3',
+    'ch03_page02_dialogue_20251018_222416.mp3',
+    'ch03_page03_dialogue_20251018_222416.mp3',
+    'ch03_page04_dialogue_20251018_222416.mp3',
+    'ch03_page05_dialogue_20251018_222416.mp3'
   ], []);
 
   const transcriptFiles = useMemo(() => [
@@ -90,7 +103,18 @@ export default function HomePage() {
     'ch01_page04_transcript_20251018_220717.txt',
     'ch01_page05_transcript_20251018_220717.txt',
     'ch01_page06_transcript_20251018_220717.txt',
-    'ch01_page07_transcript_20251018_220717.txt'
+    'ch01_page07_transcript_20251018_220717.txt',
+    // ch02
+    'ch02_page01_transcript_20251018_222240.txt',
+    'ch02_page02_transcript_20251018_222240.txt',
+    'ch02_page03_transcript_20251018_222240.txt',
+    'ch02_page04_transcript_20251018_222240.txt',
+    // ch03
+    'ch03_page01_transcript_20251018_222416.txt',
+    'ch03_page02_transcript_20251018_222416.txt',
+    'ch03_page03_transcript_20251018_222416.txt',
+    'ch03_page04_transcript_20251018_222416.txt',
+    'ch03_page05_transcript_20251018_222416.txt'
   ], []);
 
   // Mock manga pages with audio files - in a real app, this would be extracted from the uploaded file
@@ -279,7 +303,7 @@ export default function HomePage() {
     handleSeek(Math.min(duration, currentTime + 5));
   };
 
-  // Reset panel index when page changes manually
+  // Reset panel index when page changes manually (do not touch speed)
   useEffect(() => {
     setCurrentPanelIndex(0);
   }, [currentPageIndex]);
@@ -401,6 +425,19 @@ export default function HomePage() {
     // Check if file is PDF
     const isPDFFile = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
     setIsPDF(isPDFFile);
+    // Auto-select chapter based on filename pattern: scene-#.pdf → chapterIndex = # - 1
+    // Example: scene-1.pdf → chapterIndex 0 (ch01_* files)
+    try {
+      const name = file.name.toLowerCase();
+      const match = name.match(/scene[-_](\d+)/);
+      if (match) {
+        const sceneNumber = parseInt(match[1], 10);
+        if (!Number.isNaN(sceneNumber) && sceneNumber > 0) {
+          setChapterIndex(sceneNumber - 1);
+          setCurrentPageIndex(0);
+        }
+      }
+    } catch {}
     
     if (!isPDFFile) {
       setPdfPageCount(0);
@@ -530,7 +567,7 @@ export default function HomePage() {
   };
 
   const handleNextPage = () => {
-    const maxPages = isPDF ? pdfPageCount : mockPages.length;
+    const maxPages = currentPageAudio?.audioUrl ? chapterMeta.totalPages : (isPDF ? pdfPageCount : mockPages.length);
     if (currentPageIndex < maxPages - 1) {
       setCurrentPageIndex((prev) => prev + 1);
       setIsPlaying(false);
@@ -543,7 +580,7 @@ export default function HomePage() {
   };
 
   const handleLastPage = () => {
-    const maxPages = isPDF ? pdfPageCount : mockPages.length;
+    const maxPages = currentPageAudio?.audioUrl ? chapterMeta.totalPages : (isPDF ? pdfPageCount : mockPages.length);
     setCurrentPageIndex(maxPages - 1);
     setIsPlaying(false);
   };
@@ -573,10 +610,11 @@ export default function HomePage() {
           transcriptFiles={transcriptFiles}
           baseUrl="/"
           currentPageIndex={currentPageIndex}
-          currentChapterIndex={0}
+          currentChapterIndex={chapterIndex}
           onPageAudioChange={setCurrentPageAudio}
           onTranscriptChange={setPageTranscriptData}
           onActiveTranscriptChange={setActiveTranscriptEntry}
+          onMetaChange={setChapterMeta}
           currentTime={currentTime}
         >
       <div className="h-screen w-screen flex flex-col overflow-hidden bg-slate-900">
@@ -592,7 +630,7 @@ export default function HomePage() {
               : "Upload a manga file to begin reading"}
           </p>
         </div>
-        <div className="flex gap-3">
+              <div className="flex gap-3 items-center">
           <KeyboardShortcutsHelp />
           {/* Backend status indicator */}
           <div className="px-3 py-2 rounded-md bg-blue-900/80 border border-blue-600 text-blue-200 text-sm">

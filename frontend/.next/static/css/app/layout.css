@@ -1560,6 +1560,9 @@ video {
 .min-w-\[var\(--radix-select-trigger-width\)\] {
   min-width: var(--radix-select-trigger-width);
 }
+.min-w-\[2ch\] {
+  min-width: 2ch;
+}
 .max-w-2xl {
   max-width: 42rem;
 }
@@ -2200,6 +2203,9 @@ video {
 .bg-white {
   --tw-bg-opacity: 1;
   background-color: rgb(255 255 255 / var(--tw-bg-opacity, 1));
+}
+.bg-slate-800\/70 {
+  background-color: rgb(30 41 59 / 0.7);
 }
 .bg-gradient-to-b {
   background-image: linear-gradient(to bottom, var(--tw-gradient-stops));
