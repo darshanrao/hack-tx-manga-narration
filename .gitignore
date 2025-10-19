@@ -59,7 +59,7 @@ temp/
 tmp/
 
 # Audio/Video files (if you don't want to track them)
-*.mp3
+# *.mp3  # Commented out to allow tracking of generated audio files
 *.wav
 *.mp4
 *.avi
