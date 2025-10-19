@@ -1,5 +1,5 @@
 import { Button } from "./ui/button";
-import { Slider } from "./ui/slider";
+import { LightSlider } from "./ui/light-slider";
 import { Play, Pause, Volume2, Rewind, FastForward, ChevronLeft, ChevronRight } from "lucide-react";
 
 interface PDFPlaybackControlsProps {
@@ -54,21 +54,22 @@ export function PDFPlaybackControls({
     return `${mins}:${secs.toString().padStart(2, '0')}`;
   };
   return (
-    <div className={`${fullWidth ? 'w-full bg-transparent border-0 p-0' : 'bg-transparent border-0 p-6'}`}>
-      <div className={`space-y-6 ${fullWidth ? 'w-full flex flex-col items-center' : 'max-w-4xl mx-auto flex flex-col items-center'}`}>
+    <div className={`${fullWidth ? 'w-full bg-transparent border-0 p-6' : 'bg-transparent border-0 p-6'}`}>
+      <div className={`space-y-6 ${fullWidth ? 'w-full max-w-4xl mx-auto flex flex-col items-center' : 'max-w-4xl mx-auto flex flex-col items-center'}`}>
         
         {/* Enhanced Progress Bar */}
-        <div className={`w-full space-y-3 ${fullWidth ? 'max-w-4xl mx-auto' : ''}`}>
+        <div className={`w-full space-y-3 ${fullWidth ? 'max-w-4xl mx-auto' : 'max-w-4xl mx-auto'}`}>
           <div className="relative">
-            <Slider
-              value={[currentTime]}
-              max={duration || 1}
-              onValueChange={(value) => onSeek(value[0])}
-              className="cursor-pointer h-2"
+            <LightSlider
+              value={Number.isFinite(currentTime) ? Math.min(Math.max(currentTime, 0), duration || 1) : 0}
+              onChange={onSeek}
+              min={0}
+              max={Math.max(1, Math.floor(duration || 0))}
+              step={0.01}
+              className="h-2 light-slider--progress"
+              ariaLabel="Progress"
               disabled={duration === 0}
             />
-            {/* Progress bar glow effect */}
-            <div className="absolute inset-0 h-2 bg-gradient-to-r from-blue-500/20 to-purple-500/20 rounded-full blur-sm"></div>
           </div>
           <div className="flex justify-between text-sm text-slate-300 font-mono">
             <span className="bg-slate-800/50 px-2 py-1 rounded-full">{formatTime(currentTime)}</span>
@@ -140,7 +141,7 @@ export function PDFPlaybackControls({
         </div>
 
         {/* Enhanced Page Indicator with Volume and Speed Controls */}
-        <div className={`flex items-center gap-6 ${fullWidth ? 'w-full max-w-4xl mx-auto' : 'w-full'}`}>
+        <div className={`flex items-center gap-6 ${fullWidth ? 'w-full max-w-4xl mx-auto' : 'w-full max-w-4xl mx-auto'}`}>
           {/* Volume Control */}
           <div className="glass-dark rounded-2xl p-4 border border-slate-600/60 shadow-xl flex-1">
             <div className="flex items-center gap-3">
@@ -154,13 +155,14 @@ export function PDFPlaybackControls({
                     {Math.round(volume[0] * 100)}%
                   </span>
                 </div>
-                <Slider
-                  value={volume}
-                  onValueChange={onVolumeChange}
+                <LightSlider
+                  value={Number.isFinite(volume?.[0]) ? volume[0] : 1}
+                  onChange={(v) => onVolumeChange([v])}
+                  min={0}
                   max={1}
                   step={0.01}
-                  className="cursor-pointer h-2"
-                  aria-label="Volume control"
+                  className="h-2 light-slider--volume"
+                  ariaLabel="Volume control"
                 />
               </div>
             </div>
@@ -186,14 +188,14 @@ export function PDFPlaybackControls({
                     {speed[0].toFixed(1)}x
                   </span>
                 </div>
-                <Slider
-                  value={speed}
-                  onValueChange={onSpeedChange}
+                <LightSlider
+                  value={Number.isFinite(speed?.[0]) ? speed[0] : 1}
+                  onChange={(v) => onSpeedChange([v])}
                   min={0.5}
                   max={2}
                   step={0.1}
-                  className="cursor-pointer h-2"
-                  aria-label="Speed control"
+                  className="h-2 light-slider--speed"
+                  ariaLabel="Speed control"
                 />
               </div>
             </div>

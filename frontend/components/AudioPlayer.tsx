@@ -32,6 +32,7 @@ export function AudioPlayer({
   onCanPlay
 }: AudioPlayerProps) {
   const audioRef = useRef<HTMLAudioElement>(null);
+  const previousUrlRef = useRef<string>('');
   const lastSeekTimeRef = useRef<number>(0);
   const isSeekingRef = useRef<boolean>(false);
 
@@ -57,16 +58,34 @@ export function AudioPlayer({
     }
   }, [currentTime]);
 
-  // Handle play/pause
+  // Handle play/pause with readiness guard
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
     if (isPlaying) {
-      audio.play().catch((error) => {
-        console.error('Error playing audio:', error);
-        onError();
-      });
+      // If not ready, wait for canplay then attempt to play once
+      if (!audio.src) return;
+      const tryPlay = () => {
+        audio.play().catch((error) => {
+          if (error.name === 'AbortError') {
+            console.log('Audio play was aborted (likely due to source change)');
+            return;
+          }
+          console.error('Error playing audio:', error);
+          onError();
+        });
+      };
+
+      if (audio.readyState >= 2) {
+        tryPlay();
+      } else {
+        const onCanPlayOnce = () => {
+          audio.removeEventListener('canplay', onCanPlayOnce);
+          tryPlay();
+        };
+        audio.addEventListener('canplay', onCanPlayOnce);
+      }
     } else {
       audio.pause();
     }
@@ -80,7 +99,11 @@ export function AudioPlayer({
     const handleTimeUpdate = () => onTimeUpdate(audio.currentTime);
     const handleLoadedMetadata = () => onDurationChange(audio.duration);
     const handleEnded = () => onEnded();
-    const handleError = () => onError();
+    const handleError = () => {
+      // Prevent looping caused by rapid error -> play attempts
+      audio.pause();
+      onError();
+    };
     const handleLoadStart = () => onLoadStart?.();
     const handleCanPlay = () => onCanPlay?.();
 
@@ -101,22 +124,60 @@ export function AudioPlayer({
     };
   }, [onTimeUpdate, onDurationChange, onEnded, onError, onLoadStart, onCanPlay]);
 
-  // Update src when audioUrl changes
+  // Update src when audioUrl changes and preserve playback settings
   useEffect(() => {
     const audio = audioRef.current;
     if (!audio) return;
 
-    if (audioUrl && audio.src !== audioUrl) {
-      audio.src = audioUrl;
+    // Only change source if the URL actually changed
+    if (audioUrl && audioUrl !== previousUrlRef.current) {
+      // Normalize relative URLs to root-relative
+      const normalizedUrl = (audioUrl.startsWith('http') || audioUrl.startsWith('/'))
+        ? audioUrl
+        : `/${audioUrl}`;
+      // Pause current audio before changing source to prevent AbortError
+      audio.pause();
+      audio.src = normalizedUrl;
       audio.load();
+      // Re-apply current playback settings after changing source
+      audio.playbackRate = speed;
+      audio.volume = isMuted ? 0 : volume;
+      previousUrlRef.current = normalizedUrl;
+      // If we should be playing, attempt to play or wait for readiness
+      if (isPlaying) {
+        const tryPlay = () => {
+          audio.play().catch((error) => {
+            if (error.name === 'AbortError') {
+              console.log('Audio play was aborted (likely due to source change)');
+              return;
+            }
+            console.error('Error playing audio:', error);
+            onError();
+          });
+        };
+        if (audio.readyState >= 2) {
+          tryPlay();
+        } else {
+          const onCanPlayOnce = () => {
+            audio.removeEventListener('canplay', onCanPlayOnce);
+            tryPlay();
+          };
+          audio.addEventListener('canplay', onCanPlayOnce);
+        }
+      }
     }
-  }, [audioUrl]);
+  }, [audioUrl, onError, isPlaying, speed, volume, isMuted]);
 
   return (
     <audio
       ref={audioRef}
       preload="metadata"
       style={{ display: 'none' }}
-    />
+    >
+      {/* Provide a source element with type to help browser recognize format */}
+      {previousUrlRef.current && (
+        <source src={previousUrlRef.current} type="audio/mpeg" />
+      )}
+    </audio>
   );
 }

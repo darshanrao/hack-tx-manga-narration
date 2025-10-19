@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
-import * as CheckboxPrimitive from " $matches[0] -replace '@[0-9\.]+', '' ";
-import { CheckIcon } from "lucide-react@0.487.0";
+import * as CheckboxPrimitive from "@radix-ui/react-checkbox";
+import { CheckIcon } from "lucide-react";
 
 import { cn } from "./utils";
 
@@ -30,4 +30,6 @@ function Checkbox({
 }
 
 export { Checkbox };
+
+
 

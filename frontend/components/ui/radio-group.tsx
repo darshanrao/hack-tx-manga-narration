@@ -2,7 +2,7 @@
 
 import * as React from "react";
 import * as RadioGroupPrimitive from " $matches[0] -replace '@[0-9\.]+', '' ";
-import { CircleIcon } from "lucide-react@0.487.0";
+import { CircleIcon } from "lucide-react";
 
 import { cn } from "./utils";
 
@@ -43,4 +43,7 @@ function RadioGroupItem({
 }
 
 export { RadioGroup, RadioGroupItem };
+
+
+
 

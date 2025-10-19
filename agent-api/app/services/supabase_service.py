@@ -81,7 +81,19 @@ class SupabaseService:
                 signed = data.get("url")
             if not signed:
                 raise RuntimeError(f"Failed to sign URL: {data}")
-            # If response is a path, prefix base URL
-            if signed.startswith("/"):
-                return f"{self.url.rstrip('/')}{signed}"
-            return signed
+            # Normalize to include /storage/v1 prefix and absolute URL
+            # Cases observed: "/object/sign/..." or "/storage/v1/object/sign/..." or full URL
+            if signed.startswith("http://") or signed.startswith("https://"):
+                return signed
+            # Ensure it starts with /storage/v1
+            normalized_path = signed
+            if normalized_path.startswith("/object/sign/"):
+                normalized_path = f"/storage/v1{normalized_path}"
+            elif not normalized_path.startswith("/storage/v1/"):
+                # If it doesn't start with /storage/v1, insert it before object/sign
+                if normalized_path.startswith("object/sign/"):
+                    normalized_path = f"/storage/v1/{normalized_path}"
+                else:
+                    # Fallback: ensure we have the expected path
+                    normalized_path = f"/storage/v1/object/sign/{bucket}/{object_path.lstrip('/')}"
+            return f"{self.url.rstrip('/')}{normalized_path}"

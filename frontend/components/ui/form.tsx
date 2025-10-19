@@ -1,8 +1,8 @@
 "use client";
 
 import * as React from "react";
-import * as LabelPrimitive from " $matches[0] -replace '@[0-9\.]+', '' ";
-import { Slot } from " $matches[0] -replace '@[0-9\.]+', '' ";
+import * as LabelPrimitive from "@radix-ui/react-label";
+import { Slot } from "@radix-ui/react-slot";
 
 import { cn } from "./utils";
 import { Label } from "./label";
@@ -157,4 +157,7 @@ export {
   FormMessage,
   FormField,
 };
+
+
+
 

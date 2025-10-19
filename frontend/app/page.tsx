@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { UploadArea } from "../components/UploadArea";
 import { MangaPageViewer } from "../components/MangaPageViewer";
 import { PlaybackControls } from "../components/PlaybackControls";
@@ -14,10 +14,13 @@ import { ChevronLeft, ChevronRight, RotateCcw, Home } from "lucide-react";
 import Link from 'next/link';
 import dynamic from 'next/dynamic';
 import { TranscriptEntry, parseTranscript } from '../utils/transcriptParser';
+import { PageAudioManager } from '../components/PageAudioManager';
+import { PageAudioData } from '../utils/pageAudioManager';
+import { SceneSidebar } from "../components/SceneSidebar";
 // Supabase client is not needed in the browser for uploads; we use backend-forwarded uploads instead
 
 // Dynamic import for PDF viewer to avoid SSR issues
-const PDFPageViewer = dynamic(() => import('../components/PDFPageViewer').then(mod => ({ default: mod.PDFPageViewer })), {
+const PDFPageViewer = dynamic(() => import('../components/PDFPageViewer'), {
   ssr: false,
   loading: () => (
     <div className="h-full w-full flex items-center justify-center bg-muted/30">
@@ -60,12 +63,60 @@ export default function HomePage() {
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
-  const [jobId, setJobId] = useState<string | null>(null);
-  const [jobStatus, setJobStatus] = useState<string | null>(null);
-  const [transcriptUrl, setTranscriptUrl] = useState<string | null>(null);
+  // Removed ingest job logic per request; keeping UI simple
   const [transcriptData, setTranscriptData] = useState<TranscriptEntry[]>([]);
+  const [currentPageAudio, setCurrentPageAudio] = useState<PageAudioData | null>(null);
+  const [pageTranscriptData, setPageTranscriptData] = useState<TranscriptEntry[]>([]);
+  const [activeTranscriptEntry, setActiveTranscriptEntry] = useState<TranscriptEntry | null>(null);
+  const [chapterIndex, setChapterIndex] = useState(0);
+  const [chapterMeta, setChapterMeta] = useState<{ totalPages: number; canGoNext: boolean; canGoPrevious: boolean }>({ totalPages: 0, canGoNext: false, canGoPrevious: false });
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [currentScene, setCurrentScene] = useState<any>(null);
   const previousPanelRef = useRef<string | null>(null);
   const isSeekingRef = useRef<boolean>(false);
+
+  // Define the audio and transcript files for the current PDF - memoize to prevent re-renders
+  const audioFiles = useMemo(() => [
+    'ch01_page01_dialogue_20251018_220717.mp3',
+    'ch01_page02_dialogue_20251018_220717.mp3',
+    'ch01_page03_dialogue_20251018_220717.mp3',
+    'ch01_page04_dialogue_20251018_220717.mp3',
+    'ch01_page05_dialogue_20251018_220717.mp3',
+    'ch01_page06_dialogue_20251018_220717.mp3',
+    'ch01_page07_dialogue_20251018_220717.mp3',
+    // ch02
+    'ch02_page01_dialogue_20251018_222240.mp3',
+    'ch02_page02_dialogue_20251018_222240.mp3',
+    'ch02_page03_dialogue_20251018_222240.mp3',
+    'ch02_page04_dialogue_20251018_222240.mp3',
+    // ch03
+    'ch03_page01_dialogue_20251018_222416.mp3',
+    'ch03_page02_dialogue_20251018_222416.mp3',
+    'ch03_page03_dialogue_20251018_222416.mp3',
+    'ch03_page04_dialogue_20251018_222416.mp3',
+    'ch03_page05_dialogue_20251018_222416.mp3'
+  ], []);
+
+  const transcriptFiles = useMemo(() => [
+    'ch01_page01_transcript_20251018_220717.txt',
+    'ch01_page02_transcript_20251018_220717.txt',
+    'ch01_page03_transcript_20251018_220717.txt',
+    'ch01_page04_transcript_20251018_220717.txt',
+    'ch01_page05_transcript_20251018_220717.txt',
+    'ch01_page06_transcript_20251018_220717.txt',
+    'ch01_page07_transcript_20251018_220717.txt',
+    // ch02
+    'ch02_page01_transcript_20251018_222240.txt',
+    'ch02_page02_transcript_20251018_222240.txt',
+    'ch02_page03_transcript_20251018_222240.txt',
+    'ch02_page04_transcript_20251018_222240.txt',
+    // ch03
+    'ch03_page01_transcript_20251018_222416.txt',
+    'ch03_page02_transcript_20251018_222416.txt',
+    'ch03_page03_transcript_20251018_222416.txt',
+    'ch03_page04_transcript_20251018_222416.txt',
+    'ch03_page05_transcript_20251018_222416.txt'
+  ], []);
 
   // Mock manga pages with audio files - in a real app, this would be extracted from the uploaded file
   const mockPages: MangaPage[] = [
@@ -155,37 +206,20 @@ export default function HomePage() {
   const currentPage = mockPages[currentPageIndex];
   const currentPanel = currentPage?.panels[currentPanelIndex];
 
-  // Load transcript data on component mount
+  // Load transcript data on component mount - use page-specific transcripts
   useEffect(() => {
-    const loadTranscript = async () => {
-      try {
-        // In a real app, this would fetch from an API or file system
-        // For now, we'll use the mock transcript content
-        const mockTranscriptContent = `00:00 Narrator: Eren and Mikasa are walking through town and overhear Garrison soldiers, including Hannes, speaking dismissively about the Survey Corps. This angers Eren, who loudly compares living inside the walls to being a caged animal, attracting the attention of the soldiers and other passersby.
-00:15 Garrison Soldier 1: IT'S JUST LIKE HANNES SAYS.
-00:18 Garrison Soldier 2: HELL... I CAN'T UNDERSTAND THOSE GUYS IN THE SURVEY CORPS WHO WANNA GO OUTSIDE THE WALL!
-00:23 Garrison Soldier 2: BUT IF THEY WANNA HAVE FUN PLAYING WAR, LET 'EM, I SAY!!
-00:26 Eren Jaeger: WE DON'T HAVE TO GO OUTSIDE THE WALL FOR OUR WHOLE LIVES...
-00:29 Eren Jaeger: WE CAN EAT, SLEEP AND SURVIVE JUST FINE HERE... BUT...
-00:34 Eren Jaeger: ...ISN'T THAT...
-00:36 Eren Jaeger: ...LIKE BEING A CAGED ANIMAL?
-00:38 Garrison Soldier 1: PFFT... WHAT A CRACKPOT...
-00:40 Hannes: ...
-00:41 Townsperson: DON'T TELL ME... ...HE WANTS TO JOIN THE SURVEY CORPS?`;
-
-        const parsedTranscript = parseTranscript(mockTranscriptContent);
-        setTranscriptData(parsedTranscript);
-      } catch (error) {
-        console.error('Error loading transcript:', error);
-      }
-    };
-
-    loadTranscript();
-  }, []);
+    // The page-specific transcripts are now handled by PageAudioManager
+    // This effect is no longer needed since pageTranscriptData is managed by the hook
+  }, [pageTranscriptData, currentPageAudio]);
 
   // Audio player effect - handles audio playback with real audio files
   useEffect(() => {
     // Only reset time when switching panels/pages, not when pausing
+    // If we're using page-level audio (from PageAudioManager), do not reset on panel changes
+    if (currentPageAudio?.audioUrl) {
+      // When page audio is active, we avoid resetting currentTime on panel changes
+      return;
+    }
     if (!currentPanel?.audioFileUrl) {
       setCurrentTime(0);
       setDuration(0);
@@ -214,23 +248,42 @@ export default function HomePage() {
   };
 
   const handleAudioEnded = () => {
-    // Move to next panel or page
+    // If using page-level audio, advance pages directly (ignore panels)
+    if (currentPageAudio?.audioUrl) {
+      if (currentPageIndex < mockPages.length - 1) {
+        setCurrentPageIndex((prev) => prev + 1);
+        setCurrentPanelIndex(0);
+      } else {
+        setIsPlaying(false);
+      }
+      return;
+    }
+    // Panel-level audio flow
     if (currentPanelIndex < currentPage.panels.length - 1) {
       setCurrentPanelIndex((prev) => prev + 1);
     } else if (currentPageIndex < mockPages.length - 1) {
-      // Move to next page
       setCurrentPageIndex((prev) => prev + 1);
       setCurrentPanelIndex(0);
     } else {
-      // End of manga
       setIsPlaying(false);
     }
   };
 
   const handleAudioError = () => {
-    console.error('Audio playback error');
+    console.error('Audio playback error - file may not exist or be corrupted');
     setIsPlaying(false);
+    // Optionally show user-friendly error message
+    // You could add a toast notification here
   };
+
+  // Debug: log audio URL candidates when they change
+  useEffect(() => {
+    // Helps diagnose NotSupportedError / Failed to fetch
+    console.log('Audio candidates:', {
+      pageAudioUrl: currentPageAudio?.audioUrl,
+      panelAudioUrl: currentPanel?.audioFileUrl
+    });
+  }, [currentPageAudio, currentPanel]);
 
   const handleSeek = (time: number) => {
     console.log('handleSeek called with:', time, 'current duration:', duration);
@@ -251,7 +304,7 @@ export default function HomePage() {
     handleSeek(Math.min(duration, currentTime + 5));
   };
 
-  // Reset panel index when page changes manually
+  // Reset panel index when page changes manually (do not touch speed)
   useEffect(() => {
     setCurrentPanelIndex(0);
   }, [currentPageIndex]);
@@ -373,21 +426,42 @@ export default function HomePage() {
     // Check if file is PDF
     const isPDFFile = file.type === 'application/pdf' || file.name.toLowerCase().endsWith('.pdf');
     setIsPDF(isPDFFile);
+    // Auto-select chapter based on filename pattern: scene-#.pdf → chapterIndex = # - 1
+    // Example: scene-1.pdf → chapterIndex 0 (ch01_* files)
+    try {
+      const name = file.name.toLowerCase();
+      const match = name.match(/scene[-_](\d+)/);
+      if (match) {
+        const sceneNumber = parseInt(match[1], 10);
+        if (!Number.isNaN(sceneNumber) && sceneNumber > 0) {
+          setChapterIndex(sceneNumber - 1);
+          setCurrentPageIndex(0);
+        }
+      }
+    } catch {}
     
     if (!isPDFFile) {
       setPdfPageCount(0);
     }
 
-    // Upload to backend which forwards to Supabase (avoids RLS and service key in frontend host)
+    // Set PDF page count for testing (backend upload is optional)
+    if (isPDFFile) {
+      setPdfPageCount(7); // Set to 7 pages for your test PDF
+    }
+
+    // Upload to Supabase storage
     try {
       const bucket = 'manga-pdfs';
-      const objectPath = `pdfs/${Date.now()}_${file.name.replace(/[^a-zA-Z0-9_.-]/g, '_')}`;
+      // Create a cleaner filename: just use the original filename with scene number extraction
+      const originalName = file.name.replace(/[^a-zA-Z0-9_.-]/g, '_');
+      const objectPath = originalName;
       const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
       const form = new FormData();
       form.append('file', file);
       form.append('bucket', bucket);
       form.append('object_path', objectPath);
 
+      console.log('Uploading to Supabase:', { bucket, objectPath });
       const up = await fetch(`${API_BASE}/api/storage/upload`, {
         method: 'POST',
         body: form,
@@ -401,59 +475,98 @@ export default function HomePage() {
       const uploadedPath: string = uploaded.object_path;
 
       if (uploadedPath) {
-        console.log('Uploaded to:', uploadedPath);
-        // Optionally kick off backend ingest here
-        try {
-          const res = await fetch(`${API_BASE}/api/ingest/start`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ bucket, object_path: uploadedPath }),
-          });
-          if (res.ok) {
-            const { job_id } = await res.json();
-            console.log('Ingest job started:', job_id);
-            setJobId(job_id);
-            setJobStatus('queued');
-          } else {
-            console.warn('Failed to start ingest, status:', res.status);
-          }
-        } catch (e) {
-          console.warn('Unable to contact backend ingest endpoint:', e);
-        }
+        console.log('Successfully uploaded to Supabase:', uploadedPath);
+        console.log('Public URL:', uploaded.public_url);
       }
     } catch (e) {
       console.error('Unexpected upload failure:', e);
     }
   };
 
-  // Poll job status if we have a jobId
-  useEffect(() => {
-    if (!jobId) return;
-    const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
-    const interval = setInterval(async () => {
-      try {
-        const res = await fetch(`${API_BASE}/api/ingest/status/${jobId}`);
-        if (!res.ok) return;
-        const data = await res.json();
-        setJobStatus(data.status);
-        if (data.status === 'done') {
-          clearInterval(interval);
-          const tUrl = data.outputs?.transcript_url as string | undefined;
-          if (tUrl) setTranscriptUrl(tUrl);
+  // Handle scene selection from sidebar
+  const handleSceneSelect = async (scene: any) => {
+    try {
+      console.log('Selected scene:', scene);
+      setCurrentScene(scene);
+
+      // Extract chapter index from scene filename
+      const match = scene.filename?.match(/scene[-_](\d+)/i);
+      if (match) {
+        const sceneNumber = parseInt(match[1], 10);
+        if (!isNaN(sceneNumber) && sceneNumber > 0) {
+          setChapterIndex(sceneNumber - 1);
         }
-        if (data.status === 'error') {
-          clearInterval(interval);
-        }
-      } catch (e) {
-        // ignore transient errors
       }
-    }, 1500);
-    return () => clearInterval(interval);
-  }, [jobId]);
+
+      setCurrentPageIndex(0);
+      setCurrentPanelIndex(0);
+      setIsPlaying(false);
+      setPdfZoom(1.0);
+      if (scene.total_pages) setPdfPageCount(scene.total_pages);
+
+      // Resolve a public URL for the PDF (direct or via backend details)
+      let publicUrl: string | null = scene.public_url || null;
+      if (!publicUrl && scene.id) {
+        try {
+          const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
+          const detailsRes = await fetch(`${API_BASE}/api/scenes/${encodeURIComponent(scene.id)}`);
+          if (detailsRes.ok) {
+            const details = await detailsRes.json();
+            publicUrl = details.public_url || null;
+          }
+        } catch {}
+      }
+
+      if (publicUrl) {
+        let res = await fetch(publicUrl);
+        if (!res.ok) {
+          // Try backend-signed URL fallback for private buckets
+          try {
+            const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://127.0.0.1:8000';
+            const signRes = await fetch(`${API_BASE}/api/storage/sign`, {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ bucket: 'manga-pdfs', object_path: scene.id, expires_in: 3600 })
+            });
+            if (signRes.ok) {
+              const signed = await signRes.json();
+              if (signed?.signed_url) {
+                res = await fetch(signed.signed_url);
+              }
+            }
+          } catch {}
+        }
+        if (!res.ok) throw new Error(`Failed to download PDF: ${res.status}`);
+        const blob = await res.blob();
+        const fileName = scene.filename || 'scene.pdf';
+        const file = new File([blob], fileName, { type: blob.type || 'application/pdf' });
+        setUploadedFile(file);
+        setIsPDF(true);
+      } else {
+        console.warn('Scene has no resolvable public_url; cannot download PDF');
+      }
+    } catch (e) {
+      console.error('Error selecting scene:', e);
+    } finally {
+      if (typeof window !== 'undefined' && window.innerWidth < 1024) {
+        setIsSidebarOpen(false);
+      }
+    }
+  };
 
   const handlePlayPause = () => {
     setIsPlaying(!isPlaying);
   };
+
+  const handleVolumeChange = useCallback((value: number[]) => {
+    console.log('Volume changing to:', value);
+    setVolume(value);
+  }, []);
+
+  const handleSpeedChange = useCallback((value: number[]) => {
+    console.log('Speed changing to:', value);
+    setSpeed(value);
+  }, []);
 
   const handlePreviousPanel = () => {
     if (currentPanelIndex > 0) {
@@ -485,7 +598,7 @@ export default function HomePage() {
   };
 
   const handleNextPage = () => {
-    const maxPages = isPDF ? pdfPageCount : mockPages.length;
+    const maxPages = currentPageAudio?.audioUrl ? chapterMeta.totalPages : (isPDF ? pdfPageCount : mockPages.length);
     if (currentPageIndex < maxPages - 1) {
       setCurrentPageIndex((prev) => prev + 1);
       setIsPlaying(false);
@@ -498,7 +611,7 @@ export default function HomePage() {
   };
 
   const handleLastPage = () => {
-    const maxPages = isPDF ? pdfPageCount : mockPages.length;
+    const maxPages = currentPageAudio?.audioUrl ? chapterMeta.totalPages : (isPDF ? pdfPageCount : mockPages.length);
     setCurrentPageIndex(maxPages - 1);
     setIsPlaying(false);
   };
@@ -523,7 +636,27 @@ export default function HomePage() {
     currentPanelIndex < currentPage?.panels.length - 1;
 
   return (
-    <div className="h-screen w-screen flex flex-col overflow-hidden bg-slate-900">
+    <PageAudioManager
+      audioFiles={audioFiles}
+      transcriptFiles={transcriptFiles}
+      baseUrl="/"
+      currentPageIndex={currentPageIndex}
+      currentChapterIndex={chapterIndex}
+      onPageAudioChange={setCurrentPageAudio}
+      onTranscriptChange={setPageTranscriptData}
+      onActiveTranscriptChange={setActiveTranscriptEntry}
+      onMetaChange={setChapterMeta}
+      currentTime={currentTime}
+    >
+      <div className="h-screen w-screen flex flex-col overflow-hidden bg-slate-900">
+      {/* Scene Sidebar */}
+      <SceneSidebar
+        isOpen={isSidebarOpen}
+        onToggle={() => setIsSidebarOpen(!isSidebarOpen)}
+        onSceneSelect={handleSceneSelect}
+        currentScene={currentScene}
+      />
+      
       {/* Header */}
       <div className="border-b border-slate-700/50 bg-slate-900/80 backdrop-blur-xl px-8 py-6 flex items-center justify-between shadow-lg shadow-black/20">
         <div>
@@ -536,16 +669,8 @@ export default function HomePage() {
               : "Upload a manga file to begin reading"}
           </p>
         </div>
-        <div className="flex gap-3">
+              <div className="flex gap-3 items-center">
           <KeyboardShortcutsHelp />
-          {jobId && (
-            <div className="px-3 py-2 rounded-md bg-slate-800/80 border border-slate-600 text-slate-200 text-sm">
-              Job: {jobStatus || '...'}
-              {transcriptUrl && (
-                <a className="ml-2 underline text-blue-300" href={transcriptUrl} target="_blank" rel="noreferrer">transcript</a>
-              )}
-            </div>
-          )}
           <Link href="/landing">
             <Button
               variant="outline"
@@ -571,7 +696,7 @@ export default function HomePage() {
       </div>
 
       {/* Main Content - Split Screen Layout */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className={`flex-1 flex overflow-hidden transition-all duration-300 ${isSidebarOpen ? 'lg:ml-80' : ''}`}>
         {uploadedFile ? (
           <>
             {/* Left Side - Manga/PDF Viewer (75% width) */}
@@ -602,7 +727,7 @@ export default function HomePage() {
                   className="h-full"
                   onCollapseChange={setIsTranscriptCollapsed}
                   currentTime={currentTime}
-                  transcriptData={transcriptData}
+                  transcriptData={pageTranscriptData.length > 0 ? pageTranscriptData : transcriptData}
                   onSeek={handleSeek}
                 />
               </div>
@@ -620,9 +745,9 @@ export default function HomePage() {
                     isPlaying={isPlaying}
                     onPlayPause={handlePlayPause}
                     volume={volume}
-                    onVolumeChange={setVolume}
+                    onVolumeChange={handleVolumeChange}
                     speed={speed}
-                    onSpeedChange={setSpeed}
+                    onSpeedChange={handleSpeedChange}
                     currentTime={currentTime}
                     duration={duration}
                     onSeek={handleSeek}
@@ -668,9 +793,9 @@ export default function HomePage() {
       </div>
       
       {/* Audio Player - Hidden component that handles audio playback */}
-      {currentPanel?.audioFileUrl && (
+      {(currentPanel?.audioFileUrl || (currentPageAudio?.audioUrl && currentPageAudio.audioUrl !== '')) && (
         <AudioPlayer
-          audioUrl={currentPanel.audioFileUrl}
+          audioUrl={currentPageAudio?.audioUrl || currentPanel?.audioFileUrl || ''}
           isPlaying={isPlaying}
           volume={volume[0]}
           speed={speed[0]}
@@ -685,5 +810,6 @@ export default function HomePage() {
         />
       )}
     </div>
+    </PageAudioManager>
   );
 }

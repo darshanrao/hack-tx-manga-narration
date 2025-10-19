@@ -1,10 +1,10 @@
 'use client'
 
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, useMemo } from 'react';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { ChevronDown, ChevronUp } from 'lucide-react';
-import { TranscriptEntry, parseTranscript, updateTranscriptEntries } from '../utils/transcriptParser';
+import { TranscriptEntry, updateTranscriptEntries } from '../utils/transcriptParser';
 
 interface TranscriptProps {
   currentText?: string;
@@ -26,75 +26,43 @@ export function Transcript({
   onSeek
 }: TranscriptProps) {
   const [isExpanded, setIsExpanded] = useState(true);
-  const [transcriptEntries, setTranscriptEntries] = useState<TranscriptEntry[]>([]);
   const transcriptRef = useRef<HTMLDivElement>(null);
   const activeEntryRef = useRef<HTMLDivElement>(null);
 
-  // Load and parse transcript data
-  useEffect(() => {
-    if (transcriptData) {
-      setTranscriptEntries(transcriptData);
-    } else {
-      // Fallback to mock data if no transcript data provided
-      const mockTranscript: TranscriptEntry[] = [
-        {
-          id: "1",
-          timestamp: 0,
-          speaker: "Narrator",
-          text: "The city stretched endlessly before them, a vast metropolis of towering buildings and bustling streets.",
-          isActive: false
-        },
-        {
-          id: "2", 
-          timestamp: 15,
-          speaker: "Narrator",
-          text: "In the distance, a massive wall loomed over the landscape, its ancient stones weathered by centuries of wind and rain.",
-          isActive: false
-        },
-        {
-          id: "3",
-          timestamp: 30,
-          speaker: "Narrator", 
-          text: "The banner fluttered in the breeze, displaying the emblem of a helmeted warrior - a symbol of protection and strength.",
-          isActive: false
-        },
-        {
-          id: "4",
-          timestamp: 45,
-          speaker: "Narrator",
-          text: "Below, the bridge extended across the chasm, connecting the old world to the new, spanning generations of history.",
-          isActive: false
-        },
-        {
-          id: "5",
-          timestamp: 60,
-          speaker: "Narrator",
-          text: "The sound of footsteps echoed through the empty corridors, each step a reminder of the journey that lay ahead.",
-          isActive: false
-        }
-      ];
-      setTranscriptEntries(mockTranscript);
-    }
-  }, [transcriptData]);
+  // Compute display entries from provided transcript + currentTime
+  const displayEntries = useMemo<TranscriptEntry[]>(() => {
+    const baseEntries = (transcriptData && transcriptData.length > 0)
+      ? transcriptData
+      : [
+          { id: '1', timestamp: 0, speaker: 'Narrator', text: 'The city stretched endlessly before them, a vast metropolis of towering buildings and bustling streets.', isActive: false },
+          { id: '2', timestamp: 15, speaker: 'Narrator', text: 'In the distance, a massive wall loomed over the landscape, its ancient stones weathered by centuries of wind and rain.', isActive: false },
+          { id: '3', timestamp: 30, speaker: 'Narrator', text: 'The banner fluttered in the breeze, displaying the emblem of a helmeted warrior - a symbol of protection and strength.', isActive: false },
+          { id: '4', timestamp: 45, speaker: 'Narrator', text: 'Below, the bridge extended across the chasm, connecting the old world to the new, spanning generations of history.', isActive: false },
+          { id: '5', timestamp: 60, speaker: 'Narrator', text: 'The sound of footsteps echoed through the empty corridors, each step a reminder of the journey that lay ahead.', isActive: false },
+        ];
+    return updateTranscriptEntries(baseEntries, currentTime);
+  }, [transcriptData, currentTime]);
 
-  // Update active entries based on current time
+  // Auto-scroll to active entry; keep the very beginning visible
   useEffect(() => {
-    if (transcriptEntries.length > 0) {
-      const updatedEntries = updateTranscriptEntries(transcriptEntries, currentTime);
-      setTranscriptEntries(updatedEntries);
+    if (!isExpanded) return;
+    const time = currentTime ?? 0;
+    const secondEntryTs = displayEntries[1]?.timestamp ?? 3;
+    // Keep the list anchored to the top until just before the 2nd entry
+    if (time < Math.max(1, secondEntryTs - 0.5)) {
+      if (transcriptRef.current) {
+        transcriptRef.current.scrollTo({ top: 0, behavior: 'auto' });
+      }
+      return;
     }
-  }, [currentTime]);
-
-  // Auto-scroll to active entry
-  useEffect(() => {
-    if (activeEntryRef.current && isExpanded) {
+    if (activeEntryRef.current) {
       activeEntryRef.current.scrollIntoView({
         behavior: 'smooth',
-        block: 'center',
+        block: 'nearest',
         inline: 'nearest'
       });
     }
-  }, [transcriptEntries, isExpanded]);
+  }, [displayEntries, isExpanded, currentTime]);
 
   return (
     <Card className={`h-full flex flex-col bg-transparent backdrop-blur-sm border-0 rounded-none ${className} ${!isExpanded ? 'overflow-hidden p-0 m-0' : 'p-0'} transition-[padding,margin,overflow] duration-500 ease-out`}>
@@ -148,13 +116,13 @@ export function Transcript({
       </div>
 
       {/* Enhanced Transcript Content - Scrollable */}
-      <div className={`flex-1 overflow-y-auto transition-[opacity,max-height,padding] duration-500 ease-out scrollbar-thin scrollbar-track-slate-800 scrollbar-thumb-slate-600 hover:scrollbar-thumb-slate-500 scrollbar-thumb-rounded-full ${
+      <div ref={transcriptRef} className={`flex-1 overflow-y-auto transition-[opacity,max-height,padding] duration-500 ease-out scrollbar-thin scrollbar-track-slate-800 scrollbar-thumb-slate-600 hover:scrollbar-thumb-slate-500 scrollbar-thumb-rounded-full ${
         isExpanded 
           ? 'opacity-100 px-6 pt-4 pb-6' 
           : 'opacity-0 max-h-0 p-0 overflow-hidden'
       }`}>
         <div className="space-y-4">
-          {transcriptEntries.map((item) => {
+          {displayEntries.map((item) => {
             const formatTimestamp = (seconds: number) => {
               const mins = Math.floor(seconds / 60);
               const secs = Math.floor(seconds % 60);
