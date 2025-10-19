@@ -482,6 +482,25 @@ export default function HomePage() {
       const uploaded = await up.json();
       setCloudObjectPath(uploaded.object_path || objectPath);
       setCloudUploadStatus('success');
+
+      // Kick off ElevenLabs processing of the uploaded PDF on the backend
+      try {
+        const sceneId = (file.name.replace(/\.[^/.]+$/, '') || 'scene').replace(/[^a-zA-Z0-9_-]/g, '_');
+        const res = await fetch(`${API_BASE}/api/eleven/process`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ bucket: cloudBucket, object_path: uploaded.object_path || objectPath, scene_id: sceneId })
+        });
+        if (!res.ok) {
+          const err = await res.json().catch(() => ({}));
+          console.warn('ElevenLabs processing failed:', err?.detail || res.status);
+        } else {
+          const data = await res.json();
+          console.log('ElevenLabs processing started/completed:', data);
+        }
+      } catch (e) {
+        console.warn('Failed to call ElevenLabs processing endpoint:', e);
+      }
     } catch (e) {
       console.error('Unexpected upload failure:', e);
       setCloudUploadStatus('error');
