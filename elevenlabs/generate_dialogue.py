@@ -19,6 +19,10 @@ import io
 import time
 from datetime import datetime, timedelta
 from elevenlabs.client import ElevenLabs
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv(os.path.join(os.path.dirname(os.path.dirname(__file__)), '.env'))
 
 # Import config from same directory
 from config import ELEVENLABS_API_KEY
